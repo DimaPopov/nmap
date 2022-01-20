@@ -11,6 +11,7 @@
   const month = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   
   const text = window.appChrome.text.getUser;
+  const creatElement = window.appChrome.creatElement;
   
   
   /**
@@ -37,10 +38,10 @@
   
   const renderProfile = (user) => {
     const popup = $(".nk-portal-local .nk-popup");
-    
+
     const profileView = $(".nk-user-profile-view");
     const profileHeader = profileView.find(".nk-user-profile-view__header");
-        
+    
     if (user.status === "deleted") {
       const status = profileHeader.find(".nk-user-profile-view__status");
       status.before('<div class="nk-user-profile-view__name nk-user-link-view_deleted">' + user.displayName + '</div>');
@@ -66,19 +67,19 @@
     }else {
       profileView.find(".nk-scrollable__content .nk-size-observer").append("<div class='nk-info-user-details nk-section nk-section_level_2'></div>");
     }
-    
+
     let parent = profileView.find(".nk-info-user-details");
-    
+
     /* Аутсорсер ли */
-    if (user.outsourcer) {
+    if (user.outsourcer && user.status !== "deleted") {
       profileHeader.find(".nk-user-profile-view__name").after('<div class="nk-user-profile-view__status">Аутсорсер</div>'); 
     }
     
     /* Робот ли */
-    if (user.moderationStatus === "robot") {
+    if (user.moderationStatus === "robot" && user.status !== "deleted") {
       profileHeader.find(".nk-user-profile-view__name").after('<div class="nk-user-profile-view__status">Робот</div>'); 
     }
-    
+
     /* Добавление информации о должности и/или специальных прав */
     if (user.publicId && user.status !== "deleted" && !user.outsourcer && !user.yandex) {
       const data = [
@@ -111,27 +112,29 @@
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {
+          let infoAccessElement;
+          
           /* Проверка наличия прав в схемах помещений */
 
           if (response.data[0].data.stats) {
             const indoor = response.data[0].data.stats.editStats.categoryGroups.indoor_group;
 
             if (indoor.new > 0 || indoor.total > 0) {
-              if (!viewElements.infoAccess) {
-                viewElements.infoAccess = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+              if (!infoAccessElement) {
+                infoAccessElement = creatElement(parent, ["nk-user-profile-view__group", "nk-section", "nk-section_level_2", "nk-grid", "nk-user-profile-access"], ".nk-user-profile-access:last-child");
 
-                creatElement(viewElements.infoAccess, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info.access);
-                viewElements.infoAccess = creatElement(viewElements.infoAccess, ["nk-info-user__access", "nk-grid"], ".nk-info-user__access");
+                creatElement(infoAccessElement, ["nk-user-profile-view__group-title", "nk-grid__col", "nk-grid__col_span_3"], ".nk-user-profile-view__group-title", text.view.info.access);
+                infoAccessElement = creatElement(infoAccessElement, ["nk-user-profile-view__group-content", "nk-grid__col", "nk-grid__col_span_9", "nk-info-user__access", "nk-grid"], ".nk-info-user__access");
               }
 
-              viewElements.infoAccess.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_indoor-group"></span>');
+              infoAccessElement.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_indoor-group"></span>');
 
-              const groupIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_indoor-group");
+              const groupIcon = infoAccessElement.find(".nk-user-stat-badge-view_id_indoor-group");
               groupIcon.hover(() => {
                 popup.find(".nk-popup__content").text("Схемы помещений");
 
                 const topPopup = groupIcon[0].offsetHeight + groupIcon.offset().top + 5;
-                const leftPopup = window.innerWidth - groupIcon.offset().left + 10;
+                const leftPopup = window.innerWidth - groupIcon.offset().left;
 
                 popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
                 popup.addClass("nk-popup_visible");
@@ -151,21 +154,21 @@
             if (experts) {
               experts.forEach((expert) => {
                 if (expert === "transport_group") {
-                  if (!viewElements.infoAccess) {
-                    viewElements.infoAccess = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+                  if (!infoAccessElement) {
+                    infoAccessElement = creatElement(parent, ["nk-user-profile-view__group", "nk-section", "nk-section_level_2", "nk-grid", "nk-user-profile-access"], ".nk-user-profile-access:last-child");
 
-                    creatElement(viewElements.infoAccess, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info.access);
-                    viewElements.infoAccess = creatElement(viewElements.infoAccess, ["nk-info-user__access", "nk-grid"], ".nk-info-user__access");
+                    creatElement(infoAccessElement, ["nk-user-profile-view__group-title", "nk-grid__col", "nk-grid__col_span_3"], ".nk-user-profile-view__group-title", text.view.info.access);
+                    infoAccessElement = creatElement(infoAccessElement, ["nk-user-profile-view__group-content", "nk-grid__col", "nk-grid__col_span_9", "nk-info-user__access", "nk-grid"], ".nk-info-user__access");
                   }
 
-                  viewElements.infoAccess.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_transport-group"></span>');
+                  infoAccessElement.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_transport-group"></span>');
 
-                  const transportIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_transport-group");
+                  const transportIcon = infoAccessElement.find(".nk-user-stat-badge-view_id_transport-group");
                   transportIcon.hover(() => {
                     popup.find(".nk-popup__content").text("Нитки транспорта");
 
                     const topPopup = transportIcon[0].offsetHeight + transportIcon.offset().top + 5;
-                    const leftPopup = window.innerWidth - transportIcon.offset().left + 10;
+                    const leftPopup = window.innerWidth - transportIcon.offset().left;
 
                     popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
                     popup.addClass("nk-popup_visible");
@@ -234,7 +237,7 @@
           }
         
         title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
-        
+
         parent.append('<div class="nk-user-profile-view__group nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9">' + reason + '</div></div>');
       }
     }

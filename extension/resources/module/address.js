@@ -64,7 +64,7 @@
       /* Удалим переносы строк */
       .replaceAll("\n", "")
       /* Удалим точки и ненужные аббревиатуры */
-      .replaceAll(".", "").replaceAll(/\sсооружение (\d)|\sсоор(\d)|\sзд(\d)|\sздание (\d)/g, "$1$2$3$4")
+      .replaceAll(".", "").replaceAll(/\sсооружение (\d)|\sсоор(\d)|соор(\d)|\sзд(\d)|\sздание (\d)/g, "$1$2$3$4$5")
       /* Укажем дробь в соответствии с правилами */
       .replaceAll(" / ", "/").replaceAll(" \ ", "/").replaceAll("\\", "/")
       /* Укажем строения в соответствии с правилами */
@@ -319,7 +319,7 @@
       return;
     }
     
-    if (getUserAddress(value).split(",")[0].length > 5) {
+    if (getUserAddress(value).split(",")[0].length > 8) {
       window.appChrome.notification("warning", text.notification.error.valid.count);
       return;
     }
