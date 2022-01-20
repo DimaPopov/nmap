@@ -1,0 +1,204 @@
+
+.nk-get-user-view__filters {
+  align-items: center;
+  display: flex;
+  padding: 12px 16px 4px;
+  grid-gap: 10px;
+}
+
+.nk-no-info-user {
+  margin: 50px 0;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  line-height: 18px;
+  cursor: default;
+}
+
+.nk-get-user-view .nk-icon_align_auto>svg {
+  margin: -5em 0;
+}
+
+.nk-get-user-view .nk-grid__col.nk-grid__col_span_10.nk-grid__col_stick {
+  position: relative
+}
+
+.nk-get-user-view .nk-scrollable__container {
+  padding-top: 8px;
+}
+
+.nk-list-item-info-user__content {
+  padding-bottom: 12px;
+  padding-top: 12px;
+}
+
+.nk-list-item-info-user__content .nk-grid__col_stick {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.nk-info-user__user {
+  font-size: 15px;
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nk-info-user__user--login { 
+  color: #777;
+}
+
+.nk-list-item-view:not(.nk-list-item-view_expanded) .nk-list-item-info-user_details {
+  display: none;
+}
+
+.nk-info-user__info {
+  padding: 12px 16px;
+}
+
+.nk-info-user__info + .nk-info-user__info {
+  padding-top: 0;
+}
+
+.nk-info-user__info:not(.nk-info-user__info-text) {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+}
+
+.nk-info-user__user-content + .nk-info-user__info {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #e6e6e6;
+}
+
+.nk-info-user__info--title {
+  color: #999;
+  line-height: 18px;
+}
+
+.nk-info-user__access {
+  grid-gap: 5px;
+  margin-top: 2px;
+}
+
+.nk-info-user__access.nk-grid {
+  padding: 0;
+}
+
+.nk-user-stat-badge-view {
+  display: block;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+.nk-user-stat-badge-view_id_indoor-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/004640bb278e7f041c69.svg);
+}
+
+.nk-user-stat-badge-view_id_transport-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/a1a8707f5d2b4c6dcf48.svg);
+}
+
+.nk-info-user__user-badge {
+  flex: 1 0 0;
+}
+
+.nk-info-user__user-badge .nk-event-view__badge {
+  margin: 4px 0 0 0;
+}
+
+#get-user-spinner-input {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+
+.nk-time-delete {
+  color: #999;
+}
+
+.nk-get-user-view__main-alert-icon {
+  left: 35px;
+  position: absolute;
+  top: 35px;
+  z-index: 1;
+}
+
+.nk-get-user-view__alerts, 
+.nk-get-user-view__event-comment {
+  padding: 12px 16px;
+}
+
+.nk-get-user-view__alert {
+  margin-left: 25px;
+  position: relative;
+}
+
+.nk-user-profile-view .nk-get-user-view__alert {
+  margin-left: 30px;
+}
+
+.nk-get-user-view__alert-icon {
+  left: -25px;
+  position: absolute;
+  top: 0;
+}
+
+.nk-user-profile-view .nk-get-user-view__alert-icon {
+  left: -30px;
+}
+
+.nk-get-user-view__alert-icon > svg {
+  margin: -5.3em 0 -5em !important;
+}
+
+.nk-text-input_login:before {
+  border-radius: 4px;
+}
+
+.nk-info-user-details .nk-user-profile-view__group + .nk-user-profile-view__group {
+  padding-top: 0;
+}
+
+.nk-user-profile-view .nk-user-profile-view__name.nk-user-link-view_deleted:first-letter {
+  color: inherit;
+}
+
+.nk-button-check-address {
+  display: block;
+  margin-top: 10px;
+}
+
+.nk-address-check p.nk-form-control__label {
+  margin: 0;
+}
+
+.nk-address-check .nk-name-row-layout__name .nk-text-control__text {
+  padding-bottom: 5px;
+}
+
+.nk-load-status-button {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+}
+
+.nk-list-address .nk-grid__col.nk-grid__col_span_8 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.nk-list-address .nk-grid__col.nk-grid__col_span_8 .nk-text-control__text {
+  padding: 0;
+}
+
+.nk-list-address .nk-address {
+  margin-top: 0 !important;
+}
+
+.nk-list-address .nk-address-portal {
+  cursor: pointer;
+}
