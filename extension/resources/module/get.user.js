@@ -381,8 +381,13 @@
           const iconModifiedClass = !!iconModified ? " nk-user-link-view_has-icon" : "";
           const deleteModifiedUserClass = user.modifiedBy.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
 
+          let title = user.yandex ? text.view.info.delete.yndx.time : text.view.info.delete.user.time;
+          if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
+            title = text.view.info.delete.user.time;
+          }
+
           viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
-          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", user.yandex ? text.view.info.delete.yndx.time : text.view.info.delete.user.time);
+          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", title);
 
           viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text");
           viewElements.info.html('<a role="link" aria-disabled="false" class="nk-link nk-link_theme_islands nk-user-link-view' + deleteModifiedUserClass + iconModifiedClass + '" href="/#!/users/' + user.modifiedBy.publicId + '"><span class="nk-user-link-view__name">' + user.modifiedBy.displayName + '</span>' + iconModified + '</a> <span class="nk-time-delete">' + deleteDate + '</span>');
@@ -402,12 +407,19 @@
               popup.removeClass("nk-popup_visible");
             });
           }
-          
+
+          title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
+          let reason = text.deleteReason[user.deleteReason];
+
+          if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
+            title = text.view.info.delete.user.info;
+            reason = text.deleteReason["yndx-fired"];
+          }
 
           viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
-          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info);
+          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", title);
 
-          viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", text.deleteReason[user.deleteReason]);
+          viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", reason);
         }
       }
       

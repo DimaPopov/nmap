@@ -217,7 +217,10 @@
         const deleteModifiedUserClass = user.modifiedBy.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
 
         let title = user.yandex ? text.view.info.delete.yndx.time : text.view.info.delete.user.time;
-        const reason = text.deleteReason[user.deleteReason];
+
+        if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
+          title = text.view.info.delete.user.time;
+        }
 
         parent.append('<div class="nk-user-profile-view__group nk-section nk-section_level_2 nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9"><a role="link" aria-disabled="false" class="nk-link nk-link_theme_islands nk-user-link-view' + deleteModifiedUserClass + iconModifiedClass + '" href="/#!/users/' + user.modifiedBy.publicId + '"><span class="nk-user-link-view__name">' + user.modifiedBy.displayName + '</span>' + iconModified + '</a> <span class="nk-time-delete">' + deleteDate + '</span></div></div>');
 
@@ -237,6 +240,12 @@
           }
         
         title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
+        let reason = text.deleteReason[user.deleteReason];
+
+        if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
+          title = text.view.info.delete.user.info;
+          reason = text.deleteReason["yndx-fired"];
+        }
 
         parent.append('<div class="nk-user-profile-view__group nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9">' + reason + '</div></div>');
       }

@@ -6,9 +6,12 @@
 
 (function () {
   const appPage = $(".nk-app-page");
-  
+
   const URL_API = "core-sat.maps.yandex.net";
   const hashStart = window.location.href;
+
+  let startStatus = false;
+  let config = {};
 
   /* Сообщение об ошибке по умолчанию */
   const defaultError = "Извините, что-то пошло не так";
@@ -46,6 +49,7 @@
       deleteReason: {
         'passport': "Удалён в Яндекс.ID",
         'yndx-registration': "yndx-логин без соответствующих прав",
+        'yndx-fired': "Сотрудник уволен",
         'spammer': "Спамер (по версии Яндекс.ID)",
         'suspicious': "Подозрительная деятельность",
         'inactive-outsourcer': "Аутсорсер не проявлял активность",
@@ -93,7 +97,7 @@
     }
   };
   
-  let url = {
+  const url = {
     tile: {
       getServices: "https://" + URL_API + "/get.services",
       deleteCash: "https://" + URL_API + "/delete.cash",
@@ -149,20 +153,25 @@
     
     /* Редактор загрузился, теперь ожидаем загрузки дополнительных инструментов, для добавления меню */
     setTimeout(() => {
+      if (!startStatus) return;
+
+      const moderatorButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-user-tasks-control-view");
+      if (!moderatorButton[0]) return;
+
       const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
       const nameUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
       const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
     
       if (!!nameUser) {
-        const url = new URL(nameUser);
-        const getNameUser = nameUser.indexOf("name=") !== -1 ? url.searchParams.get('name') : false;
+        const urlGet = new URL(nameUser);
+        const getNameUser = nameUser.indexOf("name=") !== -1 ? urlGet.searchParams.get('name') : false;
 
         window.appChrome.getUser(getNameUser);
       }
       
       if (!!isAddressCheck) {
-        const url = new URL(isAddressCheck);
-        const getCorrectName = url.searchParams.get('correct');
+        const urlGet = new URL(isAddressCheck);
+        const getCorrectName = urlGet.searchParams.get('correct');
         
         window.appChrome.showCorrect(getCorrectName);
       }
@@ -183,8 +192,35 @@
   });
     
   loadMap.observe(appPage[0], {childList: true});
-  
-  
+  config = JSON.parse(document.querySelector("#config").innerHTML);
+
+  const data = [
+    {
+      "method": "app/getCurrentUser",
+      "params": {
+        "token": JSON.parse(localStorage.getItem("nk:token"))
+      }
+    }
+  ];
+
+  $.ajax({
+    type: "POST",
+    headers: {
+      'x-kl-ajax-request': 'Ajax_Request',
+      'x-csrf-token': config.api.csrfToken,
+      'x-lang': 'ru'
+    },
+    url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+    dataType: "json",
+    data: JSON.stringify(data),
+    success: function (response) {
+      const user = response.data[0].data;
+
+      startStatus = user.yandex || user.outsourcer || user.moderationStatus === "moderator";
+    }
+  });
+
+
   ////////////////////
   
   window.appChrome = {

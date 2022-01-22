@@ -195,7 +195,7 @@
     let lastID = 0;
 
     if (!!errorAddress.length) {
-      errorAddress.forEach((address, id) => {
+      errorAddress.forEach((address) => {
         let addressElement = creatElement(elementsView.contentError, ["nk-name-row-layout__name-type", "nk-address"], ".nk-address:last-child");
         const title = address.title.user.indexOf(", ") !== -1 ? address.title.user.split(", ")[1] : address.title.user.split(" ")[0];
         lastID++;
