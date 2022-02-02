@@ -5,6 +5,26 @@
 */
 
 (function () {
+  let settingUser = {};
+
+  chrome.storage.local.get(["nkSetting-getUser"], (result) => {
+    if (!result["nkSetting-getUser"]) {
+      const default_setting = {
+        'view': {
+          'total-edits': true,
+          'rating-pos-full': true,
+          'feedback-count': true,
+          'category-group': false,
+        }
+      };
+
+      chrome.storage.local.set({ "nkSetting-getUser": default_setting });
+      settingUser = default_setting;
+    }else {
+      settingUser = result["nkSetting-getUser"];
+    }
+  });
+
   /* Магические значения, необходимые для корректного отображения интерфейса */
   const MAGIC_HEIGHT = 218;
   const MAGIC_TOP_WINDOW = 180;
@@ -19,6 +39,7 @@
   
   const text = window.appChrome.text.getUser;
   const creatElement = window.appChrome.creatElement;
+  const popupShow = window.appChrome.popupShow;
 
   /**
    * Форматирование даты
@@ -277,8 +298,15 @@
           success: function (response) {
             /* Проверка наличия прав в схемах помещений */
 
-            if (response.data[0].data.stats) {
-              const indoor = response.data[0].data.stats.editStats.categoryGroups.indoor_group;
+            let parent;
+            let localParent;
+
+            const stats = response.data[0].error ? false : response.data[0].data.stats;
+            const infoRoleGroup = response.data[1].error ? false : response.data[1].data;
+
+
+            if (stats && settingUser.view["category-special-group"]) {
+              const indoor = stats.editStats.categoryGroups.indoor_group;
 
               if (indoor.new > 0 || indoor.total > 0) {
                 if (!viewElements.infoAccess) {
@@ -292,13 +320,7 @@
 
                 const groupIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_indoor-group");
                 groupIcon.hover(() => {
-                  popup.find(".nk-popup__content").text("Схемы помещений");
-
-                  const topPopup = groupIcon[0].offsetHeight + groupIcon.offset().top + 5;
-                  const leftPopup = window.innerWidth - groupIcon.offset().left + 10;
-
-                  popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
-                  popup.addClass("nk-popup_visible");
+                  popupShow(groupIcon, "Схемы помещений");
                 }, () => {
                   popup.removeClass("nk-popup_visible");
                 });
@@ -306,11 +328,10 @@
             }
 
 
-
             /* Проверка наличия прав в нитках транспорта */
 
-            if (response.data[1].data) {
-              const experts = response.data[1].data.expertExpertise;
+            if (infoRoleGroup && settingUser.view["category-special-group"]) {
+              const experts = infoRoleGroup.expertExpertise;
 
               if (experts) {
                 experts.forEach((expert) => {
@@ -324,20 +345,120 @@
 
                     viewElements.infoAccess.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_transport-group"></span>');
 
-                    const transportIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_transport-group");
-                    transportIcon.hover(() => {
-                      popup.find(".nk-popup__content").text("Нитки транспорта");
-
-                      const topPopup = transportIcon[0].offsetHeight + transportIcon.offset().top + 5;
-                      const leftPopup = window.innerWidth - transportIcon.offset().left + 10;
-
-                      popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
-                      popup.addClass("nk-popup_visible");
+                    const groupIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_transport-group");
+                    groupIcon.hover(() => {
+                      popupShow(groupIcon, "Нитки транспорта");
                     }, () => {
                       popup.removeClass("nk-popup_visible");
                     });
                   }
                 });
+              }
+            }
+
+            if (stats && infoRoleGroup) {
+              viewElements.parentDetals.find(".nk-list-item-info-user_details-block.nk-profile-info").remove();
+
+              parent = viewElements.parentDetals.find(".nk-list-item-info-user_details-block:first-child");
+              parent.after('<div class="nk-list-item-info-user_details-block nk-profile-info nk-section nk-section_level_2"></div>');
+
+              parent = viewElements.parentDetals.find(".nk-list-item-info-user_details .nk-list-item-info-user_details-block.nk-profile-info");
+              /* Место в рейтинге */
+              if (settingUser.view["rating-pos-full"]) {
+                localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+                creatElement(localParent, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info["rating-pos-full"]);
+                creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.ratingPosFull));
+              }
+
+              /* Число правок */
+              if (settingUser.view["total-edits"]) {
+                localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+                creatElement(localParent, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info["total-edits"]);
+                creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.totalEdits));
+              }
+
+              /* Разобранно неточности */
+              if (settingUser.view["feedback-count"]) {
+                localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+                creatElement(localParent, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info["feedback-count"]);
+                creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.resolvedFeedbackCount));
+              }
+
+              console.log(settingUser.view["category-group"]);
+
+              /* Информация о правках в слоях */
+              if (settingUser.view["category-group"]) {
+                viewElements.parentDetals.find(".nk-category-group").remove();
+
+                parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-category-group", "nk-section"], ".nk-category-group");
+                parent.css("padding", "0 12px 15px");
+
+                for (const categoryName in stats.editStats.categoryGroups) {
+                  const categoryValue = stats.editStats.categoryGroups[categoryName];
+
+                  /* Генерация шаблона информации о слое */
+                  let groupElement = creatElement(parent, ["nk-user-stat-view__category-group"], ".nk-user-stat-view__category-group:last-child")
+                  groupElement = creatElement(groupElement, ["nk-user-stat-category-group-view"], ".nk-user-stat-category-group-view");
+
+                  groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_' + categoryName.replaceAll("_", "-") + '"></span></span>');
+                  groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_expert-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_moderator-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
+
+                  const expertIcon = groupElement.find(".nk-user-stat-badge-view_id_expert-disabled");
+                  const moderatorIcon = groupElement.find(".nk-user-stat-badge-view_id_moderator-disabled");
+
+                  let number = new Intl.NumberFormat('ru-RU').format(categoryValue.total);
+
+                  if (categoryValue.total >= 1000000) {
+                    number = number.split(' ')[0] + " " + number.split(' ')[1] + "k";
+                  } else if (categoryValue.total >= 100000) {
+                    number = number.split(' ')[0] + "k";
+                  }
+
+                  groupElement.find(".nk-user-stat-category-group-view__stats").append(number);
+
+                  if (categoryValue.total === 0) {
+                    groupElement.addClass("nk-user-stat-category-group-view_disabled");
+                  }
+
+                  if (infoRoleGroup.expertExpertise && infoRoleGroup.expertExpertise.indexOf(categoryName) !== -1) {
+                    expertIcon.removeClass("nk-user-stat-badge-view_id_expert-disabled");
+                    expertIcon.addClass("nk-user-stat-badge-view_id_expert");
+                  }
+
+                  if (infoRoleGroup.moderatorExpertise) {
+                    infoRoleGroup.moderatorExpertise.forEach((moderatorExpert) => {
+                      if (moderatorExpert.categoryGroupIds.indexOf(categoryName) !== -1) {
+                        moderatorIcon.removeClass("nk-user-stat-badge-view_id_moderator-disabled");
+                        moderatorIcon.addClass("nk-user-stat-badge-view_id_moderator");
+
+                        return false;
+                      }
+                    });
+                  }
+                }
+
+                let groupElement = creatElement(parent, ["nk-user-stat-view__category-group"], ".nk-user-stat-view__category-group:last-child")
+                groupElement = creatElement(groupElement, ["nk-user-stat-category-group-view"], ".nk-user-stat-category-group-view");
+
+                groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_group-edits"></span></span>');
+                groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
+
+                if (stats.editStats.group === 0) {
+                  groupElement.addClass("nk-user-stat-category-group-view_disabled");
+                }
+
+                let number = new Intl.NumberFormat('ru-RU').format(stats.editStats.group);
+
+                if (stats.editStats.group >= 1000000) {
+                  number = number.split(' ')[0] + " " + number.split(' ')[1] + "k";
+                } else if (stats.editStats.group >= 100000) {
+                  number = number.split(' ')[0] + "k";
+                }
+
+                groupElement.find(".nk-user-stat-category-group-view__stats").append(number);
               }
             }
           }

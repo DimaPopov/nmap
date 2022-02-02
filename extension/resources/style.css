@@ -202,3 +202,178 @@
 .nk-list-address .nk-address-portal {
   cursor: pointer;
 }
+
+
+.nk-get-user-view .nk-user-stat-view__category-group {
+  display: inline-block;
+  margin: 8px 4px 0;
+}
+
+.nk-get-user-view .nk-get-user-view__filters .nk-user-stat-view__category-group .nk-user-stat-category-group-view {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: inherit;
+  display: flex;
+  height: 24px;
+  text-decoration: none;
+  width: 68px;
+}
+
+.nk-get-user-view .nk-list-item-info-user_details-block .nk-user-stat-view__category-group .nk-user-stat-category-group-view {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: inherit;
+  display: flex;
+  height: 24px;
+  text-decoration: none;
+  width: 120px;
+}
+
+.nk-get-user-view .nk-user-stat-view__category-group .nk-user-stat-category-group-view .nk-user-stat-category-group-view__category-group {
+  align-items: center;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  height: 22px;
+  justify-content: center;
+  width: 22px;
+}
+
+.nk-get-user-view .nk-user-stat-view__category-group .nk-user-stat-category-group-view .nk-user-stat-badge-view {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+
+.nk-get-user-view .nk-user-stat-view__category-group .nk-user-stat-category-group-view .nk-user-stat-badge-view {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+
+.nk-get-user-view .nk-user-stat-view__category-group .nk-user-stat-category-group-view  .nk-user-stat-category-group-view__stats {
+  align-items: center;
+  display: flex;
+  padding: 0 4px;
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_ad-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/c054b62cab8c0caa48d0.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_addr-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/20cbc86c2642fbb9a823.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_bld-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/78f7106495519239e658.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_cond-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/8e9ae2582f63dd9a7625.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_edits {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/c2e84d55f1ea4cb8ccc1.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_edits-disabled {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/421e923802d2b63ada3d.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_entrance-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/73585294833a424c82b2.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_expert {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/d504f2ecd3a5821272cc.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_expert-disabled {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/46793444badb50a6c2fb.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_fence-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/50106657b200e583384f.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_group-edits {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/aa14ba1f5b768441a14b.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_hydro-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/6fd8634e31301fa317b7.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_indoor-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/004640bb278e7f041c69.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_moderator {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/e328021544f2666f7828.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_moderator-disabled {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/8db90d13dd2fbbc95b84.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_parking-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/26b8be03e51757107e3f.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_poi-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/0744ac08a18e23a91faf.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_rd-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/0d1ed786b3275a4450e1.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_relief-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/55627355608ae994b1ed.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_transport-airport-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/0bd4de6981f48916fa77.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_transport-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/a1a8707f5d2b4c6dcf48.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_transport-metro-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/6befef038c0063af8228.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_transport-railway-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/c31396cab54e48762313.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_transport-waterway-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/ef71c67b002a4787b372.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_urban-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/a27145e10675a5286792.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_urban-roadnet-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/cd5ead5b559db92ccbb5.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_vegetation-group {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/2bda3e4df64bdf8aa32b.svg)
+}
+
+.nk-get-user-view .nk-user-stat-badge-view_id_group-edits {
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/aa14ba1f5b768441a14b.svg);
+}
+
+.nk-get-user-view .nk-user-stat-category-group-view_disabled .nk-user-stat-category-group-view__category-group .nk-user-stat-badge-view {
+  opacity: .2;
+}
+
+.nk-get-user-view .nk-user-stat-category-group-view_disabled {
+  color: #bfbfbf !important;
+}

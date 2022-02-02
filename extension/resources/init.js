@@ -1,17 +1,30 @@
 'use strict';
 
 /**
-* Запускает добавление модулей
-*/
+ * Запускает добавление модулей
+ */
 
 (function () {
   const appPage = $(".nk-app-page");
 
-  const URL_API = "core-sat.maps.yandex.net";
   const hashStart = window.location.href;
+  let setting = {};
 
-  let startStatus = false;
-  let config = {};
+  chrome.storage.local.get(["nkSetting"], (result) => {
+    if (!result.nkSetting) {
+      const default_setting = {
+        'get-user': true,
+        'get-profile': true,
+        'check-address': true,
+        'q-link': false,
+      };
+
+      chrome.storage.local.set({ "nkSetting": default_setting });
+      setting = default_setting;
+    }else {
+      setting = result.nkSetting;
+    }
+  });
 
   /* Сообщение об ошибке по умолчанию */
   const defaultError = "Извините, что-то пошло не так";
@@ -28,7 +41,11 @@
         deleteYndx: "уволен",
         info: {
           access: "Специальные права",
+          yndx: "Должность",
           createdAt: "Дата регистрации",
+          'rating-pos-full': "Место в рейтинге",
+          'total-edits': "Число правок",
+          'feedback-count': "Разобранно неточности",
           delete: {
             yndx: {
               time: "Уволил",
@@ -39,6 +56,18 @@
               info: "Причина удаления"
             }
           }
+        },
+        filter: {
+          role: {
+            title: "По правам",
+            showAll: "Показать все права",
+            hideAll: "Скрыть список прав"
+          }
+        },
+        role: {
+          moderator: "Модератор",
+          notModerator: "Права модератора в этом слое недоступны",
+          expert: "Эксперт"
         }
       },
       notification: {
@@ -49,7 +78,6 @@
       deleteReason: {
         'passport': "Удалён в Яндекс.ID",
         'yndx-registration': "yndx-логин без соответствующих прав",
-        'yndx-fired': "Сотрудник уволен",
         'spammer': "Спамер (по версии Яндекс.ID)",
         'suspicious': "Подозрительная деятельность",
         'inactive-outsourcer': "Аутсорсер не проявлял активность",
@@ -94,29 +122,85 @@
           }
         }
       }
+    },
+    categories: {
+      "rd-group": {
+        title: "Дороги",
+      },
+      "urban-roadnet-group": {
+        title: "Дорожная инфрастуктура",
+      },
+      "cond-group": {
+        title: "Условия движения",
+      },
+      "parking-group": {
+        title: "Парковки",
+      },
+      "urban-group": {
+        title: "Территории",
+      },
+      "bld-group": {
+        title: "Здания",
+      },
+      "indoor-group": {
+        title: "Схемы помещений",
+      },
+      "poi-group": {
+        title: "Места",
+      },
+      "entrance-group": {
+        title: "Входы в здание",
+      },
+      "addr-group": {
+        title: "Адреса",
+      },
+      "fence-group": {
+        title: "Заборы",
+      },
+      "ad-group": {
+        title: "Административное деление",
+      },
+      "vegetation-group": {
+        title: "Растительность",
+      },
+      "relief-group": {
+        title: "Рельеф",
+      },
+      "hydro-group": {
+        title: "Гидрография",
+      },
+      "group-edits": {
+        title: "Групповые правки",
+      },
+      "transport-group": {
+        title: "Транспорт",
+      },
+      "transport-metro-group": {
+        title: "Скоростной тарнспорт",
+      },
+      "transport-airport-group": {
+        title: "Воздушный тарнспорт",
+      },
+      "transport-railway-group": {
+        title: "Желензные дороги",
+      },
+      "transport-waterway-group": {
+        title: "Водный тарнспорт",
+      },
     }
   };
-  
-  const url = {
-    tile: {
-      getServices: "https://" + URL_API + "/get.services",
-      deleteCash: "https://" + URL_API + "/delete.cash",
-      editServices: "https://" + URL_API + "/edit.services"
-    }
-  };
-  
-  
+
+
   /**
-  * Событие клика на кнопку дополнительных инструментов
-  */
-  
+   * Событие клика на кнопку дополнительных инструментов
+   */
+
   const clickToolsButton = () => {
     const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
     toolsButton.off('click', clickToolsButton);
 
-    
     const toolsMenu = $(".nk-tools-control-view__tools-menu").parent();
-    
+
     window.appChrome.init.getUser(toolsMenu);
   };
 
@@ -129,6 +213,7 @@
    * @param text - Текст в элементе
    * @returns {*|jQuery}
    */
+
   const creatElement = (parent, classList, selector, text = "") => {
     const newElement = document.createElement("div");
 
@@ -142,95 +227,99 @@
     return $(parent).find(selector);
   };
 
+
+  /**
+   * Отображение всплывающей подсказки
+   *
+   * @param element - Элемент относительно которого нужно показать подсказку
+   * @param text - Текст подсказки
+   */
+
+  const popupShow = (element, text) => {
+    const popup = $(".nk-portal-local .nk-popup");
+    popup.find(".nk-popup__content").text(text);
+
+    const top = element[0].offsetHeight + element.offset().top + 5;
+    let left = window.innerWidth - (window.innerWidth - element.offset().left);
+
+    setTimeout(() => {
+      const innerWidth = popup.width() + left;
+
+      if (innerWidth >= window.innerWidth) {
+        popup.removeClass("nk-popup_direction_bottom-left");
+        popup.addClass("nk-popup_direction_bottom-right");
+
+        left = left - popup.width() + element.width();
+      } else {
+        popup.removeClass("nk-popup_direction_bottom-right");
+        popup.addClass("nk-popup_direction_bottom-left");
+      }
+
+      setTimeout(() => {
+        popup.css({"left": left + "px", "top": top + "px"});
+        popup.addClass("nk-popup_visible");
+      }, 1);
+    }, 1);
+  };
+
+
   /**
    * Отслеживание загрузки редактора
    *
    * @type {MutationObserver}
    */
-  
+
   const loadMap = new MutationObserver(() => {
     loadMap.disconnect();
-    
+
     /* Редактор загрузился, теперь ожидаем загрузки дополнительных инструментов, для добавления меню */
     setTimeout(() => {
-      if (!startStatus) return;
-
-      const moderatorButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-user-tasks-control-view");
-      if (!moderatorButton[0]) return;
-
       const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
-      const nameUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
+      const getUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
       const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
-    
-      if (!!nameUser) {
-        const urlGet = new URL(nameUser);
-        const getNameUser = nameUser.indexOf("name=") !== -1 ? urlGet.searchParams.get('name') : false;
+
+      if (!!getUser && setting["get-user"]) {
+        const url = new URL(getUser);
+        const getNameUser = getUser.indexOf("name=") !== -1 ? url.searchParams.get('name') : false;
 
         window.appChrome.getUser(getNameUser);
       }
-      
-      if (!!isAddressCheck) {
-        const urlGet = new URL(isAddressCheck);
-        const getCorrectName = urlGet.searchParams.get('correct');
-        
+
+      if (!!isAddressCheck && setting["check-address"]) {
+        const url = new URL(isAddressCheck);
+        const getCorrectName = url.searchParams.get('correct');
+
         window.appChrome.showCorrect(getCorrectName);
       }
-      
-      window.appChrome.init.address();
+
       toolsButton.on('click', clickToolsButton);
-      
+
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
-      window.appChrome.init.getProfile();
+      if (setting["check-address"]) window.appChrome.init.address();
+      if (setting["get-profile"]) window.appChrome.init.getProfile();
     }, 1);
-    
-    /* Показываем уведомление, если во время загрузки произошла ошибка, и модуль сообщил о ней */
-    chrome.storage.local.get(["nkApp_sendNotificationTile"], (result) => {       
-      if (!result.nkApp_sendNotificationTile && window.needNotification.status) {
-        window.appChrome.notification(window.needNotification.type, window.needNotification.text);
-      }
-    });
+
+    setTimeout(() => {
+      /* Показываем уведомление, если во время загрузки произошла ошибка, и модуль сообщил о ней */
+      chrome.storage.local.get(["nkApp_sendNotificationTile"], (result) => {
+        if (!result.nkApp_sendNotificationTile && window.needNotification.status) {
+          window.appChrome.notification(window.needNotification.type, window.needNotification.text);
+        }
+      });
+    }, 1000);
   });
-    
+
   loadMap.observe(appPage[0], {childList: true});
-  config = JSON.parse(document.querySelector("#config").innerHTML);
-
-  const data = [
-    {
-      "method": "app/getCurrentUser",
-      "params": {
-        "token": JSON.parse(localStorage.getItem("nk:token"))
-      }
-    }
-  ];
-
-  $.ajax({
-    type: "POST",
-    headers: {
-      'x-kl-ajax-request': 'Ajax_Request',
-      'x-csrf-token': config.api.csrfToken,
-      'x-lang': 'ru'
-    },
-    url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
-    dataType: "json",
-    data: JSON.stringify(data),
-    success: function (response) {
-      const user = response.data[0].data;
-
-      startStatus = user.yandex || user.outsourcer || user.moderationStatus === "moderator";
-    }
-  });
 
 
   ////////////////////
-  
+
   window.appChrome = {
     init: {},
-    api: {
-      url: url,
-    },
     notification: null,
     text: text,
-    creatElement: creatElement
+    creatElement: creatElement,
+    popupShow: popupShow
   };
 
   window.needNotification = {

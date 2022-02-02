@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Дополнение модератора",
   "description": "Расширение добавляет новые специальные возможности в Народную карту для модераторов",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "icons": {
     "128": "icon.png"
   },
@@ -21,7 +21,16 @@
         "/resources/module/get.user.js",
         "/resources/module/get.profile.js"
       ]
+    },
+    {
+      "matches": ["https://yandex.ru/q/*"],
+      "js": [
+        "/resources/module/q.js"
+      ]
     }
   ],
-  "permissions": ["storage"]
+  "options_page": "index.html",
+  "permissions": [
+    "storage"
+  ]
 }
