@@ -387,8 +387,6 @@
                 creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.resolvedFeedbackCount));
               }
 
-              console.log(settingUser.view["category-group"]);
-
               /* Информация о правках в слоях */
               if (settingUser.view["category-group"]) {
                 viewElements.parentDetals.find(".nk-category-group").remove();

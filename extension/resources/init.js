@@ -78,6 +78,7 @@
       deleteReason: {
         'passport': "Удалён в Яндекс.ID",
         'yndx-registration': "yndx-логин без соответствующих прав",
+        'yndx-fired': "Сотрудник уволен",
         'spammer': "Спамер (по версии Яндекс.ID)",
         'suspicious': "Подозрительная деятельность",
         'inactive-outsourcer': "Аутсорсер не проявлял активность",
