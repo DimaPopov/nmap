@@ -7,9 +7,7 @@
 Расширение разработано для браузеров на Chromium и стабильно работает в Google Chrome и Яндекс.Браузере, работа в остальных браузерах не проверялась.
 
   <br>
-  <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/154256302-3832b313-07bb-4d6a-a0fc-5b7d0429dd3e.png"/></a>
-
-Что-то работает не так или есть пожелание? <br> Напишите [мне](https://n.maps.yandex.ru/#!/users/demon7010) в Яндекс.Мессенджере
+  <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/154256302-3832b313-07bb-4d6a-a0fc-5b7d0429dd3e.png"/></a> Что-то работает не так или есть пожелание? <br> Напишите <a href="https://n.maps.yandex.ru/#!/users/demon7010" target="_blank">мне</a> в Яндекс.Мессенджере
 
 <p align="right"><strong> Developed by <a href="https://n.maps.yandex.ru/#!/users/demon7010" target="_blank">Dmitry Popov</a> </strong></p>
 
