@@ -8,7 +8,11 @@
   const appPage = $(".nk-app-page");
 
   const hashStart = window.location.href;
+
   let setting = {};
+  let startStatus = false;
+  let config = {};
+  let user = {};
 
   chrome.storage.local.get(["nkSetting"], (result) => {
     if (!result.nkSetting) {
@@ -16,6 +20,7 @@
         'get-user': true,
         'get-profile': true,
         'check-address': true,
+        'notification': true,
         'q-link': false,
       };
 
@@ -38,7 +43,6 @@
         defaultValue: "Для поиска начните вводить логин",
         default: "По запросу ничего не найдено",
         deleteUser: "удалён",
-        deleteYndx: "уволен",
         info: {
           access: "Специальные права",
           yndx: "Должность",
@@ -55,36 +59,19 @@
               time: "Удалил",
               info: "Причина удаления"
             }
-          }
+          },
+          banned: {
+            time: "Срок блокировки",
+            user: "Модератор",
+            reason: "Причина блокировки"
+          },
+          noCategoryGroup: 'У пользователя нет правок'
         },
-        filter: {
-          role: {
-            title: "По правам",
-            showAll: "Показать все права",
-            hideAll: "Скрыть список прав"
-          }
-        },
-        role: {
-          moderator: "Модератор",
-          notModerator: "Права модератора в этом слое недоступны",
-          expert: "Эксперт"
-        }
       },
       notification: {
         error: {
           default: defaultError
         }
-      },
-      deleteReason: {
-        'passport': "Удалён в Яндекс.ID",
-        'yndx-registration': "yndx-логин без соответствующих прав",
-        'yndx-fired': "Сотрудник уволен",
-        'spammer': "Спамер (по версии Яндекс.ID)",
-        'suspicious': "Подозрительная деятельность",
-        'inactive-outsourcer': "Аутсорсер не проявлял активность",
-        'ddos': "Большое количество запросов",
-        'user': "Удалён в ручном режиме",
-        'unknown' : "Причина неизвестна"
       }
     },
     address: {
@@ -123,6 +110,10 @@
           }
         }
       }
+    },
+    notificationRegion: {
+      checkbox: "Уведомлять о новых правках",
+      over20: "более 20 новых правок",
     },
     categories: {
       "rd-group": {
@@ -202,7 +193,7 @@
 
     const toolsMenu = $(".nk-tools-control-view__tools-menu").parent();
 
-    window.appChrome.init.getUser(toolsMenu);
+    if (startStatus) window.appChrome.init.getUser(toolsMenu);
   };
 
   /**
@@ -273,31 +264,39 @@
   const loadMap = new MutationObserver(() => {
     loadMap.disconnect();
 
+    /* Критическая ошибка - нет токена */
+    if (!JSON.parse(localStorage.getItem("nk:token"))) {
+      window.appChrome.notification("error", "В работе расширения произошла критическая ошибка");
+    }
+
     /* Редактор загрузился, теперь ожидаем загрузки дополнительных инструментов, для добавления меню */
     setTimeout(() => {
-      const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
-      const getUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
-      const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
+      if (startStatus) {
+        const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
+        const getUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
+        const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
 
-      if (!!getUser && setting["get-user"]) {
-        const url = new URL(getUser);
-        const getNameUser = getUser.indexOf("name=") !== -1 ? url.searchParams.get('name') : false;
+        if (!!getUser && setting["get-user"] && startStatus) {
+          const url = new URL(getUser);
+          const getNameUser = getUser.indexOf("name=") !== -1 ? url.searchParams.get('name') : false;
 
-        window.appChrome.getUser(getNameUser);
+          window.appChrome.getUser(getNameUser);
+        }
+
+        if (!!isAddressCheck && setting["check-address"] && startStatus) {
+          const url = new URL(isAddressCheck);
+          const getCorrectName = url.searchParams.get('correct');
+
+          window.appChrome.showCorrect(getCorrectName);
+        }
+
+        toolsButton.on('click', clickToolsButton);
       }
-
-      if (!!isAddressCheck && setting["check-address"]) {
-        const url = new URL(isAddressCheck);
-        const getCorrectName = url.searchParams.get('correct');
-
-        window.appChrome.showCorrect(getCorrectName);
-      }
-
-      toolsButton.on('click', clickToolsButton);
 
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
       if (setting["check-address"]) window.appChrome.init.address();
-      if (setting["get-profile"]) window.appChrome.init.getProfile();
+      if (setting["notification"]) window.appChrome.init.notificationRegion();
+      if (setting["get-profile"] && startStatus) window.appChrome.init.getProfile();
     }, 1);
 
     setTimeout(() => {
@@ -312,6 +311,44 @@
 
   loadMap.observe(appPage[0], {childList: true});
 
+  const getStartStatus = () => {
+    config = JSON.parse(document.querySelector("#config").innerHTML);
+
+    const data = [
+      {
+        "method": "app/getCurrentUser",
+        "params": {
+          "token": JSON.parse(localStorage.getItem("nk:token"))
+        }
+      }
+    ];
+
+    $.ajax({
+      type: "POST",
+      headers: {
+        'x-kl-ajax-request': 'Ajax_Request',
+        'x-csrf-token': config.api.csrfToken,
+        'x-lang': 'ru'
+      },
+      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+      dataType: "json",
+      data: JSON.stringify(data),
+      success: function (response) {
+        user = response.data[0].data;
+
+        startStatus = user.yandex || user.outsourcer || user.moderationStatus === "moderator";
+
+        window.appChrome.user = user;
+        window.appChrome.startStatus = startStatus;
+      }
+    });
+
+    setTimeout(getStartStatus, 30000);
+  };
+
+  if (JSON.parse(localStorage.getItem("nk:token"))) {
+    getStartStatus();
+  }
 
   ////////////////////
 
@@ -320,7 +357,9 @@
     notification: null,
     text: text,
     creatElement: creatElement,
-    popupShow: popupShow
+    popupShow: popupShow,
+    user: user,
+    startStatus: startStatus
   };
 
   window.needNotification = {

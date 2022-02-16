@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Дополнение модератора",
-  "description": "Расширение добавляет новые специальные возможности в Народную карту для модераторов",
-  "version": "2.0.0",
+  "name": "Дополнение инструменты",
+  "description": "Расширение добавляет новые специальные возможности в Народную карту",
+  "version": "3.0.0",
   "icons": {
     "128": "icon.png"
   },
@@ -19,7 +19,8 @@
         "/resources/notifications.js",
         "/resources/module/address.js",
         "/resources/module/get.user.js",
-        "/resources/module/get.profile.js"
+        "/resources/module/get.profile.js",
+        "/resources/module/notifications.region.js"
       ]
     },
     {
@@ -32,5 +33,8 @@
   "options_page": "index.html",
   "permissions": [
     "storage"
-  ]
+  ],
+  "background": {
+    "service_worker": "resources/system.js"
+  }
 }

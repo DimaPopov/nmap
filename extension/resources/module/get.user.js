@@ -73,6 +73,8 @@
    */
 
   const hideView = () => {
+    if (!window.appChrome.startStatus) return;
+
     const viewElement = $(".nk-get-user-view");
     const popup = $(".nk-portal-local");
     const select = $(".nk-select-local");
@@ -86,6 +88,8 @@
   };
     
   const hideViewKeyup = (e) => {
+    if (!window.appChrome.startStatus) return;
+
     if (e.key !== "Escape") return;
     
     const objectViewElement = document.querySelector(".nk-get-user-view");
@@ -102,6 +106,8 @@
    */
 
   const showItemUser = (e) => {
+    if (!window.appChrome.startStatus) return;
+
     const showElement = $(e.delegateTarget);
     const activeElement = $(".nk-get-user-view .nk-scrollable__content .nk-size-observer .nk-list-item-view.nk-list-item-view_expanded");
     
@@ -115,6 +121,13 @@
     showElement.removeClass("nk-list-item-view_interactive");
     showElement.addClass("nk-list-item-view_expanded");
 
+    if (showElement.attr("data-id")) {
+      setTimeout(() => {
+        showElement.find(".nk-link-user").attr("href", "/#!/users/" + showElement.attr("data-id"));
+        showElement.find(".nk-link-user").removeClass("nk-user-link-view_disabled");
+      }, 10);
+    }
+
     showElement.off("click", showItemUser);
   };
 
@@ -127,6 +140,8 @@
    */
   
   const renderUsersList = (users, isUpdate = false) => {
+    if (!window.appChrome.startStatus) return;
+
     const observer = $(".nk-get-user-view .nk-scrollable__content .nk-size-observer");
 
     if (!isUpdate) {
@@ -187,12 +202,12 @@
       const iconClass = !!icon ? " nk-user-link-view_has-icon" : ""; 
       const deleteUserClass = user.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
             
-      viewElements.name.html('<a role="link" aria-disabled="false" class="nk-link nk-link_theme_islands nk-user-link-view' + deleteUserClass + iconClass + '" href="/#!/users/' + user.publicId + '"><span class="nk-user-link-view__name">' + user.displayName + '</span>' + icon + '</a>');
+      viewElements.name.html('<a role="link" aria-disabled="false" class="nk-link nk-link-user nk-link_theme_islands nk-user-link-view_disabled nk-user-link-view' + deleteUserClass + iconClass + '"><span class="nk-user-link-view__name">' + user.displayName + '</span>' + icon + '</a>');
       creatElement(viewElements.nameContent, ["nk-info-user__user--login"], ".nk-info-user__user--login", user.login);
       
       if (user.status === "deleted") {
         viewElements.delite = creatElement(viewElements.nameParent, ["nk-event-view__date-and-action", "nk-info-user__user-badge"], ".nk-event-view__date-and-action");
-        viewElements.delite = creatElement(viewElements.delite, ["nk-badge", "nk-badge_color_red", "nk-event-view__badge"], ".nk-badge.nk-badge_color_red", (user.outsourcer || user.yandex) ? text.view.deleteYndx : text.view.deleteUser);
+        viewElements.delite = creatElement(viewElements.delite, ["nk-badge", "nk-badge_color_red", "nk-event-view__badge"], ".nk-badge.nk-badge_color_red", text.view.deleteUser);
       }else if (user.outsourcer) {
         viewElements.warningAction = creatElement(viewElements.nameParent, ["nk-event-view__date-and-action", "nk-info-user__user-badge"], ".nk-event-view__date-and-action");
         viewElements.warningAction = creatElement(viewElements.warningAction, ["nk-badge", "nk-badge_color_yellow", "nk-event-view__badge"], ".nk-badge.nk-badge_color_red", "аутсорсер");
@@ -250,7 +265,7 @@
 
       viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", creatDate);
       viewElements.parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
-      
+
       /* Добавление информации о должности, если это аутсорсер */
       if (user.outsourcer) {
         $('<div class="nk-info-user__info nk-info-user__info-role"></div>').prependTo(viewElements.parent);
@@ -282,6 +297,14 @@
               "userPublicId": user.publicId,
               "token": JSON.parse(localStorage.getItem("nk:token"))
             }
+          },
+          {
+            "method": "acl/getUser",
+            "params": {
+              "branch": "0",
+              "userPublicId": user.publicId,
+              "token": JSON.parse(localStorage.getItem("nk:token"))
+            }
           }
         ];
 
@@ -296,14 +319,16 @@
           dataType: "json",
           data: JSON.stringify(data),
           success: function (response) {
-            /* Проверка наличия прав в схемах помещений */
+            if (!window.appChrome.startStatus) return;
 
             let parent;
             let localParent;
 
             const stats = response.data[0].error ? false : response.data[0].data.stats;
             const infoRoleGroup = response.data[1].error ? false : response.data[1].data;
+            const infoProfile = response.data[2].error ? false : response.data[2].data;
 
+            /* Проверка наличия прав в схемах помещений */
 
             if (stats && settingUser.view["category-special-group"]) {
               const indoor = stats.editStats.categoryGroups.indoor_group;
@@ -356,13 +381,100 @@
               }
             }
 
+            /* Добавление информации о том, кто заблокировал пользователя */
+            if (user.status === "banned") {
+              let date = new Date(infoProfile.banRecord.createdAt);
+              let creatBannedDate = formatDate(date);
+
+              let creatBannedDateAll = creatBannedDate;
+              creatBannedDateAll +=  ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+
+              if (infoProfile.banRecord.expiresAt) {
+                date = new Date(infoProfile.banRecord.expiresAt);
+                let expiresBannedDate = formatDate(date);
+
+                let expiresBannedDateAll = expiresBannedDate;
+                expiresBannedDateAll +=  ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+              }
+
+              viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+              creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info.banned.time);
+              viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text");
+
+              viewElements.info.html(infoProfile.banRecord.expiresAt ? "c <span class='nk-creat-banned-date'>" + creatBannedDate + "</span> по <span class='nk-expires-banned-date'>" + expiresBannedDate + "</span>" : "Бессрочно c <span class='nk-creat-banned-date'>" + creatBannedDate + "</span>");
+
+              const creatBannedDateElement = viewElements.info.find(".nk-creat-banned-date");
+              creatBannedDateElement.hover(() => {
+                popupShow(creatBannedDateElement, creatBannedDateAll);
+              }, () => {
+                popup.removeClass("nk-popup_visible");
+              });
+
+              const expiresBannedDateElement = viewElements.info.find(".nk-expires-banned-date");
+              if (expiresBannedDateElement) {
+                expiresBannedDateElement.hover(() => {
+                  popupShow(expiresBannedDateElement, expiresBannedDateAll);
+                }, () => {
+                  popup.removeClass("nk-popup_visible");
+                });
+              }
+
+              ///////
+
+              viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+              creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info.banned.user);
+              viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text");
+
+              let icon;
+              let textIcon;
+
+              if (infoProfile.banRecord.createdBy.yandex) {
+                icon = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
+                textIcon = 'Сотрудник Яндекса';
+              }else if (infoProfile.banRecord.createdBy.moderationStatus === "moderator") {
+                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M6,15 L6,7 L8.7,7 L10,13 L11.3,7 L14,7 L14,15 L12,15 L12,9 L10.7,15 L9.3,15 L8,9 L8,15 L6,15 Z" id="М-3" fill="#664C0E"></path></svg></span>';
+                textIcon = 'Модератор';
+              }else if (infoProfile.banRecord.createdBy.moderationStatus === "robot") {
+                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-link-view__icon"><svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m6.5 1c-.55228 0-1 .44772-1 1 0 .37014.2011.69331.5.86622v2.13378h-4v13h14v-13h-1v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.4477-1-1-1s-1 .44772-1 1c0 .37014.2011.69331.5.86622v2.13378h-7v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.44772-1-1-1z" fill="#fc0"></path><g fill="#664c0e"><path d="m4 10h2v1h1v2h-3z"></path><path d="m6 15h6c0 .5523-.4477 1-1 1h-4c-.55228 0-1-.4477-1-1z"></path><path d="m13 10h-2v3h3v-2h-1z"></path></g><path d="m16 5h4v13h-4z" fill="#f0bf01"></path></svg></span>';
+                textIcon = 'Робот';
+              }
+
+              const iconClass = !!icon ? " nk-user-link-view_has-icon" : "";
+
+              viewElements.info.html('<a role="link" aria-disabled="false" class="nk-link nk-link-banned nk-link-user nk-user-link-view_colored nk-link_theme_islands nk-user-link-view' + iconClass + '" href="/#!/users/' + infoProfile.banRecord.createdBy.publicId + '"><span class="nk-user-link-view__name">' + infoProfile.banRecord.createdBy.displayName + '</span>' + icon + '</a>');
+
+              if (!!icon.length) {
+                const iconRole = viewElements.info.find(".nk-link-banned .nk-icon");
+                iconRole.hover(() => {
+                  popupShow(iconRole, textIcon)
+                }, () => {
+                  popup.removeClass("nk-popup_visible");
+                });
+              }
+
+              ///////
+
+              viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
+
+              creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", text.view.info.banned.reason);
+              viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", infoProfile.banRecord.reason);
+
+              viewElements.info.css({ 'white-space': 'pre-wrap', 'word-break': 'break-word' });
+
+              viewElements.parentRole = viewElements.parent;
+              viewElements.parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
+            }
+
+
             if (stats && infoRoleGroup) {
               viewElements.parentDetals.find(".nk-list-item-info-user_details-block.nk-profile-info").remove();
 
               parent = viewElements.parentDetals.find(".nk-list-item-info-user_details-block:first-child");
               parent.after('<div class="nk-list-item-info-user_details-block nk-profile-info nk-section nk-section_level_2"></div>');
 
-              parent = viewElements.parentDetals.find(".nk-list-item-info-user_details .nk-list-item-info-user_details-block.nk-profile-info");
+              parent = viewElements.parentDetals.find(".nk-list-item-info-user_details-block.nk-profile-info");
               /* Место в рейтинге */
               if (settingUser.view["rating-pos-full"]) {
                 localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
@@ -389,157 +501,85 @@
 
               /* Информация о правках в слоях */
               if (settingUser.view["category-group"]) {
-                viewElements.parentDetals.find(".nk-category-group").remove();
+                if (stats.totalEdits === 0) {
+                  viewElements.parentDetals.find(".nk-category-group").remove();
 
-                parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-category-group", "nk-section"], ".nk-category-group");
-                parent.css("padding", "0 12px 15px");
+                  parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section_level_2", "nk-section", "nk-category-group"], ".nk-list-item-info-user_details-block:last-child");
+                  creatElement(parent, ["nk-info-user__info", "nk-info-user__info-text"], ".nk-info-user__info:last-child", text.view.info.noCategoryGroup);
+                }else {
+                  viewElements.parentDetals.find(".nk-category-group").remove();
 
-                for (const categoryName in stats.editStats.categoryGroups) {
-                  const categoryValue = stats.editStats.categoryGroups[categoryName];
+                  parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-category-group", "nk-section"], ".nk-category-group");
+                  parent.css("padding", "0 12px 15px");
 
-                  /* Генерация шаблона информации о слое */
+                  for (const categoryName in stats.editStats.categoryGroups) {
+                    const categoryValue = stats.editStats.categoryGroups[categoryName];
+
+                    /* Генерация шаблона информации о слое */
+                    let groupElement = creatElement(parent, ["nk-user-stat-view__category-group"], ".nk-user-stat-view__category-group:last-child")
+                    groupElement = creatElement(groupElement, ["nk-user-stat-category-group-view"], ".nk-user-stat-category-group-view");
+
+                    groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_' + categoryName.replaceAll("_", "-") + '"></span></span>');
+                    groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_expert-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_moderator-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
+
+                    const expertIcon = groupElement.find(".nk-user-stat-badge-view_id_expert-disabled");
+                    const moderatorIcon = groupElement.find(".nk-user-stat-badge-view_id_moderator-disabled");
+
+                    let number = new Intl.NumberFormat('ru-RU').format(categoryValue.total);
+
+                    if (categoryValue.total >= 1000000) {
+                      number = number.split(' ')[0] + " " + number.split(' ')[1] + "k";
+                    } else if (categoryValue.total >= 100000) {
+                      number = number.split(' ')[0] + "k";
+                    }
+
+                    groupElement.find(".nk-user-stat-category-group-view__stats").append(number);
+
+                    if (categoryValue.total === 0) {
+                      groupElement.addClass("nk-user-stat-category-group-view_disabled");
+                    }
+
+                    if (infoRoleGroup.expertExpertise && infoRoleGroup.expertExpertise.indexOf(categoryName) !== -1) {
+                      expertIcon.removeClass("nk-user-stat-badge-view_id_expert-disabled");
+                      expertIcon.addClass("nk-user-stat-badge-view_id_expert");
+                    }
+
+                    if (infoRoleGroup.moderatorExpertise) {
+                      infoRoleGroup.moderatorExpertise.forEach((moderatorExpert) => {
+                        if (moderatorExpert.categoryGroupIds.indexOf(categoryName) !== -1) {
+                          moderatorIcon.removeClass("nk-user-stat-badge-view_id_moderator-disabled");
+                          moderatorIcon.addClass("nk-user-stat-badge-view_id_moderator");
+
+                          return false;
+                        }
+                      });
+                    }
+                  }
+
                   let groupElement = creatElement(parent, ["nk-user-stat-view__category-group"], ".nk-user-stat-view__category-group:last-child")
                   groupElement = creatElement(groupElement, ["nk-user-stat-category-group-view"], ".nk-user-stat-category-group-view");
 
-                  groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_' + categoryName.replaceAll("_", "-") + '"></span></span>');
-                  groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_expert-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_moderator-disabled"></span><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
+                  groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_group-edits"></span></span>');
+                  groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
 
-                  const expertIcon = groupElement.find(".nk-user-stat-badge-view_id_expert-disabled");
-                  const moderatorIcon = groupElement.find(".nk-user-stat-badge-view_id_moderator-disabled");
+                  if (stats.editStats.group === 0) {
+                    groupElement.addClass("nk-user-stat-category-group-view_disabled");
+                  }
 
-                  let number = new Intl.NumberFormat('ru-RU').format(categoryValue.total);
+                  let number = new Intl.NumberFormat('ru-RU').format(stats.editStats.group);
 
-                  if (categoryValue.total >= 1000000) {
+                  if (stats.editStats.group >= 1000000) {
                     number = number.split(' ')[0] + " " + number.split(' ')[1] + "k";
-                  } else if (categoryValue.total >= 100000) {
+                  } else if (stats.editStats.group >= 100000) {
                     number = number.split(' ')[0] + "k";
                   }
 
                   groupElement.find(".nk-user-stat-category-group-view__stats").append(number);
-
-                  if (categoryValue.total === 0) {
-                    groupElement.addClass("nk-user-stat-category-group-view_disabled");
-                  }
-
-                  if (infoRoleGroup.expertExpertise && infoRoleGroup.expertExpertise.indexOf(categoryName) !== -1) {
-                    expertIcon.removeClass("nk-user-stat-badge-view_id_expert-disabled");
-                    expertIcon.addClass("nk-user-stat-badge-view_id_expert");
-                  }
-
-                  if (infoRoleGroup.moderatorExpertise) {
-                    infoRoleGroup.moderatorExpertise.forEach((moderatorExpert) => {
-                      if (moderatorExpert.categoryGroupIds.indexOf(categoryName) !== -1) {
-                        moderatorIcon.removeClass("nk-user-stat-badge-view_id_moderator-disabled");
-                        moderatorIcon.addClass("nk-user-stat-badge-view_id_moderator");
-
-                        return false;
-                      }
-                    });
-                  }
                 }
-
-                let groupElement = creatElement(parent, ["nk-user-stat-view__category-group"], ".nk-user-stat-view__category-group:last-child")
-                groupElement = creatElement(groupElement, ["nk-user-stat-category-group-view"], ".nk-user-stat-category-group-view");
-
-                groupElement.append('<span class="nk-user-stat-category-group-view__category-group"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_group-edits"></span></span>');
-                groupElement.append('<span class="nk-user-stat-category-group-view__stats"><span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_edits"></span></span>');
-
-                if (stats.editStats.group === 0) {
-                  groupElement.addClass("nk-user-stat-category-group-view_disabled");
-                }
-
-                let number = new Intl.NumberFormat('ru-RU').format(stats.editStats.group);
-
-                if (stats.editStats.group >= 1000000) {
-                  number = number.split(' ')[0] + " " + number.split(' ')[1] + "k";
-                } else if (stats.editStats.group >= 100000) {
-                  number = number.split(' ')[0] + "k";
-                }
-
-                groupElement.find(".nk-user-stat-category-group-view__stats").append(number);
               }
             }
           }
         });
-      }
-
-
-      /* Если пользователь удалён, добавляем информацию о том, кто удалил */
-      if (user.status === "deleted") {
-        let iconModified = "";
-        let textIconModified = "";
-        
-        viewElements.parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
-        
-        const date = new Date(user.modifiedAt);
-        let deleteDate = formatDate(date);
-
-        const todayDate = formatDate(new Date());
-        const yesterdayDate = formatDate(new Date(Date.now()-86400000));
-
-        deleteDate = todayDate === deleteDate ? 'сегодня' : deleteDate;
-        deleteDate = yesterdayDate === deleteDate ? 'вчера' : deleteDate;
-                
-        deleteDate +=  ' в ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
-                
-        if (user.displayName === user.modifiedBy.displayName || user.deleteReason === "passport") {
-          viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
-          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info);
-
-          viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", text.deleteReason[user.deleteReason]);
-          viewElements.info.append('<br><span class="nk-time-delete">' + deleteDate + '</span>');
-        }else {
-          if (user.modifiedBy.yandex) {
-            iconModified = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
-            textIconModified = "Сотрудник Яндекса";
-          }else if (user.modifiedBy.moderationStatus === "robot") {
-            iconModified = '<span class="nk-icon nk-icon_id_robot nk-icon_align_auto nk-user-link-view__icon"><svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m6.5 1c-.55228 0-1 .44772-1 1 0 .37014.2011.69331.5.86622v2.13378h-4v13h14v-13h-1v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.4477-1-1-1s-1 .44772-1 1c0 .37014.2011.69331.5.86622v2.13378h-7v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.44772-1-1-1z" fill="#fc0"></path><g fill="#664c0e"><path d="m4 10h2v1h1v2h-3z"></path><path d="m6 15h6c0 .5523-.4477 1-1 1h-4c-.55228 0-1-.4477-1-1z"></path><path d="m13 10h-2v3h3v-2h-1z"></path></g><path d="m16 5h4v13h-4z" fill="#f0bf01"></path></svg></span>';
-            textIconModified = "Робот";
-          }
-          
-          const iconModifiedClass = !!iconModified ? " nk-user-link-view_has-icon" : "";
-          const deleteModifiedUserClass = user.modifiedBy.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
-
-          let title = user.yandex ? text.view.info.delete.yndx.time : text.view.info.delete.user.time;
-          if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
-            title = text.view.info.delete.user.time;
-          }
-
-          viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
-          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", title);
-
-          viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text");
-          viewElements.info.html('<a role="link" aria-disabled="false" class="nk-link nk-link_theme_islands nk-user-link-view' + deleteModifiedUserClass + iconModifiedClass + '" href="/#!/users/' + user.modifiedBy.publicId + '"><span class="nk-user-link-view__name">' + user.modifiedBy.displayName + '</span>' + iconModified + '</a> <span class="nk-time-delete">' + deleteDate + '</span>');
-
-          
-          if (!!iconModified.length) {
-            const iconModifiedRole = viewElements.info.find(".nk-link .nk-icon");
-            iconModifiedRole.hover(() => {
-              popup.find(".nk-popup__content").text(textIconModified);
-
-              const topPopup = iconModifiedRole[0].offsetHeight + iconModifiedRole.offset().top + 3;
-              const leftPopup = window.innerWidth - iconModifiedRole.offset().left;
-
-              popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
-              popup.addClass("nk-popup_visible");
-            }, () => {
-              popup.removeClass("nk-popup_visible");
-            });
-          }
-
-          title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
-          let reason = text.deleteReason[user.deleteReason];
-
-          if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
-            title = text.view.info.delete.user.info;
-            reason = text.deleteReason["yndx-fired"];
-          }
-
-          viewElements.info = creatElement(viewElements.parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
-          creatElement(viewElements.info, ["nk-info-user__info--title"], ".nk-info-user__info--title", title);
-
-          viewElements.info = creatElement(viewElements.info, ["nk-info-user__text"], ".nk-info-user__text", reason);
-        }
       }
       
       viewElements.parentHome.on("click", showItemUser);
@@ -554,6 +594,8 @@
    */
   
   const getUser = (after = 0) => {
+    if (!window.appChrome.startStatus) return;
+
     config = JSON.parse($("#config").text());
     const login = $("#nk-login-get-user").val();
 
@@ -618,7 +660,7 @@
    */
 
   const scrollLoad = () => {
-    if (!isCountUser || !isLoad) return;
+    if (!isCountUser || !isLoad || !window.appChrome.startStatus) return;
     
     const scrollElement = $(".nk-get-user-view .nk-scrollable__container");
     const scrollContentElement = scrollElement.find(".nk-scrollable__content");
@@ -637,7 +679,8 @@
   * Открытие окна поиска пользователей
   */
   
-  const showViewGetUser = (isEdit = true) => {    
+  const showViewGetUser = (isEdit = true) => {
+    if (!window.appChrome.startStatus) return;
     hideToolsMenu();
     
     
@@ -755,9 +798,9 @@
   * Отслеживание изменений в окне редактора
   */
   
-  const editAppView = new MutationObserver(() => {    
+  const editAppView = new MutationObserver(() => {
     const objectViewElement =  $(".nk-sidebar-view:not(.nk-get-user-view):not([style*='visibility: hidden;'])");
-    
+
     /* Проверка на наличие другого окна или активной загрузки */
     if (!objectViewElement[0] || !$(".nk-get-user-view")[0]) return;
 
@@ -770,6 +813,8 @@
   */
   
   const getUserStart = (showUser) => {
+    if (!window.appChrome.startStatus) return;
+
     showViewGetUser(false);
       
     const getHashData = "?" + window.location.hash.split("?")[1].split("%23sat")[0] + "%23sat";
@@ -786,7 +831,7 @@
       getUser();
       window.location.hash = newHash;      
     }
-    
+
     const appViewElement = document.querySelector(".nk-app-view");
     editAppView.observe(appViewElement, {childList: true});
   };
@@ -797,6 +842,8 @@
   */
   
   const creatGetUser = (toolsMenu) => {
+    if (!window.appChrome.startStatus) return;
+
     const menuGroupUser = toolsMenu.find(".nk-menu.nk-menu_theme_islands.nk-menu_size_s.nk-tools-control-view__tools-menu-column:nth-child(2) .nk-menu__group.nk-tools-control-view__tools-menu-group:nth-child(1)");
     
     const buttonShowViewGetUser = creatElement(menuGroupUser, ["nk-menu-item", "nk-menu-item_theme_islands", "nk-menu-item_size_s", "nk-button-get-user"], ".nk-button-get-user", text.button);
@@ -808,7 +855,7 @@
     });
 
     buttonShowViewGetUser.on('click', showViewGetUser);
-    
+
     const appViewElement = document.querySelector(".nk-app-view");
     editAppView.observe(appViewElement, {childList: true});
   };

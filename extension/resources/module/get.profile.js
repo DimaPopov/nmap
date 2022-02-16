@@ -47,7 +47,7 @@
       status.before('<div class="nk-user-profile-view__name nk-user-link-view_deleted">' + user.displayName + '</div>');
       
       if (user.outsourcer || user.yandex) {
-        status.text("Сотрудник уволен");
+        status.text("Сотрудник удалён");
       }
       
       const icon = profileHeader.find(".nk-user-icon_size_large");
@@ -55,9 +55,9 @@
       icon.css("background-image", "url(https://avatars.mds.yandex.net/get-yapic/" + user.avatarId + "/islands-retina-50)");
     }
         
-    if (user.karma === 100 && !user.outsourcer && !user.yandex) {
+    if (user.karma === 100 && !user.outsourcer && !user.yandex && window.appChrome.startStatus) {
       profileHeader.after('<div class="nk-section nk-section_level_1"><div class="nk-form-hint-view"><span class="nk-icon nk-icon_id_editor-hint nk-icon_align_auto nk-form-hint-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FBA233"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></g></svg></span> Является спамером</div></div>');
-    }else if (user.karma >= 85 && !user.outsourcer && !user.yandex) {
+    }else if (user.karma >= 85 && !user.outsourcer && !user.yandex && window.appChrome.startStatus) {
       profileHeader.after('<div class="nk-section nk-section_level_1"><div class="nk-form-hint-view"><span class="nk-icon nk-icon_id_editor-hint nk-icon_align_auto nk-form-hint-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FBA233"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></g></svg></span> С высокой вероятностью является спамером</div></div>');
     }
     
@@ -181,74 +181,6 @@
           }
         }
       });
-    }
-
-    /* Если пользователь удалён, добавляем информацию о том, кто удалил */
-    if (user.status === "deleted") {
-      let iconModified = "";
-      let textIconModified = "";
-      
-      const date = new Date(user.modifiedAt);
-      let deleteDate = formatDate(date);
-
-      const todayDate = formatDate(new Date());
-      const yesterdayDate = formatDate(new Date(Date.now()-86400000));
-
-      deleteDate = todayDate === deleteDate ? 'сегодня' : deleteDate;
-      deleteDate = yesterdayDate === deleteDate ? 'вчера' : deleteDate;
-
-      deleteDate +=  ' в ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
-
-      if (user.displayName === user.modifiedBy.displayName || user.deleteReason === "passport") {
-        const title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
-        const reason = text.deleteReason[user.deleteReason];
-        
-        parent.append('<div class="nk-user-profile-view__group nk-section nk-section_level_2 nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9">' + reason + '<br><span class="nk-time-delete">' + deleteDate + '</span></div></div>');
-      }else {
-        if (user.modifiedBy.yandex) {
-          iconModified = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
-          textIconModified = "Сотрудник Яндекса";
-        }else if (user.modifiedBy.moderationStatus === "robot") {
-          iconModified = '<span class="nk-icon nk-icon_id_robot nk-icon_align_auto nk-user-link-view__icon"><svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m6.5 1c-.55228 0-1 .44772-1 1 0 .37014.2011.69331.5.86622v2.13378h-4v13h14v-13h-1v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.4477-1-1-1s-1 .44772-1 1c0 .37014.2011.69331.5.86622v2.13378h-7v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.44772-1-1-1z" fill="#fc0"></path><g fill="#664c0e"><path d="m4 10h2v1h1v2h-3z"></path><path d="m6 15h6c0 .5523-.4477 1-1 1h-4c-.55228 0-1-.4477-1-1z"></path><path d="m13 10h-2v3h3v-2h-1z"></path></g><path d="m16 5h4v13h-4z" fill="#f0bf01"></path></svg></span>';
-          textIconModified = "Робот";
-        }
-
-        const iconModifiedClass = !!iconModified ? " nk-user-link-view_has-icon" : "";
-        const deleteModifiedUserClass = user.modifiedBy.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
-
-        let title = user.yandex ? text.view.info.delete.yndx.time : text.view.info.delete.user.time;
-
-        if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
-          title = text.view.info.delete.user.time;
-        }
-
-        parent.append('<div class="nk-user-profile-view__group nk-section nk-section_level_2 nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9"><a role="link" aria-disabled="false" class="nk-link nk-link_theme_islands nk-user-link-view' + deleteModifiedUserClass + iconModifiedClass + '" href="/#!/users/' + user.modifiedBy.publicId + '"><span class="nk-user-link-view__name">' + user.modifiedBy.displayName + '</span>' + iconModified + '</a> <span class="nk-time-delete">' + deleteDate + '</span></div></div>');
-
-        if (!!iconModified.length) {
-            const iconModifiedRole = parent.find(".nk-user-profile-view__group .nk-user-profile-view__group-content .nk-user-link-view .nk-icon");
-            iconModifiedRole.hover(() => {
-              popup.find(".nk-popup__content").text(textIconModified);
-
-              const topPopup = iconModifiedRole[0].offsetHeight + iconModifiedRole.offset().top + 3;
-              const leftPopup = window.innerWidth - iconModifiedRole.offset().left;
-
-              popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
-              popup.addClass("nk-popup_visible");
-            }, () => {
-              popup.removeClass("nk-popup_visible");
-            });
-          }
-        
-        title = user.yandex ? text.view.info.delete.yndx.info : text.view.info.delete.user.info;
-        let reason = text.deleteReason[user.deleteReason];
-
-        if (user.modifiedBy.moderationStatus === "robot" && user.deleteReason === "yndx-registration") {
-          title = text.view.info.delete.user.info;
-          reason = text.deleteReason["yndx-fired"];
-        }
-
-        parent.append('<div class="nk-user-profile-view__group nk-grid"><div class="nk-user-profile-view__group-title nk-grid__col nk-grid__col_span_3">' + title + '</div><div class="nk-user-profile-view__group-content nk-grid__col nk-grid__col_span_9">' + reason + '</div></div>');
-      }
     }
   };
 

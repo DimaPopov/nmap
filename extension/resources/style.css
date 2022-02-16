@@ -377,3 +377,19 @@
 .nk-get-user-view .nk-user-stat-category-group-view_disabled {
   color: #bfbfbf !important;
 }
+
+.nk-creat-banned-date,
+.nk-expires-banned-date {
+  cursor: pointer;
+}
+
+.nk-count-task-region {
+  color: #bfbfbf;
+  font-size: 12px;
+  position: absolute;
+  right: 20px;
+}
+
+.nk-checkbox_margin-left {
+  margin-left: 20px;
+}

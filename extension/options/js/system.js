@@ -13,6 +13,8 @@
   let browser;
   const userAgent = navigator.userAgent;
 
+  let moduleElement;
+
   const OS = {
     'win': "Windows",
     'mac': "Mac OS",
@@ -73,10 +75,10 @@
   chrome.storage.local.get(["nkSetting"], (result) => {
     if (!result.nkSetting) {
       const default_setting = {
-        'tile': false,
         'get-user': true,
         'get-profile': true,
         'check-address': true,
+        'notification': true,
         'q-link': false
       };
 
@@ -86,23 +88,7 @@
       setting = result.nkSetting;
     }
 
-    const moduleElement = creatRowTable(tableElement.find("#info"), "Подключенные модули", "").find(".doc-value");
-    let is_module = false;
-
-    for (const name in setting) {
-      const value = setting[name];
-
-      if (value) {
-        const active_text = moduleElement.text() ? moduleElement.text() + ", " : "";
-        is_module = true;
-
-        moduleElement.text(active_text + name);
-      }
-    }
-
-    if (!is_module) {
-      moduleElement.text("Нет подключенных модулей");
-    }
+    moduleElement = creatRowTable(tableElement.find("#info"), "Подключенные модули", "").find(".doc-value");
   });
 
   $.ajax({
@@ -117,6 +103,58 @@
 
       creatRowTable(tableElement.find("#nk"), "Скорость загрузки", totalTime + " мс");
       creatRowTable(tableElement.find("#nk"), "Версия", config.version);
+
+      const data = [
+        {
+          "method": "app/getCurrentUser",
+          "params": {}
+        }
+      ];
+
+      $.ajax({
+        type: "POST",
+        headers: {
+          'x-kl-ajax-request': 'Ajax_Request',
+          'x-csrf-token': config.api.csrfToken,
+          'x-lang': 'ru'
+        },
+        url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+        dataType: "json",
+        data: JSON.stringify(data),
+        success: function (response) {
+          const user = response.data[0].data;
+
+          let role = "Пользователь";
+
+          if (user.moderationStatus === "moderator") {
+            role = "Модератор";
+          }else if (user.outsourcer) {
+            role = "Аутсорсер";
+          }else if (user.yandex) {
+            role = "Сотрудник Яндекса";
+          }
+
+          const access = user.moderationStatus === "moderator" || user.outsourcer || user.yandex;
+          let is_module = false;
+
+          for (const name in setting) {
+            const value = setting[name];
+
+            if (value && (access || name !== "get-user" || name !== "get-profile")) {
+              const active_text = moduleElement.text() ? moduleElement.text() + ", " : "";
+              is_module = true;
+
+              moduleElement.text(active_text + name);
+            }
+          }
+
+          if (!is_module) {
+            moduleElement.text("Нет подключенных модулей");
+          }
+
+          creatRowTable(tableElement.find("#nk"), "Роль", role);
+        }
+      });
     }
   });
 

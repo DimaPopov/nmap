@@ -25,14 +25,6 @@
       {
         label: "Модули",
         link: "/options/module/index.html",
-        switcher: [
-          {
-            label: "Поиск пользователей",
-            link: "/options/module/get-user.html",
-            module: true,
-            setting_name: "get-user"
-          }
-        ]
       },
       {
         label: "Системная информация",

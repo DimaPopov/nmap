@@ -11,6 +11,13 @@
   const MAGIC_TOP_WINDOW = 180;
   const MAGIC_LEFT_CLOSE = MAGIC_TOP_WINDOW - 55;
 
+  const rep = {
+    ST: 'с',
+    KO: 'к',
+    SO: 'соор',
+    VL: 'вл',
+    KV: 'кв'
+  };
 
   let activeObject = false;
   let config = {};
@@ -58,7 +65,7 @@
    */
   
   const getUserAddress = (textarea) => {
-    const value = " " + textarea.val();
+    const value = textarea.val();
 
     return value
       .replace(/\n|\r|(зд|до)\D+|зд|г\S+?ж/gi, "")

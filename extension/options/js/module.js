@@ -13,6 +13,7 @@
         'get-user': true,
         'get-profile': true,
         'check-address': true,
+        'notification': true,
         'q-link': false
       };
 
@@ -25,6 +26,8 @@
     for (const name in settings) {
       const value = settings[name];
       const checkbox = $("#" + name);
+      if (!checkbox[0]) continue;
+
       const checkboxContent = checkbox.parent().parent();
 
       if (value) {
