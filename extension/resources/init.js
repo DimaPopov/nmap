@@ -196,6 +196,7 @@
     if (startStatus) window.appChrome.init.getUser(toolsMenu);
   };
 
+
   /**
    * Создание нового элемента
    *

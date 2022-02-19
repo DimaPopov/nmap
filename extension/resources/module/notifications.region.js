@@ -234,9 +234,9 @@
             if (!infoRegion.check) return;
 
             /* Добавим информация о числе правок */
-            if (regionsInfo[title]["count"] > 0) {
-              if (regionsInfo[title]["count"] < 20) {
-                $(this).append('<span class="nk-count-task-region">' + regionsInfo[title]["count"] + ' ' + getWord(regionsInfo[title]["count"], ['новая правка', 'новые правок', 'новых правок']) + '</span>');
+            if (infoRegion.count > 0) {
+              if (infoRegion.count < 20) {
+                $(this).append('<span class="nk-count-task-region">' + infoRegion.count + ' ' + getWord(infoRegion.count, ['новая правка', 'новые правок', 'новых правок']) + '</span>');
               }else {
                 $(this).append('<span class="nk-count-task-region">' + text.over20 + '</span>');
               }

@@ -54,12 +54,6 @@
       icon.removeClass("nk-user-icon_deleted");
       icon.css("background-image", "url(https://avatars.mds.yandex.net/get-yapic/" + user.avatarId + "/islands-retina-50)");
     }
-        
-    if (user.karma === 100 && !user.outsourcer && !user.yandex && window.appChrome.startStatus) {
-      profileHeader.after('<div class="nk-section nk-section_level_1"><div class="nk-form-hint-view"><span class="nk-icon nk-icon_id_editor-hint nk-icon_align_auto nk-form-hint-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FBA233"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></g></svg></span> Является спамером</div></div>');
-    }else if (user.karma >= 85 && !user.outsourcer && !user.yandex && window.appChrome.startStatus) {
-      profileHeader.after('<div class="nk-section nk-section_level_1"><div class="nk-form-hint-view"><span class="nk-icon nk-icon_id_editor-hint nk-icon_align_auto nk-form-hint-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FBA233"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></g></svg></span> С высокой вероятностью является спамером</div></div>');
-    }
     
     const lastGroup = profileView.find(".nk-user-profile-view__group.nk-section.nk-section_level_2.nk-grid:last-child");    
     if (lastGroup[0]) {

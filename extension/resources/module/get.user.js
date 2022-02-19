@@ -165,12 +165,6 @@
       viewElements.icon = creatElement(viewElements.iconParent, ["nk-user-icon", "nk-user-icon_size_middle"], ".nk-user-icon");
             
       viewElements.icon.css("background-image", "url(https://avatars.mds.yandex.net/get-yapic/" + user.avatarId + "/islands-middle)");
-
-      if (user.karma === 100 && !user.outsourcer && !user.yandex) {
-        viewElements.iconParent.append('<span class="nk-icon nk-icon_id_alert nk-icon_align_auto nk-get-user-view__main-alert-icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M12.637 2.247l7.987 14.732c.904 1.668.125 3.021-1.734 3.021h-15.779c-1.862 0-2.633-1.363-1.734-3.021l7.987-14.732c.904-1.668 2.376-1.658 3.275 0z" fill="#FB6261"></path><path fill="#fff" d="M10 7h2v6h-2zM10 15h2v2h-2z"></path></svg></span>');
-      }else if (user.karma >= 85 && !user.outsourcer && !user.yandex) {
-        viewElements.iconParent.append('<span class="nk-icon nk-icon_id_warning nk-icon_align_auto nk-get-user-view__main-alert-icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M12.637 2.247l7.987 14.732c.904 1.668.125 3.021-1.734 3.021h-15.779c-1.862 0-2.633-1.363-1.734-3.021l7.987-14.732c.904-1.668 2.376-1.658 3.275 0z" fill="#FFB000"></path><path fill="#fff" d="M10 7h2v6h-2zM10 15h2v2h-2z"></path></svg></span>');
-      }
       
       viewElements.content = creatElement(viewElements.parent, ["nk-grid__col", "nk-grid__col_span_10", "nk-grid__col_stick"], ".nk-grid__col_stick");
       
@@ -230,21 +224,6 @@
             
       viewElements.parentDetals = creatElement(viewElements.parentHome, ["nk-list-item-info-user_details", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details");
       viewElements.parentStart = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
-
-      /* Добавление предупреждения о спаме, если оно есть */
-      if (user.karma === 100 && !user.outsourcer && !user.yandex) {
-        viewElements.warning = creatElement(viewElements.parentStart, ["nk-get-user-view__alerts", "nk-section", "nk-section_level_2"], ".nk-get-user-view__alerts");
-        viewElements.warning = creatElement(viewElements.warning, ["nk-get-user-view__alert"], ".nk-get-user-view__alert");
-        viewElements.warning.html('<span class="nk-icon nk-icon_id_alert-small nk-icon_align_auto nk-get-user-view__alert-icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FB6261"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></g></svg></span> Является спамером');
-
-        viewElements.parentStart = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
-      }else if (user.karma >= 85 && !user.outsourcer && !user.yandex) {
-        viewElements.warning = creatElement(viewElements.parentStart, ["nk-get-user-view__alerts", "nk-section", "nk-section_level_2"], ".nk-get-user-view__alerts");
-        viewElements.warning = creatElement(viewElements.warning, ["nk-get-user-view__alert"], ".nk-get-user-view__alert");
-        viewElements.warning.html('<span class="nk-icon nk-icon_id_warning-small nk-icon_align_auto nk-get-user-view__alert-icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FFB000"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></svg></span> С высокой вероятностью является спамером');
-
-        viewElements.parentStart = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
-      }
       
       viewElements.parent = viewElements.parentStart;
       
