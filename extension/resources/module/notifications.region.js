@@ -265,7 +265,8 @@
 
             const addClass = infoRegion.check ? " nk-checkbox_checked" : "";
 
-            parent.append('<label class="nk-checkbox nk-checkbox_theme_islands nk-checkbox_size_m nk-checkbox_margin-left' + addClass + '" id="nk-show-notification"><span class="nk-checkbox__box"><input type="checkbox" value="" autocomplete="off" class="nk-checkbox__control"></span><span class="nk-checkbox__text" role="presentation">' + text.checkbox + '</span></label>');
+            parent.find(".nk-checkbox-subscribe").remove();
+            parent.append('<label class="nk-checkbox nk-checkbox_theme_islands nk-checkbox_size_m nk-checkbox_margin-left nk-checkbox-subscribe' + addClass + '" id="nk-show-notification"><span class="nk-checkbox__box"><input type="checkbox" value="" autocomplete="off" class="nk-checkbox__control"></span><span class="nk-checkbox__text" role="presentation">' + text.checkbox + '</span></label>');
 
             const checkboxElement = parent.find("#nk-show-notification");
 
