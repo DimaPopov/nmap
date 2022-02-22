@@ -2,13 +2,18 @@
 
 # Дополнительные инструменты
 
-Это расщирение добавляет новые специальные возможности в [Народную карту](https://n.maps.yandex.ru/).
+Это расширение добавляет новые специальные возможности в [Народную карту](https://n.maps.yandex.ru/).
 
 Расширение разработано для браузеров на Chromium и стабильно работает в Google Chrome и Яндекс.Браузере, работа в остальных браузерах не проверялась.
 
   <br>
+  <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155115748-8a2e78ee-0cc3-4c83-8cb6-d54bc4858429.png"/></a> О возможностях расширения Вы можете почитать в<br>— <s>Сообществе редкаторов Яндекс.Карт</s><br>— <a href="docs/opportunities/">В документации</a>
+  <br>
+  <br>
+  <br>
   <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/154256302-3832b313-07bb-4d6a-a0fc-5b7d0429dd3e.png"/></a> Что-то работает не так или есть пожелание? <br> Напишите <a href="https://n.maps.yandex.ru/#!/users/demon7010" target="_blank">мне</a> в Яндекс.Мессенджере
-
+<br>
+<br>
 <p align="right"><strong> Developed by <a href="https://n.maps.yandex.ru/#!/users/demon7010" target="_blank">Dmitry Popov</a> </strong></p>
 
 <br>
