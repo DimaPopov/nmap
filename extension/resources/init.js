@@ -297,7 +297,7 @@
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
       if (setting["check-address"]) window.appChrome.init.address();
       if (setting["notification"]) window.appChrome.init.notificationRegion();
-      if (setting["get-profile"] && startStatus) window.appChrome.init.getProfile();
+      if (setting["get-profile"]) window.appChrome.init.getProfile();
     }, 1);
 
     setTimeout(() => {
