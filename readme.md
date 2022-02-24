@@ -7,7 +7,7 @@
 Расширение разработано для браузеров на Chromium и стабильно работает в Google Chrome и Яндекс.Браузере, работа в остальных браузерах не проверялась.
 
 <br>
-<a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155182367-fe06f353-3e7a-4373-9db8-38ad96f461bf.png"/></a> <strong>Расширение разработано Народным картографом<br>И не являеться официальным расширением от Яндекса</strong>
+<a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155182367-fe06f353-3e7a-4373-9db8-38ad96f461bf.png"/></a> <strong>Расширение разработано Народным картографом<br>И не является официальным расширением от Яндекса</strong>
 <br>
 <br>
 <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155115748-8a2e78ee-0cc3-4c83-8cb6-d54bc4858429.png"/></a> О возможностях расширения Вы можете почитать в<br>— <s>Сообществе редкаторов Яндекс.Карт</s><br>— <a href="docs/opportunities/">В документации</a>
