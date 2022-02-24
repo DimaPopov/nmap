@@ -309,7 +309,7 @@
 
             /* Проверка наличия прав в схемах помещений */
 
-            if (stats && settingUser.view["category-special-group"]) {
+            if (stats) {
               const indoor = stats.editStats.categoryGroups.indoor_group;
 
               if (indoor.new > 0 || indoor.total > 0) {
@@ -334,7 +334,7 @@
 
             /* Проверка наличия прав в нитках транспорта */
 
-            if (infoRoleGroup && settingUser.view["category-special-group"]) {
+            if (infoRoleGroup) {
               const experts = infoRoleGroup.expertExpertise;
 
               if (experts) {
