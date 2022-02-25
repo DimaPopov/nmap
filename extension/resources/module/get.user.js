@@ -470,7 +470,7 @@
                 creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.totalEdits));
               }
 
-              /* Разобранно неточности */
+              /* Разобрано неточности */
               if (settingUser.view["feedback-count"]) {
                 localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
 

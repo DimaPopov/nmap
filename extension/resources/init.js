@@ -49,7 +49,7 @@
           createdAt: "Дата регистрации",
           'rating-pos-full': "Место в рейтинге",
           'total-edits': "Число правок",
-          'feedback-count': "Разобранно неточности",
+          'feedback-count': "Разобрано неточности",
           delete: {
             yndx: {
               time: "Уволил",
@@ -168,16 +168,16 @@
         title: "Транспорт",
       },
       "transport-metro-group": {
-        title: "Скоростной тарнспорт",
+        title: "Скоростной транспорт",
       },
       "transport-airport-group": {
-        title: "Воздушный тарнспорт",
+        title: "Воздушный транспорт",
       },
       "transport-railway-group": {
-        title: "Желензные дороги",
+        title: "Железные дороги",
       },
       "transport-waterway-group": {
-        title: "Водный тарнспорт",
+        title: "Водный транспорт",
       },
     }
   };
