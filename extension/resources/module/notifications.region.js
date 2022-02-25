@@ -41,7 +41,7 @@
       if (response.error) {
         statusRegion = false;
 
-        /* Неудалось получить информация о подписках */
+        /* Не удалось получить информация о подписках */
         window.needNotification = {
           status: true,
           type: "error",
@@ -72,7 +72,7 @@
     error: function () {
       statusRegion = false;
 
-      /* Неудалось получить информация о подписках */
+      /* Не удалось получить информация о подписках */
       window.needNotification = {
         status: true,
         type: "error",
@@ -83,7 +83,7 @@
 
 
   /**
-   * Склоение слова
+   * Склонение слова
    *
    * @param number - Число
    * @param words - Массив слов
@@ -220,7 +220,7 @@
           listSubscriptions.each(function () {
             let title;
 
-            /* Обвернем заголовок, для далнейшей корректной работы */
+            /* Обвернем заголовок, для дальнейшей корректной работы */
             if (!$(this).find(".nk-title-region")[0]) {
               title = $(this).text();
               $(this).html("<span class='nk-title-region'>" + title + "</span>");

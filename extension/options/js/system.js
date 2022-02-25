@@ -59,7 +59,7 @@
   }else if (userAgent.indexOf("Safari") > -1) {
     browser = "Safari " + userAgent.split("Safari/")[1].split(" ")[0];
   }else {
-    browser = "Неопределен";
+    browser = "Не определен";
   }
 
   creatRowTable(tableElement.find("#info"), "Браузер", browser);
