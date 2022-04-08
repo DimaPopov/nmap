@@ -179,6 +179,141 @@
       "transport-waterway-group": {
         title: "Водный транспорт",
       },
+    },
+    blocked: {
+      button: "Выбрать шаблон",
+      portal: {
+        title: "Выберите шаблон блокировки",
+        pattern: [
+          "Игнорирование замечаний",
+          "Невозможно связаться с пользователем",
+          "Систематические нарушения правил",
+          "Ненормативная лексика",
+          "Высказывания разжигающие вражду",
+          "Вандализм",
+          "Дубликат заблокированного профиля",
+          "Временная блокировка для исправления ошибок"
+        ]
+      },
+      pattern: [
+        // Игнорирование замечаний
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, Вы игнорируете замечания модератора и продолжаете допускать ошибки при рисовании карты. Пожалуйста, ответьте мне в [Яндекс.Месседжере](https://yandex.ru/chat#/) и я сниму блокировку досрочно.",
+          height: 192,
+          term: "2 дня"
+        },
+
+        // Невозможно связаться с пользователем
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, я не смог связаться с Вами через [Яндекс.Месседжер](https://yandex.ru/chat#/). Пожалуйста, снимите ограничение и напишите мне, после чего я сниму блокировку досрочно.",
+          height: 192,
+          term: "день"
+        },
+
+        // Систематические нарушения правил
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, Вы допускаете множество ошибок при рисовании объектов, несмотря на их разъяснение Вам.\n\nПожалуйста, изучите [правила](https://yandex.ru/support/nmaps/) за время блокировки, чтобы в будущем не допускать ошибок.",
+          height: 224,
+          term: "3 дня"
+        },
+
+        // Ненормативная лексика
+        {
+          text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование ненормативной лексики. Пожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
+          height: 192,
+          term: "3 дня"
+        },
+
+        // Высказывания разжигающие вражду
+        {
+          text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование высказываний, направленных на возбуждение ненависти либо вражды или на унижение достоинства человека либо группы лиц.\n\nПожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
+          height: 258,
+          term: "3 дня"
+        },
+
+        // Вандализм
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, Ваши правки признаны вандальными, поэтому Ваш профиль заблокирован навсегда.",
+          height: 160,
+          term: "бессрочно"
+        },
+
+        // Дубликат заблокированного профиля
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, Ваш профиль признан дубликатом другого, заблокированного профиля.",
+          height: 160,
+          term: "бессрочно"
+        },
+
+        // Временная блокировка для исправления ошибок
+        {
+          text: "Добрый день, {user_name}!\n\nК сожалению, Вы отрисовали множество объектов, которые содержат критичные ошибки. При этом, Вы не даете их исправить, поэтому Ваш профиль временно заблокирован. Как только допущенные ошибки будут исправлены, блокировка будет снята",
+          height: 208,
+          term: "день"
+        }
+      ],
+      pattern_end: "\n\nВы всегда можете обжаловать блокировку через [службу поддержки](https://yandex.ru/support/nmaps/troubleshooting/fb_nmaps.html)",
+    },
+    tiles: {
+      popup: "Цветовая коррекция спутниковых тайлов",
+      fulter: {
+        brightness: {
+          title: "Яркость",
+          max: 200,
+          min: 0,
+          meaning: 100,
+          default: 100,
+          unit: ""
+        },
+        contrast: {
+          title: "Контраст",
+          max: 200,
+          min: 0,
+          meaning: 100,
+          default: 100,
+          unit: ""
+        },
+        grayscale: {
+          title: "Баланс черного и белого",
+          max: 100,
+          min: 0,
+          meaning: 100,
+          default: 0,
+          unit: ""
+        },
+        opacity: {
+          title: "Непрозрачность",
+          max: 100,
+          min: 0,
+          meaning: 100,
+          default: 100,
+          unit: ""
+        },
+        saturate: {
+          title: "Насыщенность",
+          max: 1500,
+          min: 0,
+          meaning: 100,
+          default: 100,
+          unit: ""
+        },
+        'hue-rotate': {
+          title: "Сдвиг цветов",
+          max: 350,
+          min: 0,
+          meaning: 1,
+          default: 0,
+          unit: "deg"
+        },
+        invert: {
+          title: "Инверсия цветов",
+          max: 100,
+          min: 0,
+          meaning: 100,
+          default: 0,
+          unit: ""
+        }
+      }
     }
   };
 
@@ -278,7 +413,6 @@
       if (startStatus) {
         const toolsButton = $("body > div.nk-app-view > header > div.nk-app-bar-view > button.nk-button.nk-button_theme_air.nk-button_size_xl.nk-tools-control-view");
         const getUser = hashStart.indexOf("tools/get-user") !== -1 ? hashStart.replace("#!", "") : false;
-        const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
 
         if (!!getUser && setting["get-user"] && startStatus) {
           const url = new URL(getUser);
@@ -287,21 +421,30 @@
           window.appChrome.getUser(getNameUser);
         }
 
-        if (!!isAddressCheck && setting["check-address"] && startStatus) {
-          const url = new URL(isAddressCheck);
-          const getCorrectName = url.searchParams.get('correct');
-
-          window.appChrome.showCorrect(getCorrectName);
-        }
-
         toolsButton.on('click', clickToolsButton);
+
+        if (setting["lock-pattern"]) window.appChrome.init.lockPattern();
+      }
+
+      const isAddressCheck = hashStart.indexOf("correct=") !== -1 ? hashStart.replace("#!", "") : false;
+
+      if (!!isAddressCheck && setting["check-address"]) {
+        const url = new URL(isAddressCheck);
+        const getCorrectName = url.searchParams.get('correct');
+
+        window.appChrome.showCorrect(getCorrectName);
       }
 
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
       if (setting["check-address"]) window.appChrome.init.address();
+      if (setting["duplicate-addresses"]) window.appChrome.init.addressDuplicate();
       if (setting["notification"]) window.appChrome.init.notificationRegion();
       if (setting["get-profile"]) window.appChrome.init.getProfile();
-    }, 10);
+      if (setting["tiles"]) window.appChrome.init.tiles();
+      if (setting["poi"]) window.appChrome.init.poi();
+      if (setting["parking"]) window.appChrome.init.parking();
+      if (setting["vegetation"]) window.appChrome.init.vegetation();
+    }, 1);
 
     setTimeout(() => {
       /* Показываем уведомление, если во время загрузки произошла ошибка, и модуль сообщил о ней */

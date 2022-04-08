@@ -282,9 +282,13 @@
    * Инициализация подгрудки дополнительной информации в профиль
    */
 
-  const creatGetProfile = () => {    
-    const appViewElement = document.querySelector(".nk-app-view");
-    editAppView.observe(appViewElement, {childList: true});
+  const creatGetProfile = () => {
+    try {
+      const appViewElement = document.querySelector(".nk-app-view");
+      editAppView.observe(appViewElement, {childList: true});
+    }catch {
+      window.appChrome.notification("error", "Модуль подгрузки дополнительной информации в профиль не запущен");
+    }
   };
   
   window.appChrome.init.getProfile = creatGetProfile;

@@ -611,8 +611,12 @@
   */
 
   const creatAddress = () => {
-    const appViewElement = document.querySelector(".nk-app-view");
-    editAppView.observe(appViewElement, {childList: true});
+    try {
+      const appViewElement = document.querySelector(".nk-app-view");
+      editAppView.observe(appViewElement, {childList: true});
+    }catch {
+      window.appChrome.notification("error", "Модуль проверки адресов не запущен");
+    }
   };
 
   window.appChrome.init.address = creatAddress;

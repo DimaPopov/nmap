@@ -835,8 +835,12 @@
 
     buttonShowViewGetUser.on('click', showViewGetUser);
 
-    const appViewElement = document.querySelector(".nk-app-view");
-    editAppView.observe(appViewElement, {childList: true});
+    try {
+      const appViewElement = document.querySelector(".nk-app-view");
+      editAppView.observe(appViewElement, {childList: true});
+    }catch {
+      window.appChrome.notification("error", "Модуль поиска пользоватлей не запущен");
+    }
   };
   
   window.appChrome.init.getUser = creatGetUser;

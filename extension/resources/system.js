@@ -8,9 +8,14 @@
   const default_setting = {
     'get-user': true,
     'get-profile': true,
-    'check-address': true,
+    'check-address': false,
+    'duplicate-addresses': true,
     'notification': true,
-    'q-link': false
+    'q-link': false,
+    'lock-pattern': true,
+    'tiles': true,
+    'parking': true,
+    'vegetation': true
   };
 
   /* Начинаем отслеживание обновлений или установки расширения */

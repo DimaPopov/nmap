@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Дополнительные инструменты",
   "description": "Расширение добавляет новые специальные возможности в Народную карту",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "icons": {
     "128": "icon.png"
   },
@@ -18,9 +18,14 @@
         "/resources/init.js",
         "/resources/notifications.js",
         "/resources/module/address.js",
+        "/resources/module/duplicate.addresses.js",
         "/resources/module/get.user.js",
         "/resources/module/get.profile.js",
-        "/resources/module/notifications.region.js"
+        "/resources/module/notifications.region.js",
+        "/resources/module/lock.pattern.js",
+        "/resources/module/tiles.js",
+        "/resources/module/parking.master.js",
+        "/resources/module/vegetation.js"
       ]
     },
     {
