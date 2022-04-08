@@ -394,6 +394,10 @@
   margin-left: 20px;
 }
 
+.nk-button.nk-button-lock-pattern {
+  margin-left: 10px;
+}
+
 .nk-portal_edit-tile .nk-map-layers-control-view__actions {
   display: block;
   margin: 12px 20px;
