@@ -393,3 +393,37 @@
 .nk-checkbox_margin-left {
   margin-left: 20px;
 }
+
+.nk-portal_edit-tile .nk-map-layers-control-view__actions {
+  display: block;
+  margin: 12px 20px;
+}
+
+.nk-filter-block input {
+  min-width: 200px;
+  width: 100%;
+}
+
+.nk-filter-title {
+  margin-bottom: 3px;
+}
+
+.nk-info-text-todo {
+  color: #bfbfbf;
+}
+
+.nk-address-dublicate {
+  display: block;
+}
+
+.nk-address-dublicate + .nk-address-dublicate {
+  margin-top: 5px;
+}
+
+.nk-live-tabs-bar .nk-tabs-bar__tabs * {
+  text-decoration: none;
+}
+
+.nk-get-user-view .nk-size-observer {
+  width: 100%;
+}
