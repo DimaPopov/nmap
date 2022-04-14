@@ -62,7 +62,7 @@
         const warnings = info.filter(active_address => active_address.title === address.text && active_address.id != address.id);
 
         if (warnings.length > 0) {
-          const addressBlock = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-island:nth-child(1) .nk-scrollable__content > div");
+          const addressBlock = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-size-observer .nk-island:nth-child(1) .nk-scrollable__content > div");
           const count_dublicate = warnings.length % 2 === 0 ? warnings.length + " дубликата" : warnings.length + " дублкиат";
 
           if (!addressBlock.find(".nk-poi-conflicts-viewer-view")[0]) {
@@ -70,8 +70,6 @@
             const parrent = $(".nk-poi-conflicts-viewer-view .nk-poi-conflicts-viewer-view__geoobject");
 
             warnings.forEach((warning) => {
-              console.log(warning.id, address.id);
-
               parrent.append('<a role="link" class="nk-link nk-link_theme_islands nk-geoobject-link-view nk-geoobject-link-view_with-preview nk-poi-conflicts-viewer-view__geoobject-link nk-poi-conflicts-viewer-view__geoobject-link_severity_critical nk-address-dublicate" href="/#!/objects/' + warning.id + '">' + warning.title + '</a>');
             });
           }

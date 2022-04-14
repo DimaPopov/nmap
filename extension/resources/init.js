@@ -9,10 +9,15 @@
 
   const hashStart = window.location.href;
 
-  let setting = {};
+
+  let checkUpdate = true;
   let startStatus = false;
+  let setting = {};
   let config = {};
   let user = {};
+  let update = {};
+
+  let loadCount = 0;
 
   chrome.storage.local.get(["nkSetting"], (result) => {
     if (!result.nkSetting) {
@@ -191,8 +196,7 @@
           "Ненормативная лексика",
           "Высказывания разжигающие вражду",
           "Вандализм",
-          "Дубликат заблокированного профиля",
-          "Временная блокировка для исправления ошибок"
+          "Дубликат заблокированного профиля"
         ]
       },
       pattern: [
@@ -200,56 +204,57 @@
         {
           text: "Добрый день, {user_name}!\n\nК сожалению, Вы игнорируете замечания модератора и продолжаете допускать ошибки при рисовании карты. Пожалуйста, ответьте мне в [Яндекс.Месседжере](https://yandex.ru/chat#/) и я сниму блокировку досрочно.",
           height: 192,
-          term: "2 дня"
+          term: "Выберите любой срок блокировки, но не более 3 дней"
         },
 
         // Невозможно связаться с пользователем
         {
           text: "Добрый день, {user_name}!\n\nК сожалению, я не смог связаться с Вами через [Яндекс.Месседжер](https://yandex.ru/chat#/). Пожалуйста, снимите ограничение и напишите мне, после чего я сниму блокировку досрочно.",
           height: 192,
-          term: "день"
+          term: "Рекомендуемый срок блокировки для этой причины — день"
         },
 
         // Систематические нарушения правил
         {
           text: "Добрый день, {user_name}!\n\nК сожалению, Вы допускаете множество ошибок при рисовании объектов, несмотря на их разъяснение Вам.\n\nПожалуйста, изучите [правила](https://yandex.ru/support/nmaps/) за время блокировки, чтобы в будущем не допускать ошибок.",
           height: 224,
-          term: "3 дня"
+          term: "Выберите любой срок блокировки, но не более 3 дней",
+          warning: {
+            title: "Желательно указать ссылки на несколько правок с ошибками",
+            gaid: "Это нужно, чтобы пользователь лучше понимал, какие ошибки он допускал повторно.\n\nСсылки можно указать после фразы «... несмотря на их разъяснение Вам». На следующей строке можно написать «Вот несколько примеров из них:» и с новой строки указать ссылки на правки с описанием ошибки.\n\nЧтобы причина блокировки имела единый стиль написания, рекомендуеться использовать конструкцию вида:\n— [Краткое описание ошибки](ссылка на правку)"
+          }
         },
 
         // Ненормативная лексика
         {
-          text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование ненормативной лексики. Пожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
+          text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование ненормативной лексики в комментариях или профиле. Пожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
           height: 192,
-          term: "3 дня"
+          term: "Выберите любой срок блокировки, но не более 3 дней"
         },
 
         // Высказывания разжигающие вражду
         {
           text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование высказываний, направленных на возбуждение ненависти либо вражды или на унижение достоинства человека либо группы лиц.\n\nПожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
           height: 258,
-          term: "3 дня"
+          term: "Выберите любой срок блокировки, но не более 3 дней"
         },
 
         // Вандализм
         {
           text: "Добрый день, {user_name}!\n\nК сожалению, Ваши правки признаны вандальными, поэтому Ваш профиль заблокирован навсегда.",
           height: 160,
-          term: "бессрочно"
+          term: "Рекомендуемый срок блокировки для этой причины — бессрочно"
         },
 
         // Дубликат заблокированного профиля
         {
           text: "Добрый день, {user_name}!\n\nК сожалению, Ваш профиль признан дубликатом другого, заблокированного профиля.",
           height: 160,
-          term: "бессрочно"
-        },
-
-        // Временная блокировка для исправления ошибок
-        {
-          text: "Добрый день, {user_name}!\n\nК сожалению, Вы отрисовали множество объектов, которые содержат критичные ошибки. При этом, Вы не даете их исправить, поэтому Ваш профиль временно заблокирован. Как только допущенные ошибки будут исправлены, блокировка будет снята",
-          height: 208,
-          term: "день"
+          term: "Рекомендуемый срок блокировки для этой причины — бессрочно",
+          warning: {
+            title: "Желательно указать ссылку на другой профиль этого пользователя",
+            gaid: "Это нужно, чтобы при позникновении спорной ситуации было легче найти дубликат профиля.\n\nСсылку можно указать вместо надписи «заблокированного профиля».\n\nЧтобы причина блокировки имела единый стиль написания, рекомендуеться использовать конструкцию вида: [заблокированного профиля](ссылка на профиль)"
+          }
         }
       ],
       pattern_end: "\n\nВы всегда можете обжаловать блокировку через [службу поддержки](https://yandex.ru/support/nmaps/troubleshooting/fb_nmaps.html)",
@@ -364,13 +369,13 @@
    */
 
   const popupShow = (element, text) => {
-    const popup = $(".nk-portal-local .nk-popup");
-    popup.find(".nk-popup__content").text(text);
+    element.hover(() => {
+      const popup = $(".nk-portal-local .nk-popup");
+      popup.find(".nk-popup__content").text(text);
 
-    const top = element[0].offsetHeight + element.offset().top + 5;
-    let left = window.innerWidth - (window.innerWidth - element.offset().left);
+      const top = element[0].offsetHeight + element.offset().top + 5;
+      let left = window.innerWidth - (window.innerWidth - element.offset().left);
 
-    setTimeout(() => {
       const innerWidth = popup.width() + left;
 
       if (innerWidth >= window.innerWidth) {
@@ -383,11 +388,12 @@
         popup.addClass("nk-popup_direction_bottom-left");
       }
 
-      setTimeout(() => {
-        popup.css({"left": left + "px", "top": top + "px"});
-        popup.addClass("nk-popup_visible");
-      }, 1);
-    }, 1);
+      popup.css({"left": left + "px", "top": top + "px"});
+      popup.addClass("nk-popup_visible");
+    }, () => {
+      const popup = $(".nk-portal-local .nk-popup");
+      popup.removeClass("nk-popup_visible");
+    });
   };
 
 
@@ -398,7 +404,13 @@
    */
 
   const loadMap = new MutationObserver(() => {
+    loadCount++;
+
+    if (loadCount < 3) return;
     loadMap.disconnect();
+
+    /* Добавим вслплывающие окна */
+    $("body").append('<div class="nk-portal nk-portal-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_view_tooltip" style="z-index: 111001;"><div class="nk-size-observer"><div class="nk-popup__content"></div></div></div><!----></div><div class="nk-portal nk-select-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_restrict-height" id="select-status-user"><div class="nk-size-observer"><div class="nk-popup__content"><div class="nk-menu nk-menu_theme_islands nk-menu_mode_check nk-menu_size_m nk-menu_focused nk-select__menu" tabindex="0"><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-menu-item_checked nk-select__option" data-value="all">Все</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="active">Активные</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="banned">Заблокированные</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="deleted">Удалённые</div></div></div></div></div><!----><!----><!----></div>');
 
     /* Критическая ошибка - нет токена */
     if (!JSON.parse(localStorage.getItem("nk:token"))) {
@@ -441,8 +453,6 @@
       if (setting["notification"]) window.appChrome.init.notificationRegion();
       if (setting["get-profile"]) window.appChrome.init.getProfile();
       if (setting["tiles"]) window.appChrome.init.tiles();
-      if (setting["poi"]) window.appChrome.init.poi();
-      if (setting["parking"]) window.appChrome.init.parking();
       if (setting["vegetation"]) window.appChrome.init.vegetation();
     }, 1);
 
@@ -454,6 +464,24 @@
         }
       });
     }, 1000);
+
+    if (update.needUpdate) {
+      const manifest = chrome.runtime.getManifest();
+      const v = manifest.version_name;
+
+      const infoVersion = !!update.info.length ? update.info : '<span style="color: var(--nk-name-row-layout__name-type--font-color);">Информации об обновлении нет</span>';
+
+      $("body").append('<div class="nk-portal nk-window-update"><!----><div class="nk-modal nk-modal_theme_islands nk-modal_visible" role="dialog" aria-hidden="false" style="z-index: 10001;"><div class="nk-modal__table"><div class="nk-modal__cell"><div class="nk-modal__content" tabindex="-1"><div class="nk-data-loss-confirmation-view__text nk-section nk-section_level_2"><strong>Доступно обновление расширения</strong><br>Хотите перейти на GitHub, чтобы скачать новую версию?</div><div class="nk-grid nk-sidebar-control nk-section nk-section_level_2 nk-info-update"><div class="nk-grid__col nk-grid__col_span_4"><label style=" color: var(--sidebar-control__label--font-color);">Текущая весрия</label></div><div class="nk-grid__col nk-grid__col_span_8">' + v + '</div></div><div class="nk-grid nk-sidebar-control nk-section nk-info-update"><div class="nk-grid__col nk-grid__col_span_4"><label style=" color: var(--sidebar-control__label--font-color);">Доступная весрия</label></div><div class="nk-grid__col nk-grid__col_span_8">' + update.lastVersion + '</div></div><div class="nk-grid nk-sidebar-control nk-section nk-info-update"><div class="nk-grid__col nk-grid__col_span_4"><label style=" color: var(--sidebar-control__label--font-color);">Что нового</label></div><div class="nk-grid__col nk-grid__col_span_8">' + infoVersion + '</div></div><div class="nk-form-submit-view nk-form-submit-view_size_l"><button class="nk-button nk-button_theme_islands nk-button_size_l nk-close-window" type="button"><span class="nk-button__text">Напомнить позже</span></button><button class="nk-button nk-button_theme_islands nk-button_size_l nk-button_view_action nk-button_hovered nk-form-submit-view__submit nk-close-window" type="button"><a class="nk-button__text" style="text-decoration: none;color: inherit;" href="https://github.com/Dmitry-407/nmap/releases/latest" target="_blank">Перейти на GitHub</a></button></div></div></div></div></div><!----><!----><!----></div>');
+
+      $(".nk-close-window").on("click", () => {
+        const winodw = $(".nk-window-update .nk-modal.nk-modal_theme_islands");
+        winodw.removeClass("nk-modal_visible");
+
+        setTimeout(() => {
+          winodw.remove()
+        }, 3000);
+      });
+    }
   });
 
   loadMap.observe(appPage[0], {childList: true});
@@ -487,6 +515,14 @@
 
         window.appChrome.user = user;
         window.appChrome.startStatus = startStatus;
+
+        if (checkUpdate) {
+          chrome.runtime.sendMessage({method: "checkUpdate", id: user.id}, function (response) {
+            update = response;
+          });
+
+          checkUpdate = false;
+        }
       }
     });
 

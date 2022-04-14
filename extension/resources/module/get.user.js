@@ -73,23 +73,14 @@
    */
 
   const hideView = () => {
-    if (!window.appChrome.startStatus) return;
-
     const viewElement = $(".nk-get-user-view");
-    const popup = $(".nk-portal-local");
-    const select = $(".nk-select-local");
     window.location.hash = "?" + window.location.hash.split("?")[1].split("%23sat")[0] + "%23sat";
     
     document.removeEventListener("keyup", hideViewKeyup);
     viewElement.remove();
-    
-    popup.remove();
-    select.remove();
   };
     
   const hideViewKeyup = (e) => {
-    if (!window.appChrome.startStatus) return;
-
     if (e.key !== "Escape") return;
     
     const objectViewElement = document.querySelector(".nk-get-user-view");
@@ -149,8 +140,7 @@
     }
     
     const parent = observer.find(".nk-list-view__items");
-    const popup = $(".nk-portal-local .nk-popup");
-    
+
     users.forEach((user) => {
       const viewElements = {};
       lastUserID = user.id;
@@ -176,27 +166,27 @@
       let textIcon = "";
       
       if (user.yandex) {
-        icon = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
+        icon = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-name-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
         textIcon = 'Сотрудник Яндекса';
       }else if (user.moderationStatus === "moderator") {
-        icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M6,15 L6,7 L8.7,7 L10,13 L11.3,7 L14,7 L14,15 L12,15 L12,9 L10.7,15 L9.3,15 L8,9 L8,15 L6,15 Z" id="М-3" fill="#664C0E"></path></svg></span>';
+        icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-name-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M6,15 L6,7 L8.7,7 L10,13 L11.3,7 L14,7 L14,15 L12,15 L12,9 L10.7,15 L9.3,15 L8,9 L8,15 L6,15 Z" id="М-3" fill="#664C0E"></path></svg></span>';
         textIcon = 'Модератор';
       }else if (user.status === "banned") {
-        icon = '<span class="nk-icon nk-icon_id_banned nk-icon_align_auto nk-user-link-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g transform="translate(4 4)" fill="none"><circle fill="#FC5A5C" cx="7" cy="7" r="7"></circle><path fill="#fff" d="M2 6h10v2h-10z"></path></g></svg></span>';
+        icon = '<span class="nk-icon nk-icon_id_banned nk-icon_align_auto nk-user-name-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g transform="translate(4 4)" fill="none"><circle fill="#FC5A5C" cx="7" cy="7" r="7"></circle><path fill="#fff" d="M2 6h10v2h-10z"></path></g></svg></span>';
         textIcon = 'Заблокирован';
       }else if (user.status !== "deleted" && (user.trustLevel === "novice" || user.trustLevel === "afterBan")) {
-        icon = '<span class="nk-icon nk-icon_id_untrusted nk-icon_align_auto nk-user-link-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M8.667 10.13h1.212l1.252 2.951 1.069-2.951h1.132l-1.813 4.32c-.198.468-.399.824-.604 1.068-.205.244-.47.366-.795.366-.32 0-.57-.022-.751-.066v-.853l.417.016c.251 0 .432-.048.54-.145.109-.097.213-.306.313-.626l-1.974-4.079z" fill="#4A4A4A"></path><path d="M10.047 3.69c.527-.966 1.381-.964 1.907 0l6.846 12.565c.527.966.061 1.75-1.055 1.75h-13.489c-1.109 0-1.58-.786-1.055-1.75l6.846-12.565z" stroke="#FC5A5C"></path></g></svg></span>';
+        icon = '<span class="nk-icon nk-icon_id_untrusted nk-icon_align_auto nk-user-name-view__icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M8.667 10.13h1.212l1.252 2.951 1.069-2.951h1.132l-1.813 4.32c-.198.468-.399.824-.604 1.068-.205.244-.47.366-.795.366-.32 0-.57-.022-.751-.066v-.853l.417.016c.251 0 .432-.048.54-.145.109-.097.213-.306.313-.626l-1.974-4.079z" fill="#4A4A4A"></path><path d="M10.047 3.69c.527-.966 1.381-.964 1.907 0l6.846 12.565c.527.966.061 1.75-1.055 1.75h-13.489c-1.109 0-1.58-.786-1.055-1.75l6.846-12.565z" stroke="#FC5A5C"></path></g></svg></span>';
         textIcon = user.trustLevel === "novice" ? 'Новичок' : 'Недавно разблокирован';
       }else if (user.moderationStatus === "expert") {
-        icon = '<span class="nk-icon nk-icon_id_expert nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M18,11.634 L18,9.109 L19,8.652 L11,5 L3,8.652 L11,12.304 L17,9.565 L17,11.634 C16.701,11.807 16.5,12.13 16.5,12.5 C16.5,13.052 16.948,13.5 17.5,13.5 C18.052,13.5 18.5,13.052 18.5,12.5 C18.5,12.13 18.299,11.807 18,11.634 L18,11.634 Z M16,11.103 L11,13.348 L6,11.103 L6,14.392 C6,14.392 6,17.001 11,17.001 C16,17.001 16,14.392 16,14.392 L16,11.103 Z" fill="#8FCB69"></path></svg></span>';
+        icon = '<span class="nk-icon nk-icon_id_expert nk-icon_align_auto nk-user-name-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M18,11.634 L18,9.109 L19,8.652 L11,5 L3,8.652 L11,12.304 L17,9.565 L17,11.634 C16.701,11.807 16.5,12.13 16.5,12.5 C16.5,13.052 16.948,13.5 17.5,13.5 C18.052,13.5 18.5,13.052 18.5,12.5 C18.5,12.13 18.299,11.807 18,11.634 L18,11.634 Z M16,11.103 L11,13.348 L6,11.103 L6,14.392 C6,14.392 6,17.001 11,17.001 C16,17.001 16,14.392 16,14.392 L16,11.103 Z" fill="#8FCB69"></path></svg></span>';
         textIcon = 'Эксперт';
       }
       
       
       const iconClass = !!icon ? " nk-user-link-view_has-icon" : ""; 
-      const deleteUserClass = user.status === "deleted" ? " nk-user-link-view_deleted" : " nk-user-link-view_colored";
+      const deleteUserClass = user.status === "deleted" ? "nk-user-name-view_deleted" : "nk-user-name-view_colored";
             
-      viewElements.name.html('<a role="link" aria-disabled="false" class="nk-link nk-link-user nk-link_theme_islands nk-user-link-view_disabled nk-user-link-view' + deleteUserClass + iconClass + '"><span class="nk-user-link-view__name">' + user.displayName + '</span>' + icon + '</a>');
+      viewElements.name.html('<a role="link" aria-disabled="false" class="nk-link nk-link-user nk-link_theme_islands nk-user-link-view_disabled nk-user-link-view' + iconClass + '"><span class="nk-user-name-view ' + deleteUserClass + '"><span class="nk-user-name-view__name">' + user.displayName + '</span>' + icon + '</span></a>');
       creatElement(viewElements.nameContent, ["nk-info-user__user--login"], ".nk-info-user__user--login", user.login);
       
       if (user.status === "deleted") {
@@ -209,17 +199,7 @@
 
       if (!!icon.length) {
         const iconRole = viewElements.name.find(".nk-link .nk-icon");
-        iconRole.hover(() => {
-          popup.find(".nk-popup__content").text(textIcon);
-
-          const topPopup = iconRole[0].offsetHeight + iconRole.offset().top + 5;
-          const leftPopup = window.innerWidth - iconRole.offset().left;
-
-          popup.css({ "left": window.innerWidth - leftPopup + "px", "top": topPopup + "px" });
-          popup.addClass("nk-popup_visible");
-        }, () => {
-          popup.removeClass("nk-popup_visible");
-        });
+        popupShow(iconRole, textIcon);
       }
             
       viewElements.parentDetals = creatElement(viewElements.parentHome, ["nk-list-item-info-user_details", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details");
@@ -323,11 +303,7 @@
                 viewElements.infoAccess.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_indoor-group"></span>');
 
                 const groupIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_indoor-group");
-                groupIcon.hover(() => {
-                  popupShow(groupIcon, "Схемы помещений");
-                }, () => {
-                  popup.removeClass("nk-popup_visible");
-                });
+                popupShow(groupIcon, "Схемы помещений");
               }
             }
 
@@ -350,11 +326,7 @@
                     viewElements.infoAccess.append('<span class="nk-user-stat-badge-view nk-user-stat-badge-view_id_transport-group"></span>');
 
                     const groupIcon = viewElements.infoAccess.find(".nk-user-stat-badge-view_id_transport-group");
-                    groupIcon.hover(() => {
-                      popupShow(groupIcon, "Нитки транспорта");
-                    }, () => {
-                      popup.removeClass("nk-popup_visible");
-                    });
+                    popupShow(groupIcon, "Нитки транспорта");
                   }
                 });
               }
@@ -384,19 +356,11 @@
               viewElements.info.html(infoProfile.banRecord.expiresAt ? "c <span class='nk-creat-banned-date'>" + creatBannedDate + "</span> по <span class='nk-expires-banned-date'>" + expiresBannedDate + "</span>" : "Бессрочно c <span class='nk-creat-banned-date'>" + creatBannedDate + "</span>");
 
               const creatBannedDateElement = viewElements.info.find(".nk-creat-banned-date");
-              creatBannedDateElement.hover(() => {
-                popupShow(creatBannedDateElement, creatBannedDateAll);
-              }, () => {
-                popup.removeClass("nk-popup_visible");
-              });
+              popupShow(creatBannedDateElement, creatBannedDateAll);
 
               const expiresBannedDateElement = viewElements.info.find(".nk-expires-banned-date");
               if (expiresBannedDateElement) {
-                expiresBannedDateElement.hover(() => {
-                  popupShow(expiresBannedDateElement, expiresBannedDateAll);
-                }, () => {
-                  popup.removeClass("nk-popup_visible");
-                });
+                popupShow(expiresBannedDateElement, expiresBannedDateAll);
               }
 
               ///////
@@ -410,27 +374,23 @@
               let textIcon;
 
               if (infoProfile.banRecord.createdBy.yandex) {
-                icon = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
+                icon = '<span class="nk-icon nk-icon_id_yandex nk-icon_align_auto nk-user-name-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M11.0107422,15 L11.0107422,11.7128906 C11.0107422,11.7128906 10.8335785,11.7880852 10.6276856,11.9384766 C10.4217926,12.0888679 10.0699895,12.538245 9.57226563,13.2866211 L8.42285157,15 L6.52148438,15 L7.38291016,13.46 C7.76246935,12.8551402 7.96503794,12.4281425 8.190625,12.1828613 C8.41621207,11.9375802 8.59908684,11.7182627 8.93925782,11.5249023 C8.20520467,11.4103184 7.67526205,11.155194 7.34941407,10.7595215 C7.02356608,10.3638489 6.86064453,9.89030224 6.86064453,9.33886719 C6.86064453,8.85904708 6.98149294,8.43383974 7.22319336,8.06323242 C7.46489379,7.6926251 7.7835755,7.34376691 8.17924805,7.21665039 C8.5749206,7.08953387 8.96663018,7.02597656 9.75439453,7.02597656 L13.0005859,7.02597656 L13.0005859,15 L11.0107422,15 Z M11.0107422,8.45800781 C11.0107422,8.45800781 9.7253428,8.47233059 9.52661134,8.50097656 C9.32787987,8.52962254 9.15690177,8.62630126 9.01367188,8.79101562 C8.870442,8.95572999 8.79882813,9.17057159 8.79882813,9.43554688 C8.79882813,9.7112644 8.86775648,9.93058187 9.00561524,10.0935059 C9.143474,10.2564299 9.31892798,10.3575844 9.53198243,10.3969727 C9.74503688,10.4363609 11.0107422,10.4560547 11.0107422,10.4560547 L11.0107422,8.45800781 Z" fill="#664C0E"></path></g></svg></span>';
                 textIcon = 'Сотрудник Яндекса';
               }else if (infoProfile.banRecord.createdBy.moderationStatus === "moderator") {
-                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-link-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M6,15 L6,7 L8.7,7 L10,13 L11.3,7 L14,7 L14,15 L12,15 L12,9 L10.7,15 L9.3,15 L8,9 L8,15 L6,15 Z" id="М-3" fill="#664C0E"></path></svg></span>';
+                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-name-view__icon"><svg width="22px" height="22px" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M2,2 L16,2 L21,11 L16,20 L2,20 L2,2 Z" fill="#FFCC00"></path><path d="M6,15 L6,7 L8.7,7 L10,13 L11.3,7 L14,7 L14,15 L12,15 L12,9 L10.7,15 L9.3,15 L8,9 L8,15 L6,15 Z" id="М-3" fill="#664C0E"></path></svg></span>';
                 textIcon = 'Модератор';
               }else if (infoProfile.banRecord.createdBy.moderationStatus === "robot") {
-                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-link-view__icon"><svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m6.5 1c-.55228 0-1 .44772-1 1 0 .37014.2011.69331.5.86622v2.13378h-4v13h14v-13h-1v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.4477-1-1-1s-1 .44772-1 1c0 .37014.2011.69331.5.86622v2.13378h-7v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.44772-1-1-1z" fill="#fc0"></path><g fill="#664c0e"><path d="m4 10h2v1h1v2h-3z"></path><path d="m6 15h6c0 .5523-.4477 1-1 1h-4c-.55228 0-1-.4477-1-1z"></path><path d="m13 10h-2v3h3v-2h-1z"></path></g><path d="m16 5h4v13h-4z" fill="#f0bf01"></path></svg></span>';
+                icon = '<span class="nk-icon nk-icon_id_moderator nk-icon_align_auto nk-user-name-view__icon"><svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m6.5 1c-.55228 0-1 .44772-1 1 0 .37014.2011.69331.5.86622v2.13378h-4v13h14v-13h-1v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.4477-1-1-1s-1 .44772-1 1c0 .37014.2011.69331.5.86622v2.13378h-7v-2.13378c.2989-.17291.5-.49608.5-.86622 0-.55228-.44772-1-1-1z" fill="#fc0"></path><g fill="#664c0e"><path d="m4 10h2v1h1v2h-3z"></path><path d="m6 15h6c0 .5523-.4477 1-1 1h-4c-.55228 0-1-.4477-1-1z"></path><path d="m13 10h-2v3h3v-2h-1z"></path></g><path d="m16 5h4v13h-4z" fill="#f0bf01"></path></svg></span>';
                 textIcon = 'Робот';
               }
 
               const iconClass = !!icon ? " nk-user-link-view_has-icon" : "";
 
-              viewElements.info.html('<a role="link" aria-disabled="false" class="nk-link nk-link-banned nk-link-user nk-user-link-view_colored nk-link_theme_islands nk-user-link-view' + iconClass + '" href="/#!/users/' + infoProfile.banRecord.createdBy.publicId + '"><span class="nk-user-link-view__name">' + infoProfile.banRecord.createdBy.displayName + '</span>' + icon + '</a>');
+              viewElements.info.html('<a role="link" aria-disabled="false" class="nk-link nk-link-banned nk-link-user nk-user-link-view_colored nk-link_theme_islands nk-user-link-view' + iconClass + '" href="/#!/users/' + infoProfile.banRecord.createdBy.publicId + '"><span class="nk-user-name-view nk-user-name-view_colored"><span class="nk-user-name-view__name">' + infoProfile.banRecord.createdBy.displayName + '</span>' + icon + '</span></a>');
 
               if (!!icon.length) {
                 const iconRole = viewElements.info.find(".nk-link-banned .nk-icon");
-                iconRole.hover(() => {
-                  popupShow(iconRole, textIcon)
-                }, () => {
-                  popup.removeClass("nk-popup_visible");
-                });
+                popupShow(iconRole, textIcon);
               }
 
               ///////
@@ -694,7 +654,9 @@
     
     viewElements.header.viewClose = creatElement(viewElements.header.parent, ["nk-sidebar-header-view__close", "nk-grid__col"], ".nk-sidebar-header-view__close");
     viewElements.header.viewClose.html('<span class="nk-icon nk-icon_id_close nk-icon_align_auto nk-icon_interactive"><svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="m9.58579 11-5.43934-5.43934c-.19527-.19526-.19527-.51184 0-.70711l.7071-.7071c.19527-.19527.51185-.19527.70711 0l5.43934 5.43934 5.4393-5.43934c.1953-.19527.5119-.19527.7071 0l.7072.7071c.1952.19527.1952.51185 0 .70711l-5.4394 5.43934 5.4394 5.4393c.1952.1953.1952.5119 0 .7071l-.7072.7072c-.1952.1952-.5118.1952-.7071 0l-5.4393-5.4394-5.43934 5.4394c-.19526.1952-.51184.1952-.70711 0l-.7071-.7072c-.19527-.1952-.19527-.5118 0-.7071z"></path></svg></span>');
-    
+
+    let popup = $(".nk-portal-local .nk-popup");
+
     viewElements.header.viewClose.on('click', hideView);
     viewElements.header.viewClose.hover(() => {
       popup.css({ "left": window.innerWidth - MAGIC_LEFT_CLOSE + "px", "top": "105px" });
@@ -703,13 +665,7 @@
     }, () => {
       popup.removeClass("nk-popup_visible");
     });
-    
-    /* Заготовка под всплывающее окно */
-    $(".nk-portal-local").remove();
 
-    $("body").append('<div class="nk-portal nk-portal-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_view_tooltip" style="z-index: 111001;"><div class="nk-size-observer"><div class="nk-popup__content"></div></div></div><!----><!----></div>');
-    const popup = $(".nk-portal-local .nk-popup");
-    
     // Содержимое окна
     viewElements.content = {};
     

@@ -8,7 +8,7 @@
   const text = window.appChrome.text.blocked;
   let lastUser = null;
 
-  let countBan = 0;
+  const popupShow = window.appChrome.popupShow;
 
   const showBlocked = () => {
     if (!window.appChrome.startStatus) return;
@@ -44,9 +44,20 @@
 
         portal.removeClass("nk-popup_visible");
 
-        const term = countBan >= 2 ? 7 : text.pattern[id].term;
+        window.appChrome.notification("suggest", text.pattern[id].term, 3);
+        $(".nk-warnings-blocked").remove();
 
-        window.appChrome.notification("suggest", "Не забудьте указать срок блокировки, рекомендуемый — " + term, 3);
+        if (text.pattern[id].warning) {
+          const warning = text.pattern[id].warning;
+
+          textarea.parent().parent().parent().after('<div class="nk-warnings-blocked nk-section nk-section_level_2"><div class="nk-warning-blocked"><span class="nk-icon nk-icon_id_warning-small nk-icon_align_auto nk-warning-blocked_alert-icon"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M10.504 5.726c.55-.953 1.443-.952 1.992 0l5.508 9.547c.55.953.103 1.726-.996 1.726h-11.016c-1.1 0-1.545-.774-.996-1.726l5.508-9.547z" fill="#FFB000"></path><path fill="#fff" d="M11 9h1v4h-1zM11 14h1v1h-1z"></path></svg></span>' + warning.title + '<span class="nk-icon nk-icon_id_help-small nk-icon_align_auto nk-system__info-icon"><svg xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd" transform="scale(0.7) translate(5, 5)"><path d="M11 21c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0-1.8c4.529 0 8.2-3.671 8.2-8.2s-3.671-8.2-8.2-8.2-8.2 3.671-8.2 8.2 3.671 8.2 8.2 8.2zM10.885 6.048c.956 0 1.751.229 2.384.686.633.457.949 1.134.949 2.031 0 .55-.138 1.014-.413 1.39-.161.229-.47.521-.927.876l-.451.349c-.245.19-.408.413-.489.667-.051.161-.078.41-.083.749h-1.714c.025-.715.093-1.209.203-1.482.11-.273.394-.587.851-.943l.463-.362c.152-.114.275-.239.368-.375.169-.233.254-.489.254-.768 0-.322-.094-.615-.282-.879-.188-.264-.532-.397-1.031-.397-.491 0-.839.163-1.044.489-.205.326-.308.664-.308 1.016h-1.834c.051-1.206.472-2.061 1.263-2.564.499-.322 1.113-.482 1.841-.482zM10 14h2v2h-2v-2z"></path></g></svg></span></div></div>');
+
+          $(".nk-warnings-blocked .nk-icon_id_help-small").hover(() => {
+            popupShow($(".nk-warnings-blocked .nk-icon_id_help-small"), warning.gaid);
+          }, () => {
+            $(".nk-portal-local .nk-popup").removeClass("nk-popup_visible");
+          });
+        }
       });
     });
 
@@ -120,42 +131,6 @@
       lastUser = userId;
 
       buttonLock.on("click", showBlocked);
-
-      const hesh_user = window.location.href.replace("https://n.maps.yandex.ru/#!/", "");
-      const publicID = hesh_user.split("/")[1].split("?")[0];
-
-      const config = JSON.parse($("#config").text());
-      const data = [
-        {
-          "method": "acl/getBanHistory",
-          "params": {
-            "userPublicId": publicID,
-            "token": JSON.parse(localStorage.getItem("nk:token")),
-          }
-        },
-      ];
-
-      $.ajax({
-        type: "POST",
-        headers: {
-          'x-kl-ajax-request': 'Ajax_Request',
-          'x-csrf-token': config.api.csrfToken,
-          'x-lang': 'ru'
-        },
-        url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
-        dataType: "json",
-        data: JSON.stringify(data),
-        success: function (response) {
-          if (response.data[0].error) return;
-
-          const info = response.data[0].data;
-          countBan = 0;
-
-          info.forEach((value) => {
-            if (value.action === "ban") countBan++;
-          });
-        }
-      });
     }
   });
 

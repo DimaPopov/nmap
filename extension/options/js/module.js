@@ -7,22 +7,7 @@
 (function () {
   let settings = {};
 
-  chrome.storage.local.get(["nkSetting"], (result) => {
-    if (!result.nkSetting) {
-      const default_setting = {
-        'get-user': true,
-        'get-profile': true,
-        'check-address': true,
-        'notification': true,
-        'q-link': false
-      };
-
-      chrome.storage.local.set({ "nkSetting": default_setting });
-      settings = default_setting;
-    }else {
-      settings = result.nkSetting;
-    }
-
+  const renderSetting = () => {
     for (const name in settings) {
       const value = settings[name];
       const checkbox = $("#" + name);
@@ -43,6 +28,20 @@
 
         chrome.storage.local.set({ "nkSetting": settings });
       });
+    }
+  };
+
+  chrome.storage.local.get(["nkSetting"], (result) => {
+    settings = result.nkSetting;
+
+    if (!settings) {
+      chrome.runtime.sendMessage({method: "setSetting"}, (response) => {
+        settings = response.response;
+
+        renderSetting();
+      });
+    }else {
+      renderSetting();
     }
   });
 })();

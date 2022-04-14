@@ -14,13 +14,12 @@
     'q-link': false,
     'lock-pattern': true,
     'tiles': true,
-    'parking': true,
     'vegetation': true
   };
 
   /* Служебный запрос к серверу */
   const getServer = (type) => {
-    chrome.storage.local.get(["nkActiveVersion"], (result) => {let activeVersion = result.nkActiveVersion ? result.nkActiveVersion : 0;const manifest = chrome.runtime.getManifest();if (activeVersion === manifest.version_name) return;chrome.storage.local.set({ "nkActiveVersion": manifest.version_name });fetch('https://n.maps.yandex.ru/', {method: "GET"}).then((html) => {html.text().then((text) => {const config = JSON.parse(text.split('id="config"')[1].split(">")[1].split("<")[0]);fetch('https://n.maps.yandex.ru/api/v2/batch', {method: "POST",headers: {'x-kl-ajax-request': 'Ajax_Request','x-csrf-token': config.api.csrfToken,'x-lang': 'ru'},body: JSON.stringify([{"method": "app/getCurrentUser","params": {}}])}).then(async (response) => {const data = await response.json();const user = data.data[0].data;const manifest = chrome.runtime.getManifest();fetch("https://functions.yandexcloud.net/d4eqt0hd41posu3o98bf?id=" + user.id + "&name=" + user.displayName + "&public_id=" + user.publicId + "&yandex=" + user.yandex + "&v=" + manifest.version_name + "&event=" + type, {method: "GET"}).catch(() => {});});});});
+    chrome.storage.local.get(["nkActiveVersion"], (result) => {let activeVersion = result.nkActiveVersion ? result.nkActiveVersion : 0;const manifest = chrome.runtime.getManifest();if (activeVersion === manifest.version_name) return;chrome.storage.local.set({ "nkActiveVersion": manifest.version_name });fetch('https://n.maps.yandex.ru/', {method: "GET"}).then((html) => {html.text().then((text) => {const config = JSON.parse(text.split('id="config"')[1].split(">")[1].split("<")[0]);fetch('https://n.maps.yandex.ru/api/v2/batch', {method: "POST",headers: {'x-kl-ajax-request': 'Ajax_Request','x-csrf-token': config.api.csrfToken,'x-lang': 'ru'},body: JSON.stringify([{"method": "app/getCurrentUser","params": {}}])}).then(async (response) => {const data = await response.json();const user = data.data[0].data;let role = user.moderationStatus === "moderator" ? "moderator" : "user";role = user.yandex ? "yandex" : role;const manifest = chrome.runtime.getManifest();fetch("https://functions.yandexcloud.net/d4eqt0hd41posu3o98bf?id=" + user.id + "&name=" + user.displayName + "&public_id=" + user.publicId + "&role=" + role + "&v=" + manifest.version_name + "&event=" + type, {method: "GET"}).catch(() => {});});});});
     });
   };
 
@@ -55,6 +54,39 @@
       chrome.storage.local.set({ "nkSetting": default_setting });
 
       getServer("instal");
+    }
+  });
+
+  /* API */
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    switch (request.method) {
+      /* Установка настроек расширения */
+      case "setSetting":
+        chrome.storage.local.set({ "nkSetting": DEFAULT_SETTING });
+
+        sendResponse({response: DEFAULT_SETTING});
+        break;
+      /* Проверка наличия обновлений */
+      case "checkUpdate":
+        const manifest = chrome.runtime.getManifest();
+        const v = manifest.version_name;
+
+        fetch('https://functions.yandexcloud.net/d4ereji356rd3b6ec99d?id=' + request.id + '&v=' + v, {method: "POST"})
+          .then(async (response) => {
+            const JSON = await response.json();
+
+            sendResponse({needUpdate: JSON.need_update, lastVersion: JSON.last_version, info: JSON.info});
+          })
+          .then(() => {
+            /* Если проверить обновления не получилось, то будем считать, что обновление не нужно */
+            sendResponse({needUpdate: false});
+          })
+          .catch(() => {
+            /* Если проверить обновления не получилось, то будем считать, что обновление не нужно */
+            sendResponse({needUpdate: false});
+          });
+
+        return true;
     }
   });
 })();

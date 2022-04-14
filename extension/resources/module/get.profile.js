@@ -44,7 +44,7 @@
     
     if (user.status === "deleted") {
       const status = profileHeader.find(".nk-user-profile-view__status");
-      status.before('<div class="nk-user-profile-view__name nk-user-link-view_deleted">' + user.displayName + '</div>');
+      status.before('<div class="nk-user-profile-view__name nk-user-name-view_deleted">' + user.displayName + '</div>');
       
       if (user.outsourcer || user.yandex) {
         status.text("Сотрудник удалён");

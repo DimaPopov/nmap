@@ -140,7 +140,7 @@
           for (const name in setting) {
             const value = setting[name];
 
-            if (value && (access || (name !== "get-user"))) {
+            if (value && (access || (name !== "get-user" && name !== "lock-pattern"))) {
               const active_text = moduleElement.text() ? moduleElement.text() + ", " : "";
               is_module = true;
 

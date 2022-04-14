@@ -431,3 +431,59 @@
 .nk-get-user-view .nk-size-observer {
   width: 100%;
 }
+
+.nk-address-dublicate {
+  display: block;
+}
+
+.nk-address-dublicate + .nk-address-dublicate {
+  margin-top: 5px;
+}
+
+.nk-get-user-view .nk-size-observer {
+  width: 100%;
+}
+
+.nk-grid.nk-info-update {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.nk-data-loss-confirmation-view__text + .nk-info-update {
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.nk-warnings-blocked {
+  padding: 5px 0 12px;
+  margin: 0 16px 5px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.nk-warning-blocked {
+  margin-left: 25px;
+  position: relative;
+}
+
+.nk-warning-blocked_alert-icon {
+  left: -25px;
+  position: absolute;
+  top: 0;
+}
+
+.nk-portal-local .nk-popup__content {
+  white-space: pre-wrap;
+}
+
+.nk-get-user-view .nk-user-name-view__icon {
+  margin: 0 0 -4px 4px;
+}
+
+.nk-user-name-view_deleted:first-letter {
+  color: inherit !important;
+}
+
+.nk-system__info-icon {
+  margin-bottom: -8px;
+  opacity: .4;
+}
