@@ -13,7 +13,6 @@
   let checkUpdate = true;
   let startStatus = false;
   let setting = {};
-  let config = {};
   let user = {};
   let update = {};
 
@@ -50,21 +49,10 @@
         deleteUser: "удалён",
         info: {
           access: "Специальные права",
-          yndx: "Должность",
           createdAt: "Дата регистрации",
           'rating-pos-full': "Место в рейтинге",
           'total-edits': "Число правок",
           'feedback-count': "Разобрано неточности",
-          delete: {
-            yndx: {
-              time: "Уволил",
-              info: "Причина увольнения"
-            },
-            user: {
-              time: "Удалил",
-              info: "Причина удаления"
-            }
-          },
           banned: {
             time: "Срок блокировки",
             user: "Модератор",
@@ -228,7 +216,7 @@
         // Ненормативная лексика
         {
           text: "Добрый день, {user_name}!\n\nВ Народной карте запрещено использование ненормативной лексики в комментариях или профиле. Пожалуйста, пересмотрите свое отношение к картографии и за время блокировки изучите [правила](https://yandex.ru/support/nmaps/)",
-          height: 192,
+          height: 212,
           term: "Выберите любой срок блокировки, но не более 3 дней"
         },
 
@@ -449,11 +437,10 @@
 
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
       if (setting["check-address"]) window.appChrome.init.address();
-      if (setting["duplicate-addresses"]) window.appChrome.init.addressDuplicate();
-      if (setting["notification"]) window.appChrome.init.notificationRegion();
       if (setting["get-profile"]) window.appChrome.init.getProfile();
+      if (setting["duplicate-addresses"]) window.appChrome.init.addressDuplicate();
       if (setting["tiles"]) window.appChrome.init.tiles();
-      if (setting["vegetation"]) window.appChrome.init.vegetation();
+      if (setting["favorite-objects"]) window.appChrome.init.favoriteObject();
     }, 1);
 
     setTimeout(() => {
@@ -484,14 +471,18 @@
     }
   });
 
-  loadMap.observe(appPage[0], {childList: true});
-
   const getStartStatus = () => {
-    config = JSON.parse(document.querySelector("#config").innerHTML);
+    const config = window.appChrome.config;
 
     const data = [
       {
         "method": "app/getCurrentUser",
+        "params": {
+          "token": JSON.parse(localStorage.getItem("nk:token"))
+        }
+      },
+      {
+        "method": "app/getCategoriesConfig",
         "params": {
           "token": JSON.parse(localStorage.getItem("nk:token"))
         }
@@ -510,6 +501,7 @@
       data: JSON.stringify(data),
       success: function (response) {
         user = response.data[0].data;
+        window.appChrome.configGet = response.data[1].data;
 
         startStatus = user.yandex || user.outsourcer || user.moderationStatus === "moderator";
 
@@ -529,9 +521,21 @@
     setTimeout(getStartStatus, 30000);
   };
 
-  if (JSON.parse(localStorage.getItem("nk:token"))) {
-    getStartStatus();
-  }
+  $.ajax({
+    url: "https://n.maps.yandex.ru/",
+    type: "GET",
+    success: function(data) {
+      const response = new DOMParser().parseFromString(data, "text/html");
+      const config = JSON.parse(response.getElementById("config").innerHTML);
+
+      window.appChrome.config = config;
+      loadMap.observe(appPage[0], {childList: true});
+
+      if (JSON.parse(localStorage.getItem("nk:token"))) {
+        getStartStatus();
+      }
+    }
+  });
 
   ////////////////////
 
@@ -542,7 +546,9 @@
     creatElement: creatElement,
     popupShow: popupShow,
     user: user,
-    startStatus: startStatus
+    startStatus: startStatus,
+    configGet: {},
+    config: {}
   };
 
   window.needNotification = {

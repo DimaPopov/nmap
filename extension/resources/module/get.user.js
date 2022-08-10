@@ -35,8 +35,7 @@
   let lastUserID = 0;
   let isCountUser = false;
   let isLoad = true;
-  let config = {};
-  
+
   const text = window.appChrome.text.getUser;
   const creatElement = window.appChrome.creatElement;
   const popupShow = window.appChrome.popupShow;
@@ -132,6 +131,7 @@
   
   const renderUsersList = (users, isUpdate = false) => {
     if (!window.appChrome.startStatus) return;
+    const config = window.appChrome.config;
 
     const observer = $(".nk-get-user-view .nk-scrollable__content .nk-size-observer");
 
@@ -535,7 +535,7 @@
   const getUser = (after = 0) => {
     if (!window.appChrome.startStatus) return;
 
-    config = JSON.parse($("#config").text());
+    const config = window.appChrome.config;
     const login = $("#nk-login-get-user").val();
 
     if (login.length === 0) {

@@ -1,9 +1,15 @@
 
 .nk-get-user-view__filters {
-  align-items: center;
-  display: flex;
-  padding: 12px 16px 4px;
+  padding: 12px 16px;
+}
+
+.nk-get-user-view__filters .nk-grid {
   grid-gap: 10px;
+  padding: 0;
+}
+
+.nk-get-user-view__filters .nk-grid + .nk-grid {
+  padding-top: 10px;
 }
 
 .nk-no-info-user {
@@ -78,7 +84,7 @@
 }
 
 .nk-info-user__access {
-  grid-gap: 5px;
+  gap: 5px 10px;
   margin-top: 2px;
 }
 
@@ -86,19 +92,23 @@
   padding: 0;
 }
 
-.nk-user-stat-badge-view {
+.nk-info-user__access .nk-user-stat-badge-view {
   display: block;
   height: 16px;
   width: 16px;
-  cursor: pointer;
 }
 
-.nk-user-stat-badge-view_id_indoor-group {
+.nk-info-user__access .nk-user-stat-badge-view_id_indoor-group {
   background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/004640bb278e7f041c69.svg);
 }
 
-.nk-user-stat-badge-view_id_transport-group {
+.nk-info-user__access .nk-user-stat-badge-view_id_transport-group {
   background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/a1a8707f5d2b4c6dcf48.svg);
+}
+
+.nk-info-user__access .nk-user-stat-badge-view_id_feedback-group {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' height='32' viewBox='0 0 32 32' width='32' fill='none'%3e%3cg%3e%3crect xmlns='http://www.w3.org/2000/svg' fill='%23fa0' rx='15' width='32' height='32'/%3e%3cpath clip-rule='evenodd' d='m14.1048 9.88669c-.0579-1.04199.7435-1.88669 1.8015-1.88669h.1874c1.0528 0 1.8593.8467 1.8015 1.88669l-.3115 5.60691c-.0462.832-.7495 1.5064-1.5837 1.5064-.8284 0-1.5376-.6765-1.5837-1.5064zm-.1048 11.11331c0-1.1046.8877-2 2-2 1.1046 0 2 .8877 2 2 0 1.1046-.8877 2-2 2-1.1046 0-2-.8877-2-2z' fill='%23fff' fill-rule='evenodd'/%3e%3c/g%3e%3c/svg%3e");
+  background-size: 16px;
 }
 
 .nk-info-user__user-badge {
@@ -203,6 +213,10 @@
   cursor: pointer;
 }
 
+.nk-info-title {
+  color: #4D4D4D;
+  padding: 12px 0;
+}
 
 .nk-get-user-view .nk-user-stat-view__category-group {
   display: inline-block;
@@ -311,7 +325,7 @@
 }
 
 .nk-get-user-view .nk-user-stat-badge-view_id_moderator {
-  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/e328021544f2666f7828.svg)
+  background: no-repeat 50% url(https://yastatic.net/s3/front-maps-static/maps-front-nmaps/_/e328021544f24D4D4Df7828.svg)
 }
 
 .nk-get-user-view .nk-user-stat-badge-view_id_moderator-disabled {
@@ -378,6 +392,44 @@
   color: #bfbfbf !important;
 }
 
+.nk-get-user-view .nk-get-user-view__filters .nk-all-block .nk-grid__col_span_2 {
+  width: 68px;
+}
+
+.nk-get-user-view .nk-get-user-view__filters .nk-all-block .nk-grid__col_span_10 {
+  margin-left: 0;
+}
+
+.nk-get-user-view .nk-get-user-view__filters .nk-role-list {
+  overflow: hidden;
+}
+
+.nk-get-user-view input[type="number"]::-webkit-outer-spin-button,
+.nk-get-user-view input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.nk-get-user-view input[type='number'],
+.nk-get-user-view input[type="number"]:hover,
+.nk-get-user-view input[type="number"]:focus {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.nk-get-user-view .nk-list-item-info-user_details-block .nk-acl-policy-view_public {
+  background-color: #bde39c;
+  border-color: rgba(110,179,50,.9);
+  word-wrap: break-word;
+  margin: 4px 4px 0 0;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.nk-get-user-view .nk-list-item-info-user_details-block .nk-tag-view {
+  margin: 4px 4px 0 0;
+  cursor: pointer;
+}
+
 .nk-creat-banned-date,
 .nk-expires-banned-date {
   cursor: pointer;
@@ -394,8 +446,89 @@
   margin-left: 20px;
 }
 
+.nk-portal-local .nk-popup__content {
+  white-space: pre-wrap;
+}
+
+.nk-button_theme_islands.nk-button_size_m.nk-button_access .nk-button__text {
+  margin: 7px;
+  line-height: 3px;
+}
+
+.nk-permissions-view .nk-acl-user-permissions-view__root {
+  list-style-type: none;
+  margin: 0;
+  padding: 0
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node {
+  margin: 4px 16px;
+  position: relative;
+  overflow-y: clip;
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__label {
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 4px;
+  text-effect: engrave;
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__label_disabled {
+  color: rgba(0,0,0,.4);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__children {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__expand-switcher,.nk-acl-user-permissions-tree-node__progress {
+  position: absolute
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__progress {
+  left: -18px;
+  top: 3px
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__expand-switcher {
+  left: -21px;
+  transition: transform .1s
+}
+
+.nk-permissions-view .nk-acl-user-permissions-tree-node__expand-switcher_expanded {
+  transform: rotate(90deg)
+}
+
+.nk-permissions-view .nk-scrollable__container {
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.nk-permissions-view .nk-scrollable__container .nk-user-profile-view__group-title {
+  margin-top: 0;
+}
+
+.nk-permissions-view .nk-icon_id_close {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  z-index: 100;
+}
+
 .nk-button.nk-button-lock-pattern {
   margin-left: 10px;
+}
+
+.nk-user-profile-view__transport + .nk-user-profile-view__transport {
+  margin-top: 15px;
 }
 
 .nk-portal_edit-tile .nk-map-layers-control-view__actions {
@@ -432,18 +565,6 @@
   width: 100%;
 }
 
-.nk-address-dublicate {
-  display: block;
-}
-
-.nk-address-dublicate + .nk-address-dublicate {
-  margin-top: 5px;
-}
-
-.nk-get-user-view .nk-size-observer {
-  width: 100%;
-}
-
 .nk-grid.nk-info-update {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -471,10 +592,6 @@
   top: 0;
 }
 
-.nk-portal-local .nk-popup__content {
-  white-space: pre-wrap;
-}
-
 .nk-get-user-view .nk-user-name-view__icon {
   margin: 0 0 -4px 4px;
 }
@@ -486,4 +603,72 @@
 .nk-system__info-icon {
   margin-bottom: -8px;
   opacity: .4;
+}
+
+.nk-background-warning {
+  background: #fffae5;
+}
+
+.nk-background-warning-top {
+  margin-top: -4px;
+}
+
+.nk-bottom-chrome {
+  margin-bottom: 7px;
+  word-wrap: break-word;
+}
+
+/* Любимые объекты */
+
+.nk-button_theme_air.nk-favorite-objects {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nk-button_theme_air.nk-favorite-objects a {
+  margin: 0 3px;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-geoobject-icon {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-geoobject-icon.nk-geoobject-icon_id_category-urban-roadnet-parking-lot {
+  border-radius: 3px;
+}
+
+.nk-button_theme_air.nk-favorite-objects a:first-child:not(:last-child) .nk-geoobject-icon {
+  margin-top: 6px;
+}
+
+.nk-button_theme_air.nk-favorite-objects a:last-child:not(:first-child) .nk-geoobject-icon {
+  margin-bottom: 6px;
+}
+
+/* */
+
+.nk-revert-commit-view__alert {
+  margin-left: 40px;
+  position: relative;
+  color: #999;
+}
+
+.nk-revert-commit-view__alert-icon {
+  left: -40px;
+  position: absolute;
+  top: 10px;
+}
+
+.nk-revert-commit-view__alert-icon.nk-icon>svg {
+  width: 30px;
+  height: 30px;
 }

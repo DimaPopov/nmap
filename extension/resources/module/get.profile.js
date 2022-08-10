@@ -6,8 +6,7 @@
 
 (function () {
   let lastId = null;
-  let config = {};
-  
+
   const month = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   
   const text = window.appChrome.text.getUser;
@@ -37,6 +36,7 @@
    */
   
   const renderProfile = (user) => {
+    const config = window.appChrome.config;
     const popup = $(".nk-portal-local .nk-popup");
 
     const profileView = $(".nk-user-profile-view");
@@ -187,7 +187,7 @@
   
   const loadDataProfile = (login) => {
     if (!login) return false;
-    config = JSON.parse(document.querySelector("#config").innerHTML);
+    const config = window.appChrome.config;
             
     const data = [
         {
@@ -242,7 +242,7 @@
                 
     if (isUser && lastId !== userId && $(".nk-user-profile-view")[0]) {
       lastId = userId;
-      config = JSON.parse(document.querySelector("#config").innerHTML);
+      const config = window.appChrome.config;
             
       const data = [
           {

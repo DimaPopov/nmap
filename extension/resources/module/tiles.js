@@ -6,9 +6,8 @@
 
 (function () {
   const text = window.appChrome.text.tiles;
-  let mapElement = null;
-
   const popupShow = window.appChrome.popupShow;
+  let mapElement = null;
 
   const showPanel = () => {
     $(".nk-portal-local .nk-popup").removeClass("nk-popup_visible nk-popup_direction_bottom-right");
@@ -44,8 +43,6 @@
     }
 
     mapElement.css("filter", filterList.join(" "));
-    //TODO Убрать эту надпись в релизе
-    listBlock.append('<p class="nk-info-text-todo">Пожалуйтса, оставьте отзыв<br>об этой функции в <a href="https://forms.gle/g4e5bc3b1tpvu1KN6" target="_blank" class="nk-link-panel-view__title">спеицальной форме</a></p>');
 
     const element = $(".nk-portal_edit-tile .nk-popup");
     $(document).off("mouseup");
@@ -70,8 +67,14 @@
     zoomButton.before('<button aria-disabled="false" class="nk-button nk-button_theme_air nk-button_edit-tiles nk-button_size_xl nk-map-ruler-control-view" aria-pressed="false" type="button"><span class="nk-icon nk-icon_id_ruler nk-icon_align_auto"><svg height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m14 2c-1 1-2 1-2 1s1 0 2 1 1 2 1 2 0-1 1-2 2-1 2-1-1 0-2-1-1-2-1-2 0 1-1 2z"></path><path d="m5.33334 5.33333c-1.16667 1.16667-2.33333 1.16667-2.33333 1.16667s1.16666 0 2.33333 1.16667c1.16667 1.16666 1.16667 2.33333 1.16667 2.33333s0-1.16667 1.16666-2.33333c1.16667-1.16667 2.33333-1.16667 2.33333-1.16667s-1.16666 0-2.33333-1.16667c-1.16666-1.16666-1.16666-2.33333-1.16666-2.33333s0 1.16667-1.16667 2.33333z"></path><path d="m15 11.5s.8333 0 1.6667-.8333c.8333-.83337.8333-1.6667.8333-1.6667s0 .83333.8334 1.6667c.8333.8333 1.6666.8333 1.6666.8333s-.8333 0-1.6666.8333c-.8334.8334-.8334 1.6667-.8334 1.6667s0-.8333-.8333-1.6667c-.8334-.8333-1.6667-.8333-1.6667-.8333z"></path><path d="m14.3744 9.03991-1.0607 1.06069-1.4142-1.41425 1.0607-1.06066c.1952-.19526.5118-.19526.7071 0l.7071.70711c.1953.19526.1953.51185 0 .70711z"></path><path d="m2.14864 18.4397 9.04376-9.04624 1.4142 1.41424-9.04374 9.0462c-.19526.1953-.51185.1953-.70711 0l-.70711-.7071c-.19526-.1953-.19526-.5118 0-.7071z"></path></svg></span></button>');
     const editTilesButton = menuBlock.find(".nk-button_edit-tiles");
 
-    popupShow(editTilesButton, text.popup);
+    popupShow(editTilesButton, text.popup)
     editTilesButton.click(showPanel);
+
+    editTilesButton.hover(() => {
+      editTilesButton.addClass("nk-button_hovered");
+    }, () => {
+      editTilesButton.removeClass("nk-button_hovered");
+    });
   };
 
   window.appChrome.init.tiles = initTiles;

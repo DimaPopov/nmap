@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Дополнительные инструменты",
   "description": "Расширение добавляет новые специальные возможности в Народную карту",
-  "version": "4.0.0",
-  "version_name": "4.0.0",
+  "version": "4.0.1",
+  "version_name": "4.0.1 beta",
   "icons": {
     "128": "icon.png"
   },
@@ -11,21 +11,24 @@
     {
       "matches": ["https://n.maps.yandex.ru/*"],
       "css": [
-        "/resources/style.css" 
+        "/resources/style.css"
       ],
       "js": [
         "jquery-3.3.1.min.js",
         "debounce.js",
         "/resources/init.js",
         "/resources/notifications.js",
-        "/resources/module/address.js",
-        "/resources/module/duplicate.addresses.js",
+        "/resources/event.object.js",
+        "/resources/module/check.address.js",
         "/resources/module/get.user.js",
         "/resources/module/get.profile.js",
-        "/resources/module/notifications.region.js",
         "/resources/module/lock.pattern.js",
         "/resources/module/tiles.js",
-        "/resources/module/vegetation.js"
+        "/resources/module/favorite.objects.js",
+        "/resources/module/object/vegetation.js",
+        "/resources/module/object/road.js",
+        "/resources/module/object/indoor.plan.js",
+        "/resources/module/object/address.js"
       ]
     },
     {

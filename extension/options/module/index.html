@@ -9,83 +9,80 @@
     <h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" width="22" height="22"><path fill="#666" d="M18.107 10.993l1.51 1.048a.884.884 0 0 1 .001 1.456l-7.367 5.13c-.716.498-1.786.498-2.502 0l-7.367-5.13a.884.884 0 0 1 0-1.456l1.511-1.048-1.511-1.052a.884.884 0 0 1 0-1.456L9.75 3.372c.715-.496 1.784-.496 2.5 0l7.367 5.113a.884.884 0 0 1 .001 1.456l-1.511 1.052zM11.216 4.83c-.095-.066-.337-.066-.432 0L4.462 9.216l6.323 4.399c.095.065.336.065.43 0l6.317-4.398-6.316-4.388z"></path></svg> Модули</h1>
     <p class="p" style="margin-bottom: 20px;">Вы можете выбрать какие функции и модули Вам нужны, отключенные модули не будут запускаться во время работы с Народной картой</p>
     <!---->
-    <div class="doc-section">
-      <div class="item-checkbox p">
-        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-          <span class="checkbox__box">
-            <input class="checkbox__control" type="checkbox" id="notification">
-            <i class="checkbox__tick"></i>
-          </span>
-          <label class="checkbox__label" aria-hidden="true" id="lable-notification" for="notification">
-            <div class="safe-content">
-              <p class="title">Уведомления о новых правках в подписках</p>
-              <p class="description">Добавляет возможность настроить уведомления о новых правках в конкретных подписках<br><span style="font-size: 12px; opacity: .5">Информация обновляется раз в минуту</span></p>
-            </div>
-          </label>
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="check-address">
+          <i class="checkbox__tick"></i>
         </span>
-      </div>
-      <!---->
-      <div class="item-checkbox p">
-        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-          <span class="checkbox__box">
-            <input class="checkbox__control" type="checkbox" id="check-address">
-            <i class="checkbox__tick"></i>
-          </span>
-          <label class="checkbox__label" aria-hidden="true" id="lable-check-address" for="check-address">
-            <div class="safe-content">
-              <p class="title">Проверка адресов</p>
-              <p class="description">Добавляет возможность проверить адреса добавленные в Яндекс.Карты</p>
-            </div>
-          </label>
-        </span>
-      </div>
-      <!---->
-      <div class="item-checkbox p">
-        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-          <span class="checkbox__box">
-            <input class="checkbox__control" type="checkbox" id="duplicate-addresses">
-            <i class="checkbox__tick"></i>
-          </span>
-          <label class="checkbox__label" aria-hidden="true" id="lable-duplicate-addresses" for="duplicate-addresses">
-            <div class="safe-content">
-              <p class="title">Поиск дубликатов адресов</p>
-              <p class="description">Ищет дубликаты адресов, в случае их обнаружения выводит в карточку адреса предупреждение</p>
-            </div>
-          </label>
-        </span>
-      </div>
-      <!---->
-      <div class="item-checkbox p">
-        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-          <span class="checkbox__box">
-            <input class="checkbox__control" type="checkbox" id="q-link">
-            <i class="checkbox__tick"></i>
-          </span>
-          <label class="checkbox__label" aria-hidden="true" id="lable-q-link" for="q-link">
-            <div class="safe-content">
-              <p class="title">Переход в профиль из Яндекс.Кью</p>
-              <p class="description">Добавляет возможность перейти в <a href="https://yandex.ru/q/" target="_blank">Яндекс.Кью</a> в профиль пользователя в Народной карте</p>
-            </div>
-          </label>
-        </span>
-      </div>
-      <!---->
-      <div class="item-checkbox p">
-        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-          <span class="checkbox__box">
-            <input class="checkbox__control" type="checkbox" id="tiles">
-            <i class="checkbox__tick"></i>
-          </span>
-          <label class="checkbox__label" aria-hidden="true" id="lable-tiles" for="tiles">
-            <div class="safe-content">
-              <p class="title">Цветовая коррекция спутниковых снимков</p>
-              <p class="description">Добавляет возможность настраивать подложку под различные параметры</p>
-            </div>
-          </label>
-        </span>
-      </div>
+        <label class="checkbox__label" aria-hidden="true" id="lable-check-address" for="check-address">
+          <div class="safe-content">
+            <p class="title">Проверка адресов</p>
+            <p class="description">Добавляет возможность проверить адреса добавленные в Яндекс.Карты</p>
+          </div>
+        </label>
+      </span>
     </div>
     <!---->
+    <div class="item-checkbox p">
+        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+          <span class="checkbox__box">
+            <input class="checkbox__control" type="checkbox" id="favorite-objects">
+            <i class="checkbox__tick"></i>
+          </span>
+          <label class="checkbox__label" aria-hidden="true" id="lable-favorite-objects" for="favorite-objects">
+            <div class="safe-content">
+              <p class="title">Любимые объекты</p>
+              <p class="description">Включает в левом меню блок с любимыми категорями объектов, которые доступны для быстрого создания</p>
+            </div>
+          </label>
+        </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="object_addr">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-object_addr" for="object_addr">
+          <div class="safe-content">
+            <p class="title">Поиск дубликатов адресов</p>
+            <p class="description">Ищет дубликаты адресов, в случае их обнаружения выводит в карточку адреса предупреждение</p>
+          </div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="q-link">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-q-link" for="q-link">
+          <div class="safe-content">
+            <p class="title">Переход в профиль из Яндекс.Кью</p>
+            <p class="description">Добавляет возможность в <a href="https://yandex.ru/q/" target="_blank">Яндекс.Кью</a> перейти в профиль пользователя в Народной карте</p>
+          </div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="tiles">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-tiles" for="tiles">
+          <div class="safe-content">
+            <p class="title">Цветовая коррекция спутниковых снимков</p>
+            <p class="description">Добавляет возможность настраивать подложку под различные параметры</p>
+          </div>
+        </label>
+      </span>
+    </div>
     <h2>Подгрузка дополнительной информации</h2>
     <p class="p" style="margin-bottom: 20px;">Вы можете выбрать, какую информацию необходимо отображать</p>
     <!---->
@@ -107,13 +104,28 @@
     <div class="item-checkbox p">
       <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
         <span class="checkbox__box">
-          <input class="checkbox__control" type="checkbox" id="vegetation">
+          <input class="checkbox__control" type="checkbox" id="object_vegetation">
           <i class="checkbox__tick"></i>
         </span>
-        <label class="checkbox__label" aria-hidden="true" id="lable-vegetation" for="vegetation">
+        <label class="checkbox__label" aria-hidden="true" id="lable-object_vegetation" for="object_vegetation">
           <div class="safe-content">
             <p class="title">Детальность отрисовки парков и скверов</p>
             <p class="description">Загружает информацию о детальности отрисовки парков и скверов</p>
+          </div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="object_indoor_plan">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-object_indoor_plan" for="object_indoor_plan">
+          <div class="safe-content">
+            <p class="title">Публикация схемы помещения в Я.Картах</p>
+            <p class="description">Загружает информацию о том публикуется ли схема помещений в Я.Картах</p>
           </div>
         </label>
       </span>

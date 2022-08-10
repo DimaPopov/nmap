@@ -9,12 +9,15 @@
     'get-user': true,
     'get-profile': true,
     'check-address': false,
-    'duplicate-addresses': true,
-    'notification': true,
     'q-link': false,
     'lock-pattern': true,
     'tiles': true,
-    'vegetation': true
+    'favorite-objects': false,
+    'object:parking': true,
+    'object:vegetation': true,
+    'object:rd_el': true,
+    'object:indoor_plan': true,
+    'object:addr': true
   };
 
   /* Служебный запрос к серверу */

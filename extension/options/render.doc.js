@@ -25,6 +25,14 @@
       {
         label: "Модули",
         link: "/options/module/index.html",
+        switcher: [
+          {
+            label: "Любимые объекты",
+            link: "/options/module/favorite-objects.html",
+            module: true,
+            setting_name: "favorite-objects"
+          }
+        ]
       },
       {
         label: "Системная информация",
@@ -36,23 +44,7 @@
 
 
   let settings = {};
-
-  chrome.storage.local.get(["nkSetting"], (result) => {
-    if (!result.nkSetting) {
-      const default_setting = {
-        'tile': false,
-        'get-user': true,
-        'get-profile': true,
-        'check-address': true,
-        'q-link': false
-      };
-
-      chrome.storage.local.set({ "nkSetting": default_setting });
-      settings = default_setting;
-    }else {
-      settings = result.nkSetting;
-    }
-  });
+  chrome.storage.local.get(["nkSetting"], (result) =>  settings = result.nkSetting);
 
 
   const renderMenyItem = (parent, itemData, submeny = false) => {
@@ -95,10 +87,6 @@
       itemData.switcher.forEach((itemSubmeny) => {
         renderMenyItem(item, itemSubmeny, true);
       });
-    }
-
-    if (itemData.module && !settings[itemData.setting_name]) {
-      item.find(".link").addClass("link_disabled_yes");
     }
   };
 

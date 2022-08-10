@@ -1,16 +1,18 @@
 'use strict';
 
 /**
-* Добавляет возможность взаимодействовать с уведомлениями
+* взаимодействовать с уведомлениями
 */
 
 (function () {
   /**
   * Создание нового уведомления
   */
-  
-  const showNotification = (type, text, durationInSeconds = 5) => {
-    const notificationTemplate = '<div class="custom-notification nk-notification-view nk-notification-view_type_{type}"><div class="nk-notification-view__content">{text}</div></div>';
+
+  //progress
+
+  const showNotification = (type, text, durationInSeconds = 5, progress = false) => {
+    const notificationTemplate = '<div class="custom-notification nk-notification-view nk-notification-view_type_{type}">' + (progress ? '<span class="nk-icon nk-icon_id_spinner nk-icon_align_auto nk-notification-view__progress"><span class="nk-spinner nk-spinner_theme_islands nk-spinner_size_xs"></span></span>' : '') + '<div class="nk-notification-view__content">{text}</div></div>';
     const preservedNotification = $(".nk-notification-view_type_suggest:not(.custom-notification)");
     const doNotRestoreNotification = preservedNotification ? preservedNotification.hasClass("nk-notification-view_animation-stage_leaving") : true;
     
@@ -47,7 +49,7 @@
   */
   
   const hideNotification = (bubble) => {
-    if (!bubble) return;
+    if (!bubble[0]) return;
     
     bubble.removeClass("nk-notification-view_animation-stage_leaving");
   }
