@@ -105,7 +105,7 @@
                 setTimeout(() => {
                   const input = $(".nk-sidebar-view:not(.nk-geoobject-viewer-view):not([style]) .nk-suggest .nk-text-input__control");
 
-                  input.val(popup);
+                  input.val(rubric ? rubric : object);
 
                   input[0].dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
                   input[0].dispatchEvent(new KeyboardEvent('keypress', { bubbles: true }));
