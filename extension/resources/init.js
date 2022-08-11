@@ -90,10 +90,6 @@
         }
       }
     },
-    notificationRegion: {
-      checkbox: "Уведомлять о новых правках",
-      over20: "более 20 новых правок",
-    },
     categories: {
       "rd-group": {
         title: "Дороги",
@@ -293,6 +289,60 @@
           unit: ""
         }
       }
+    },
+    road: {
+      l135: {
+        title: "резкий поворот налево",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M5.111 7.233l-2.121 7.778 7.778-2.121-2.184-2.184 3.584-3.584c1.324-1.324 1.833-1.115 1.833.745v12.133h2v-12.133c0-3.644-2.665-4.741-5.247-2.159l-3.584 3.584-2.058-2.058z"/></svg>'
+      },
+      l180: {
+        title: "левый разворот",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M6 9h-3l4 7 4-7h-3v-1c0-1.654 1.345-3 3-3 1.654 0 3 1.345 3 3v12h2v-12c0-2.76-2.242-5-5-5-2.76 0-5 2.242-5 5v1z"/></svg>'
+      },
+      l45: {
+        title: "плавно налево",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M7.111 10.767l-2.121-7.778 7.778 2.121-2.184 2.184 3.414 3.414c.579.579 1.003 1.597 1.003 2.414v7.878h-2v-7.878c0-.285-.212-.795-.417-1l-3.414-3.414-2.058 2.058z"/></svg>'
+      },
+      l90: {
+        title: "налево",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M10 10h10v2h-10v3l-7-4 7-4z"/></svg>'
+      },
+      lr: {
+        title: "налево через разворот",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M11 6v-3l-7 4 7 4v-3h3.009c1.653 0 2.991 1.342 2.991 3 0 1.654-1.346 3-3.002 3h-3.992c-2.209 0-4.006 1.786-4.006 3.991v2.009h2v-2.009c0-1.097.899-1.991 2.006-1.991h3.992c2.761 0 5.002-2.242 5.002-5 0-2.762-2.232-5-4.991-5h-3.009z"/></svg>'
+      },
+      r135: {
+        title: "резко направо",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M16.889 7.234l2.121 7.778-7.778-2.121 2.184-2.184-3.584-3.584c-1.324-1.324-1.833-1.115-1.833.745v12.133h-2v-12.133c0-3.644 2.665-4.741 5.247-2.159l3.584 3.584 2.058-2.058z"/></svg>'
+      },
+      r180: {
+        title: "правый разворот",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M19 9l-4 7-4-7h3v-1c0-1.654-1.345-3-3-3-1.654 0-3 1.345-3 3v12h-2v-12c0-2.76 2.242-5 5-5 2.76 0 5 2.242 5 5v1h3z"/></svg>'
+      },
+      r45: {
+        title: "плавно направо",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M14.889 10.767l2.121-7.778-7.778 2.121 2.184 2.184-3.414 3.414c-.579.579-1.003 1.597-1.003 2.414v7.878h2v-7.878c0-.285.212-.795.417-1l3.414-3.414 2.058 2.058z"/></svg>'
+      },
+      r90: {
+        title: "направо",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M13 12h-10v-2h10v-3l7 4-7 4v-3z"/></svg>'
+      },
+      rl: {
+        title: "направо через разворот",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M11 6v-3l7 4-7 4v-3h-3.009c-1.653 0-2.991 1.342-2.991 3 0 1.654 1.346 3 3.002 3h3.992c2.209 0 4.006 1.786 4.006 3.991v2.009h-2v-2.009c0-1.097-.899-1.991-2.006-1.991h-3.992c-2.761 0-5.002-2.242-5.002-5 0-2.762 2.232-5 4.991-5h3.009z"/></svg>'
+      },
+      s: {
+        title: "прямо",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v10h-2v-10h-3l4-7 4 7z"/></svg>'
+      },
+      sl: {
+        title: "немного левее",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M13 9l-4-7-4 7h3v1.506c0 1.601 1.255 3.041 2.846 3.268l3.026.432c.608.087 1.129.684 1.129 1.294v3.5h2v-3.5c0-1.607-1.255-3.046-2.846-3.274l-3.026-.432c-.608-.087-1.129-.684-1.129-1.288v-1.506h3z"/></svg>'
+      },
+      sr: {
+        title: "немного правее",
+        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M9 9l4-7 4 7h-3v1.506c0 1.601-1.255 3.041-2.846 3.268l-3.026.432c-.608.087-1.129.684-1.129 1.294v3.5h-2v-3.5c0-1.607 1.255-3.046 2.846-3.274l3.026-.432c.608-.087 1.129-.684 1.129-1.288v-1.506h-3z"/></svg>'
+      }
     }
   };
 
@@ -459,6 +509,37 @@
     }
   });
 
+  const getExpertise = (publicID) => {
+    const config = window.appChrome.config;
+
+    const data = [
+      {
+        "method": "social/getUserExpertise",
+        "params": {
+          "userPublicId": publicID,
+          "token": JSON.parse(localStorage.getItem("nk:token"))
+        }
+      }
+    ];
+
+    $.ajax({
+      type: "POST",
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8',
+        'x-kl-ajax-request': 'Ajax_Request',
+        'x-csrf-token': config.api.csrfToken,
+        'x-lang': 'ru'
+      },
+      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+      dataType: "json",
+      data: JSON.stringify(data),
+      success: function (response) {
+        user.expertise = response.data[0].data;
+        window.appChrome.user = user;
+      }
+    });
+  };
+
   const getStartStatus = () => {
     const config = window.appChrome.config;
 
@@ -490,6 +571,8 @@
       success: function (response) {
         user = response.data[0].data;
         window.appChrome.configGet = response.data[1].data;
+
+        getExpertise(user.publicId);
 
         startStatus = user.yandex || user.outsourcer || user.moderationStatus === "moderator";
 

@@ -188,7 +188,7 @@
           stopList.push(ID);
           return;
         }
-
+        
         /* Модуль для этой категории отключен, добавляем объект в стоп-лист */
         if (!settingMaster["object:" + setting.category] || setting.category === "rd_el" && window.appChrome.user.expertise.moderatorExpertise[0].categoryGroupIds.indexOf("rd_group") === -1 && !window.appChrome.user.yandex) {
           stopList.push(ID);
