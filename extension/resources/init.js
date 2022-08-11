@@ -18,22 +18,8 @@
 
   let loadCount = 0;
 
-  chrome.storage.local.get(["nkSetting"], (result) => {
-    if (!result.nkSetting) {
-      const default_setting = {
-        'get-user': true,
-        'get-profile': true,
-        'check-address': true,
-        'notification': true,
-        'q-link': false,
-      };
+  chrome.storage.local.get(["nkSetting"], (result) => setting = result.nkSetting);
 
-      chrome.storage.local.set({ "nkSetting": default_setting });
-      setting = default_setting;
-    }else {
-      setting = result.nkSetting;
-    }
-  });
 
   /* Сообщение об ошибке по умолчанию */
   const defaultError = "Извините, что-то пошло не так";
@@ -442,6 +428,8 @@
       if (setting["tiles"]) window.appChrome.init.tiles();
       if (setting["favorite-objects"]) window.appChrome.init.favoriteObject();
     }, 1);
+
+    window.appChrome.init.eventObject(setting);
 
     setTimeout(() => {
       /* Показываем уведомление, если во время загрузки произошла ошибка, и модуль сообщил о ней */

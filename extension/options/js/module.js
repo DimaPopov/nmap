@@ -8,12 +8,13 @@
   let settings = {};
 
   const renderSetting = () => {
-    for (const name in settings) {
+    for (let name in settings) {
+      const id = name.replace(":", "_");
       const value = settings[name];
-      const checkbox = $("#" + name);
-      if (!checkbox[0]) continue;
-
+      const checkbox = $("#" + id);
       const checkboxContent = checkbox.parent().parent();
+
+      console.log(name, value);
 
       if (value) {
         checkbox.attr("checked", true);
@@ -43,5 +44,7 @@
     }else {
       renderSetting();
     }
+
+    console.log(settings);
   });
 })();

@@ -22,7 +22,8 @@
         'urban-roadnet': false,
         'ad': false,
         'category-urban-roadnet-parking-lot': false,
-        'parking': false
+        'parking': false,
+        'user-objects': {}
       };
 
       chrome.storage.local.set({"nkSetting-favoriteObjects": default_setting});

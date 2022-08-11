@@ -20,7 +20,6 @@
   };
 
   let activeObject = false;
-  let config = {};
 
   let typeObject = "";
   let objectID = 0;
@@ -308,7 +307,7 @@
   */
   
   const checkAddress = () => {
-    config = JSON.parse($("#config").text());
+    const config = window.appChrome.config;
 
     const buttonElement = $(".nk-address-check .nk-form-submit-view");
     const textAreaElement = $(".nk-address-check .nk-text-area");
@@ -405,7 +404,6 @@
   */
   
   const showCheckAddress = () => {
-    config = JSON.parse($("#config").text());
     objectID = window.location.hash.split("objects/")[1].split("?")[0];
     
     /* Заготовки под всплывающие окна */

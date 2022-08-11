@@ -73,21 +73,7 @@
   creatRowTable(tableElement.find("#info"), "Поддержка cookie", navigator.cookieEnabled ? "Да" : "Нет");
 
   chrome.storage.local.get(["nkSetting"], (result) => {
-    if (!result.nkSetting) {
-      const default_setting = {
-        'get-user': true,
-        'get-profile': true,
-        'check-address': true,
-        'notification': true,
-        'q-link': false
-      };
-
-      chrome.storage.local.set({ "nkSetting": default_setting });
-      setting = default_setting;
-    }else {
-      setting = result.nkSetting;
-    }
-
+    setting = result.nkSetting;
     moduleElement = creatRowTable(tableElement.find("#info"), "Подключенные модули", "").find(".doc-value");
   });
 
@@ -161,6 +147,10 @@
   const restartSetting = () => {
     chrome.storage.local.clear("nkSetting");
     chrome.storage.local.clear("nkSetting-getUser");
+    chrome.storage.local.clear("nkSetting-checkAddress");
+    chrome.storage.local.clear("nkSetting-favoriteObjects");
+
+    chrome.runtime.sendMessage({method: "setSetting"}, () => {});
 
     $("#restart_setting + span").attr("data-info", "Настройки сброшены");
   };

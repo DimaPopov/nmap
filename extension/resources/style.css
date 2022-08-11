@@ -642,16 +642,72 @@
   cursor: pointer;
 }
 
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list {
+  display: flex;
+  flex-direction: column;
+}
+
 .nk-button_theme_air.nk-favorite-objects .nk-geoobject-icon.nk-geoobject-icon_id_category-urban-roadnet-parking-lot {
   border-radius: 3px;
 }
 
-.nk-button_theme_air.nk-favorite-objects a:first-child:not(:last-child) .nk-geoobject-icon {
+.nk-button_theme_air.nk-favorite-objects > a:first-child:not(:nth-last-child(2)) .nk-geoobject-icon {
   margin-top: 6px;
 }
 
-.nk-button_theme_air.nk-favorite-objects a:last-child:not(:first-child) .nk-geoobject-icon {
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list:last-child:not(:first-child):not(:empty) {
   margin-bottom: 6px;
+  padding-top: 6px;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list:not(:empty):not(:first-child):before {
+  background: var(--map-zoom-control__separator--color);
+  border-color: var(--control_theme_air--bg-color);
+  border-style: solid;
+  border-width: 0 6px;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  width: 20px;
+  z-index: 1;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list > *:first-child:not(:last-child) .nk-geoobject-icon {
+  margin-top: 5px;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list:first-child > a:last-child:not(:first-child) .nk-geoobject-icon {
+  margin-bottom: 6px;
+}
+
+.nk-button_theme_air.nk-favorite-objects .nk-favorite-objects_user-list:empty {
+  margin-bottom: 5px;
+}
+
+.nk-button-favorite-object {
+  width: 25px;
+  height: 25px;
+  float: right;
+  margin: 6px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nk-button-favorite-object svg {
+  fill: var(--icon_disabled--color);
+  opacity: .2;
+  transition: opacity .2s, fill .2s;
+}
+
+.nk-control-only-layout.nk-primary-type-control.nk-form__control:hover .nk-button-favorite-object svg {
+  opacity: 1;
+}
+
+.nk-button-favorite-object:hover svg {
+  fill: var(--icon--color);
 }
 
 /* */

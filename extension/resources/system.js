@@ -5,7 +5,7 @@
  */
 
 (function () {
-  const default_setting = {
+  const DEFAULT_SETTING = {
     'get-user': true,
     'get-profile': true,
     'check-address': false,
@@ -13,7 +13,6 @@
     'lock-pattern': true,
     'tiles': true,
     'favorite-objects': false,
-    'object:parking': true,
     'object:vegetation': true,
     'object:rd_el': true,
     'object:indoor_plan': true,
@@ -43,10 +42,10 @@
         }
 
         /* Проверим каких настроек нет и добавим их */
-        for (const setting in default_setting) {
+        for (const setting in DEFAULT_SETTING) {
           if (checkSetting.indexOf(setting) !== -1) continue;
 
-          settings[setting] = default_setting[setting];
+          settings[setting] = DEFAULT_SETTING[setting];
         }
 
         chrome.storage.local.set({ "nkSetting": settings });
@@ -54,7 +53,7 @@
         getServer("update");
       });
     }else {
-      chrome.storage.local.set({ "nkSetting": default_setting });
+      chrome.storage.local.set({ "nkSetting": DEFAULT_SETTING });
 
       getServer("instal");
     }
