@@ -74,7 +74,7 @@
 
           const button = headerObject.find(".nk-button-favorite-object");
 
-          popupShow(button, activeStatus ? "Добавить объект в любимые" : "Удалить объект из любимых");
+          popupShow(button, !activeStatus ? "Добавить объект в любимые" : "Удалить объект из любимых");
           button.on("click", () => {
             const activeStatus = settingFavoriteObjects["user-objects"][nameObject] !== undefined;
 
