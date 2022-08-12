@@ -30,7 +30,7 @@
 
   const checkShow = () => {
     const element = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style])");
-    const hesh_user = window.location.href.replace("https://n.maps.yandex.ru/#!/", "");
+    const hesh_user = window.location.href.replace("https://n.maps.yandex.ru/#!/", "").replace("https://mapeditor.yandex.com/#!/", "");
 
     /* Проверим, объект ли открыт */
     if (hesh_user.indexOf("objects/") === -1) return false;
@@ -172,7 +172,7 @@
         'x-csrf-token': config.api.csrfToken,
         'x-lang': 'ru'
       },
-      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+      url: window.location.origin + config.api.url + "/batch",
       dataType: "json",
       data: JSON.stringify(data),
       success: function (response) {

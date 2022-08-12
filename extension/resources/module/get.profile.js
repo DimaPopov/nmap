@@ -102,7 +102,7 @@
           'x-csrf-token': config.api.csrfToken,
           'x-lang': 'ru'
         },
-        url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+        url: window.location.origin + config.api.url + "/batch",
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {
@@ -206,7 +206,7 @@
         'x-csrf-token': config.api.csrfToken,
         'x-lang': 'ru'
       },
-      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+      url: window.location.origin + config.api.url + "/batch",
       dataType: "json",
       data: JSON.stringify(data),
       success: function (response) {        
@@ -262,7 +262,7 @@
           'x-csrf-token': config.api.csrfToken,
           'x-lang': 'ru'
         },
-        url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+        url: window.location.origin + config.api.url + "/batch",
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {        

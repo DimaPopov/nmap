@@ -41,7 +41,6 @@
   const renderLane = (element, attr_name, lanes) => {
     /* Добавим информацию о том, к какой точке относятся эти манёвры */
     element.append('<div class="nk-grid nk-sidebar-control nk-section nk-section_level_2 nk-geoobject-relations-view"><div class="nk-grid__col nk-grid__col_span_4"><label class="nk-sidebar-control__label">' + window.appChrome.configGet.attrs[attr_name].label + '</label></div><div class="nk-grid__col nk-grid__col_span_8"><table class="nk-lanes-view"><tbody><tr class="nk-lanes-view__row nk-lanes-view__lanes-numbers"></tr><tr class="nk-lanes-view__row nk-lanes-view__lanes-directions"></tr></tbody></table></div></div>');
-
     const laneView = element.find("div:last-child .nk-grid__col_span_8 .nk-lanes-view");
     const numberLanes = laneView.find(".nk-lanes-view__lanes-numbers");
 
@@ -108,6 +107,32 @@
         activeDirections.append('<td class="nk-lanes-view__cell"></td>');
       }
     });
+
+
+    /* Если есть информация о том, для кого полоса, добавим её */
+    if (!!kindsLane.length) {
+      laneView.append('<tr class="nk-lanes-view__row nk-lanes-view__lanes-kinds"></tr>');
+      const parent = laneView.find(".nk-lanes-view__lanes-kinds");
+
+      for (let i = 0; i < lanes.length; i++) {
+        const nameKinds = kindsLane[i];
+
+        /* Это обычная полоса, пропускаем её */
+        if (!nameKinds) {
+          parent.append('<td class="nk-lanes-view__cell"></td>');
+          continue;
+        }
+
+        /* Добавим информацию о виде траспнорта */
+        const kinds = kindsInfo[nameKinds];
+        parent.append('<td class="nk-lanes-view__cell nk-last-append-chrome"><span class="nk-icon">' + kinds.icon + '</span></td>');
+
+        const element = parent.find(".nk-last-append-chrome");
+        element.removeClass('nk-last-append-chrome');
+
+        popupShow(element, kinds.title);
+      }
+    }
   };
 
 
@@ -184,11 +209,6 @@
     const sectionElement = $(sectionsElement[sectionsElement.length - 1]);
 
     checkRenderLane(info, sectionElement);
-
-    /* Двойная сплошная */
-    if (info.attrs["rd_el:dr"]) {
-      sectionElement.find("> .nk-form__group").prepend('<div class="nk-control-only-layout nk-boolean-text-control nk-form__control nk-dr-control"><span class="nk-boolean-text-control__value">' + window.appChrome.configGet.attrs["rd_el:dr"].label + '</span></div>');
-    }
   };
 
 
