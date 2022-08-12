@@ -22,7 +22,7 @@
    */
 
   window.appChrome.eventObect.append({
-    title: ['Схема помещений'],
+    title: ['Схема помещений', 'Indoor map'],
     category: "indoor_plan",
     check: () => {
       const indoorPlanObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-indoor_plan-system");

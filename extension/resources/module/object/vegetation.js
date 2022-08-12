@@ -25,7 +25,7 @@
    */
 
   window.appChrome.eventObect.append({
-    title: ['Растительность'],
+    title: ['Растительность', 'Vegetation'],
     category: "vegetation",
     check: () => {
       const vegetationObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-vegetation-system");

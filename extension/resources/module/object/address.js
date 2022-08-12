@@ -72,7 +72,7 @@
    */
 
   window.appChrome.eventObect.append({
-    title: ['Адрес'],
+    title: ['Адрес', 'Address'],
     category: "addr",
     check: () => {
       const addressConflictsObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-address-conflicts");

@@ -108,32 +108,6 @@
         activeDirections.append('<td class="nk-lanes-view__cell"></td>');
       }
     });
-
-
-    /* Если есть информация о том, для кого полоса, добавим её */
-    if (!!kindsLane.length) {
-      laneView.append('<tr class="nk-lanes-view__row nk-lanes-view__lanes-kinds"></tr>');
-      const parent = laneView.find(".nk-lanes-view__lanes-kinds");
-
-      for (let i = 0; i < lanes.length; i++) {
-        const nameKinds = kindsLane[i];
-
-        /* Это обычная полоса, пропускаем её */
-        if (!nameKinds) {
-          parent.append('<td class="nk-lanes-view__cell"></td>');
-          continue;
-        }
-
-        /* Добавим информацию о виде траспнорта */
-        const kinds = kindsInfo[nameKinds];
-        parent.append('<td class="nk-lanes-view__cell nk-last-append-chrome"><span class="nk-icon">' + kinds.icon + '</span></td>');
-
-        const element = parent.find(".nk-last-append-chrome");
-        element.removeClass('nk-last-append-chrome');
-
-        popupShow(element, kinds.title);
-      }
-    }
   };
 
 
@@ -223,14 +197,11 @@
    */
 
   window.appChrome.eventObect.append({
-    title: ['Участок дороги'],
+    title: ['Участок дороги', 'Section of road'],
     category: "rd_el",
     check: () => {
       const lanesObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-lanes-view");
-      const drObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-dr-control");
-      const restrictsObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-restricts-section");
-
-      return lanesObject[0] || drObject[0] || restrictsObject[0];
+      return lanesObject[0];
     },
     render: render
   });
