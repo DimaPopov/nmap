@@ -433,7 +433,7 @@
     if (loadCount < 3) return;
     loadMap.disconnect();
 
-    /* Добавим вслплывающие окна */
+    /* Добавим всплывающие окна */
     $("body").append('<div class="nk-portal nk-portal-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_view_tooltip" style="z-index: 111001;"><div class="nk-size-observer"><div class="nk-popup__content"></div></div></div><!----></div><div class="nk-portal nk-select-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_restrict-height" id="select-status-user"><div class="nk-size-observer"><div class="nk-popup__content"><div class="nk-menu nk-menu_theme_islands nk-menu_mode_check nk-menu_size_m nk-menu_focused nk-select__menu" tabindex="0"><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-menu-item_checked nk-select__option" data-value="all">Все</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="active">Активные</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="banned">Заблокированные</div><div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_m nk-select__option" data-value="deleted">Удалённые</div></div></div></div></div><!----><!----><!----></div>');
 
     /* Критическая ошибка - нет токена */
@@ -443,6 +443,28 @@
       }, 100);
       return;
     }
+
+    /* Ждем клика по аватарке */
+    $(".nk-user-bar-view__user-icon").on('click', () => {
+      setTimeout(() => {
+        const parent = $("body > div:nth-child(9) > div > div > div > div.nk-menu.nk-menu_theme_islands.nk-menu_size_l > div:nth-child(1)");
+
+        const id = chrome.runtime.id;
+        parent.append('<div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_l" data-link="chrome-extension://' + id + '/index.html" tabindex="-1">Настройки</div>');
+        const button = parent.find('div[data-link="chrome-extension://' + id + '/index.html"]');
+
+        button.hover(() => {
+          button.addClass("nk-menu-item_hovered");
+        }, () => {
+          button.removeClass("nk-menu-item_hovered");
+        });
+
+        button.on("click", () => {
+          chrome.runtime.sendMessage({method: "openSetting"});
+        });
+      }, 10);
+    });
+
 
     /* Редактор загрузился, теперь ожидаем загрузки дополнительных инструментов, для добавления меню */
     setTimeout(() => {
@@ -477,6 +499,9 @@
       if (setting["duplicate-addresses"]) window.appChrome.init.addressDuplicate();
       if (setting["tiles"]) window.appChrome.init.tiles();
       if (setting["favorite-objects"]) window.appChrome.init.favoriteObject();
+      if (setting["open-service"]) window.appChrome.init.openService();
+      if (setting["moderation"] && window.appChrome.user.moderationStatus === "moderator") window.appChrome.init.moderation();
+      if (setting["address"]) window.appChrome.init.address();
     }, 1);
 
     window.appChrome.init.eventObject(setting);

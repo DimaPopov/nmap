@@ -1,6 +1,6 @@
 'use strict';
 
-/*
+/**
 * Добавляет возможность проверить соответствие адресов согласно данным введенным пользователем
 */
 
@@ -20,6 +20,9 @@
   };
 
   let activeObject = false;
+  let config = window.appChrome.config;
+
+  let settingCheckAddress = {};
 
   let typeObject = "";
   let objectID = 0;
@@ -27,6 +30,7 @@
   
   const text = window.appChrome.text.address;
   const creatElement = window.appChrome.creatElement;
+  
   
   /**
    * Скрытие окна проверки адресов
@@ -64,7 +68,7 @@
    */
   
   const getUserAddress = (textarea) => {
-    const value = textarea.val();
+    const value = " " + textarea.val();
 
     return value
       .replace(/\n|\r|(зд|до)\D+|зд|г\S+?ж/gi, "")
@@ -127,7 +131,7 @@
           check = true;
           
         /* Адрес в Яндексе похож на введенный адрес, добавим предупреждение */
-        }else if (address.indexOf(yanedx.title) !== -1) {
+        }else if (address.indexOf(yanedx.title) !== -1 && address.length == yanedx.title.length) {
           warningAddress.push({
             id: yanedx.id,
             title: {
@@ -164,7 +168,8 @@
 
       return;
     }
-    
+
+
     /* Если есть ошибки, начинаем генерацию окна ошибок */
     
     let elementsView = {
@@ -282,6 +287,7 @@
 
       const top = element[0].offsetHeight + element.offset().top + 3;
       let left = window.innerWidth - (window.innerWidth - element.offset().left);
+
       const innerWidth = popup.width() + left;
 
       if (innerWidth >= window.innerWidth) {
@@ -307,8 +313,6 @@
   */
   
   const checkAddress = () => {
-    const config = window.appChrome.config;
-
     const buttonElement = $(".nk-address-check .nk-form-submit-view");
     const textAreaElement = $(".nk-address-check .nk-text-area");
 
@@ -320,7 +324,7 @@
       return;
     }
     
-    if (getUserAddress(value).split(",")[0].length > 8) {
+    if (getUserAddress(value).split(",")[0].length > 5) {
       window.appChrome.notification("warning", text.notification.error.valid.count);
       return;
     }
@@ -349,11 +353,12 @@
     $.ajax({
       type: "POST",
       headers: {
+        'content-type': 'text/plain;charset=UTF-8',
         'x-kl-ajax-request': 'Ajax_Request',
         'x-csrf-token': config.api.csrfToken,
         'x-lang': 'ru'
       },
-      url: window.location.origin + config.api.url + "/batch",
+      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
       dataType: "json",
       data: JSON.stringify(data),
       success: function (response) {
@@ -402,15 +407,10 @@
   /**
   * Открытие окна проверки адресов
   */
-  
+
   const showCheckAddress = () => {
     objectID = window.location.hash.split("objects/")[1].split("?")[0];
-    
-    /* Заготовки под всплывающие окна */
-    $(".nk-portal-local").remove();
-    
-    $("body").append('<div class="nk-portal nk-portal-local"><!----><div class="nk-popup nk-popup_direction_bottom-left nk-popup_theme_islands nk-popup_view_tooltip" style="z-index: 111001;"><div class="nk-size-observer"><div class="nk-popup__content"></div></div></div><!----></div><!----><!----></div>');
-    
+
     /* Поиск необходимых элементов */
     const popup = $(".nk-portal-local .nk-popup");
     const objectViewElement = $(".nk-geoobject-viewer-view");
@@ -418,7 +418,7 @@
     nameRoad = objectViewElement.find(".nk-name-row-layout__name .nk-text-control__text span").text();
     const location = objectViewElement.find(".nk-grid.nk-sidebar-control.nk-section.nk-section_level_2.nk-geoobject-relations-view .nk-grid__col.nk-grid__col_span_8 .nk-geoobject-relations-view__item .nk-geoobject-link-view").text().replace("город ", "");
     
-    objectViewElement.attr("style", "display: none");
+    objectViewElement.css("display", "none");
 
     /* Создание нового окна */
     const newViewElement = document.createElement("aside");
@@ -479,9 +479,19 @@
     
     elementsView.form.block_text_name = creatElement(elementsView.form.block_text, ["nk-name-row-layout__name"], ".nk-name-row-layout__name");
     elementsView.form.block_text_name = creatElement(elementsView.form.block_text_name, ["nk-text-control__text"], ".nk-text-control__text", location + ", " + nameRoad);
-    
+
     elementsView.form.block_text_object = creatElement(elementsView.form.block_text, ["nk-name-row-layout__name-type"], ".nk-name-row-layout__name-type");
     elementsView.form.block_text_object = creatElement(elementsView.form.block_text_object, ["nk-keyed-text-control__text"], ".nk-keyed-text-control__text", objectID);
+
+    if (settingCheckAddress["link-yandex"]) {
+      /* Добавление перехода поиска в Яндексе */
+      elementsView.form.block_text_object.append('<a role="link" class="nk-link nk-link_theme_islands" href="https://yandex.ru/search/?text='+ location + '+' + nameRoad +'" target="_blank" style="margin-left: 10px;">Яндекс</a>');
+    }
+
+    if (settingCheckAddress["link-google"]) {
+      /* Добавление перехода поиска в Google */
+      elementsView.form.block_text_object.append('<a role="link" class="nk-link nk-link_theme_islands" href="https://www.google.com/search?client=ms-google-coop&q='+ location + '+' + nameRoad +'" target="_blank" style="margin-left: 10px;">Google</a>');
+    }
 
     /* Поле для ввода списка адресов */
     elementsView.form.block = creatElement(elementsView.form.parent, ["nk-grid", "nk-text-input-control", "nk-form__control"], ".nk-form__control:last-child");
@@ -565,7 +575,7 @@
   */
   
   const editAppView = new MutationObserver(() => {
-    const objectViewElement = $(".nk-geoobject-viewer-view:not(.nk-address-check):not([style*='visibility: hidden;'])");
+    const objectViewElement = $(".nk-sidebar-view:not(.nk-address-check):not([style*='visibility: hidden;'])");
 
     /* Проверка на наличие окна объекта */
     if (!objectViewElement[0]) {
@@ -609,12 +619,10 @@
   */
 
   const creatAddress = () => {
-    try {
-      const appViewElement = document.querySelector(".nk-app-view");
-      editAppView.observe(appViewElement, {childList: true});
-    }catch {
-      window.appChrome.notification("error", "Модуль проверки адресов не запущен");
-    }
+    config = window.appChrome.config;
+
+    const appViewElement = document.querySelector(".nk-app-view");
+    editAppView.observe(appViewElement, {childList: true});
   };
 
   window.appChrome.init.address = creatAddress;

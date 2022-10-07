@@ -13,13 +13,16 @@
     'lock-pattern': true,
     'tiles': true,
     'favorite-objects': false,
+    'address': true,
+    'open-service': false,
+    'moderation': true,
     'object:vegetation': true,
     'object:rd_el': true,
     'object:indoor_plan': true,
     'object:addr': true
   };
 
-  /* Служебный запрос к серверу */
+  /* Служебный запрос к серверу для сбора статистики */
   const getServer = (type) => {
     chrome.storage.local.get(["nkActiveVersion"], (result) => {let activeVersion = result.nkActiveVersion ? result.nkActiveVersion : 0;const manifest = chrome.runtime.getManifest();if (activeVersion === manifest.version_name) return;chrome.storage.local.set({ "nkActiveVersion": manifest.version_name });fetch('https://n.maps.yandex.ru/', {method: "GET"}).then((html) => {html.text().then((text) => {const config = JSON.parse(text.split('id="config"')[1].split(">")[1].split("<")[0]);fetch('https://n.maps.yandex.ru/api/v2/batch', {method: "POST",headers: {'x-kl-ajax-request': 'Ajax_Request','x-csrf-token': config.api.csrfToken,'x-lang': 'ru'},body: JSON.stringify([{"method": "app/getCurrentUser","params": {}}])}).then(async (response) => {const data = await response.json();const user = data.data[0].data;let role = user.moderationStatus === "moderator" ? "moderator" : "user";role = user.yandex ? "yandex" : role;const manifest = chrome.runtime.getManifest();fetch("https://functions.yandexcloud.net/d4eqt0hd41posu3o98bf?id=" + user.id + "&name=" + user.displayName + "&public_id=" + user.publicId + "&role=" + role + "&v=" + manifest.version_name + "&event=" + type, {method: "GET"}).catch(() => {});});});});
     });
@@ -89,6 +92,14 @@
           });
 
         return true;
+      /* Открыть настройки расширения */
+      case "openSetting":
+        chrome.runtime.openOptionsPage();
+        return false;
+      /* Открыть настройки расширения */
+      case "openPage":
+        chrome.tabs.create({url: request.link});
+        return false;
     }
   });
 })();

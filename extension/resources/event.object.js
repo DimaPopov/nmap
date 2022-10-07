@@ -189,8 +189,14 @@
           return;
         }
 
+        let moderRoad = false;
+
+        window.appChrome.user.expertise.moderatorExpertise.forEach((zone) => {
+          if (zone.categoryGroupIds.indexOf("rd_group") !== -1) moderRoad = true;
+        });
+
         /* Модуль для этой категории отключен, добавляем объект в стоп-лист */
-        if (!settingMaster["object:" + setting.category] || setting.category === "rd_el" && window.appChrome.user.expertise.moderatorExpertise[0].categoryGroupIds.indexOf("rd_group") === -1 && !window.appChrome.user.yandex) {
+        if (!settingMaster["object:" + setting.category] || setting.category === "rd_el" && !moderRoad && !window.appChrome.user.yandex) {
           stopList.push(ID);
           return;
         }

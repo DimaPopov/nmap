@@ -14,8 +14,6 @@
       const checkbox = $("#" + id);
       const checkboxContent = checkbox.parent().parent();
 
-      console.log(name, value);
-
       if (value) {
         checkbox.attr("checked", true);
         checkboxContent.addClass("checkbox_checked_yes");
@@ -44,7 +42,5 @@
     }else {
       renderSetting();
     }
-
-    console.log(settings);
   });
 })();
