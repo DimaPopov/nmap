@@ -102,4 +102,11 @@
         return false;
     }
   });
+
+  /* Если пользователь решил удалить расширение откреом форму обратной связи */
+  chrome.runtime.onInstalled.addListener(details => {
+    if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+      chrome.runtime.setUninstallURL('https://docs.google.com/forms/d/e/1FAIpQLSdyw8dJJOzLlgPQ4hnMgcCK13waSKbmR6jwPUq_9_NH9mMlZQ/viewform');
+    }
+  });
 })();
