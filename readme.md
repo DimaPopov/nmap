@@ -10,7 +10,7 @@
 <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155182367-fe06f353-3e7a-4373-9db8-38ad96f461bf.png"/></a> <strong>Расширение разработано Народным картографом<br>И не является официальным расширением от Яндекса</strong>
 <br>
 <br>
-<a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155115748-8a2e78ee-0cc3-4c83-8cb6-d54bc4858429.png"/></a> О возможностях расширения Вы можете почитать в<br>— <a href="https://yandex.ru/q/article/novoe_rasshirenie_dlia_narodnoi_karty_54066d64/">Сообществе редакторов Яндекс.Карт</a><br>— <a href="docs/opportunities/">В документации</a> _(может быть не акутальна)_
+<a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/155115748-8a2e78ee-0cc3-4c83-8cb6-d54bc4858429.png"/></a> О возможностях расширения Вы можете почитать в<br>— <a href="https://yandex.ru/q/article/novoe_rasshirenie_dlia_narodnoi_karty_54066d64/">Сообществе редакторов Яндекс.Карт</a><br>— <a href="docs/opportunities/">В документации</a> (может быть не акутальна)
 <br>
 <br>
 <a href="#"><img height="50" align="left" src="https://user-images.githubusercontent.com/52531675/154256302-3832b313-07bb-4d6a-a0fc-5b7d0429dd3e.png"/></a> Что-то работает не так или есть пожелание? <br> Напишите <a href="https://n.maps.yandex.ru/#!/users/demon7010" target="_blank">мне</a> в Яндекс.Мессенджере

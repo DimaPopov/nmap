@@ -100,11 +100,12 @@
       $.ajax({
         type: "POST",
         headers: {
+          'content-type': 'text/plain;charset=UTF-8',
           'x-kl-ajax-request': 'Ajax_Request',
           'x-csrf-token': config.api.csrfToken,
           'x-lang': 'ru'
         },
-        url: window.location.origin + config.api.url + "/batch",
+        url: "https://n.maps.yandex.ru/" + config.api.url + "/batch",
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {
