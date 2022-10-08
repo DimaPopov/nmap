@@ -494,7 +494,7 @@
       }
 
       /* Запускаем модули, которые не зависят от дополнительных инструментов */
-      if (setting["check-address"]) window.appChrome.init.address();
+      if (setting["check-address"]) window.appChrome.init.addressCheck();
       if (setting["get-profile"]) window.appChrome.init.getProfile();
       if (setting["duplicate-addresses"]) window.appChrome.init.addressDuplicate();
       if (setting["tiles"]) window.appChrome.init.tiles();

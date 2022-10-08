@@ -358,7 +358,7 @@
         'x-csrf-token': config.api.csrfToken,
         'x-lang': 'ru'
       },
-      url: "https://n.maps.yandex.ru" + config.api.url + "/batch",
+      url: "https://n.maps.yandex.ru/" + config.api.url + "/batch",
       dataType: "json",
       data: JSON.stringify(data),
       success: function (response) {
@@ -625,6 +625,6 @@
     editAppView.observe(appViewElement, {childList: true});
   };
 
-  window.appChrome.init.address = creatAddress;
+  window.appChrome.init.addressCheck = creatAddress;
   window.appChrome.showCorrect = showWarningCorrect;
 })();
