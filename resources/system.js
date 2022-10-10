@@ -15,9 +15,7 @@
     'favorite-objects': false,
     'address': true,
     'open-service': false,
-    'moderation': true,
     'object:vegetation': true,
-    'object:rd_el': true,
     'object:indoor_plan': true,
     'object:addr': true
   };

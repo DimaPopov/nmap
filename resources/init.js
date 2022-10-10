@@ -500,7 +500,6 @@
       if (setting["tiles"]) window.appChrome.init.tiles();
       if (setting["favorite-objects"]) window.appChrome.init.favoriteObject();
       if (setting["open-service"]) window.appChrome.init.openService();
-      if (setting["moderation"] && window.appChrome.user.moderationStatus === "moderator") window.appChrome.init.moderation();
       if (setting["address"]) window.appChrome.init.address();
     }, 1);
 
