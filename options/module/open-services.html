@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf8">
+    <link href="/options/style.css" rel="stylesheet"/>
+    <script src="/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <h1 data-info="Настройки модуля">Картографические сервисы</h1>
+    <p class="p" style="margin-bottom: 20px;">Вы можете выбрать какие картографические сервисы будут доступны для перехода в них из Народной карты.</p>
+
+    <div class="doc-section">
+      <h2>Настройки интерфейса</h2>
+      <p class="p" style="margin-top: -4px; margin-bottom: 15px;">Влияет на то, какие будет выглядить интерфейс перехода в Народной карте.</p>
+      <!---->
+      <div class="item-checkbox p">
+        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+          <span class="checkbox__box">
+            <input class="checkbox__control" type="checkbox" id="setting-button">
+            <i class="checkbox__tick"></i>
+          </span>
+          <label class="checkbox__label" aria-hidden="true" id="lable-setting-button" for="setting-button">
+            <div class="safe-content">Кнопка в нижнем меню</div>
+          </label>
+        </span>
+      </div>
+      <!---->
+      <div class="item-checkbox p" data-info="По умолчанию используются обычные">
+        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+          <span class="checkbox__box">
+            <input class="checkbox__control" type="checkbox" id="setting-button-menu">
+            <i class="checkbox__tick"></i>
+          </span>
+          <label class="checkbox__label" aria-hidden="true" id="lable-button-menu" for="setting-button-menu">
+            <div class="safe-content">Минимальные отступы в меню вызываемым кнопкной внизу</div>
+          </label>
+        </span>
+      </div>
+      <!---->
+      <div class="item-checkbox p">
+        <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+          <span class="checkbox__box">
+            <input class="checkbox__control" type="checkbox" id="setting-menu">
+            <i class="checkbox__tick"></i>
+          </span>
+          <label class="checkbox__label" aria-hidden="true" id="lable-setting-menu" for="setting-menu">
+            <div class="safe-content">Кнопки в правом меню</div>
+          </label>
+        </span>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 40px">Список сервисов</h2>
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="pkk">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-pkk" for="pkk">
+          <div class="safe-content">Публичная кадрастровая карта</div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="2gis">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="label-2gis" for="2gis">
+          <div class="safe-content">2ГИС</div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="google">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-google" for="google">
+          <div class="safe-content">Google Maps</div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="osm">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-osm" for="osm">
+          <div class="safe-content">OpenStreetMap</div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="here">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-here" for="here">
+          <div class="safe-content">Here</div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="wikimapia">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-wikimapia" for="wikimapia">
+          <div class="safe-content">Wikimapia</div>
+        </label>
+      </span>
+    </div>
+
+    <script src="/options/js/module.open-service.js"></script>
+    <script src="/options/render.doc.js"></script>
+  </body>
+</html>
