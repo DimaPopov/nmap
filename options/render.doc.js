@@ -31,6 +31,12 @@
             link: "/options/module/favorite-objects.html",
             module: true,
             setting_name: "favorite-objects"
+          },
+          {
+            label: "Картографические сервисы",
+            link: "/options/module/open-services.html",
+            module: true,
+            setting_name: "open-services"
           }
         ]
       },
