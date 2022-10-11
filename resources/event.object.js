@@ -191,9 +191,11 @@
 
         let moderRoad = false;
 
-        window.appChrome.user.expertise.moderatorExpertise.forEach((zone) => {
-          if (zone.categoryGroupIds.indexOf("rd_group") !== -1) moderRoad = true;
-        });
+        if (window.appChrome.user.expertise && window.appChrome.user.expertise.moderatorExpertise) {
+          window.appChrome.user.expertise.moderatorExpertise.forEach((zone) => {
+            if (zone.categoryGroupIds.indexOf("rd_group") !== -1) moderRoad = true;
+          });
+        }
 
         /* Модуль для этой категории отключен, добавляем объект в стоп-лист */
         if (!settingMaster["object:" + setting.category] || setting.category === "rd_el" && !moderRoad && !window.appChrome.user.yandex) {
