@@ -422,6 +422,32 @@
 
 
   /**
+   * Симуляция нажатия
+   * @param node - Node-элемент на который нужно симулировать нажатие
+   * @param eventType - Вид симулироваемоего сиобытия
+   */
+
+  const triggerMouseEvent = (node, eventType) => {
+    let clickEvent = document.createEvent('MouseEvents');
+    clickEvent.initEvent(eventType, true, true);
+    node.dispatchEvent(clickEvent);
+  };
+
+
+  /**
+   * Вызывает необходимые события для сиуляции нажатия
+   * @param element - Элемент на который нужно симулировать нажатие
+   */
+
+  const triggerClick = (element) => {
+    triggerMouseEvent(element[0], "mouseover");
+    triggerMouseEvent(element[0], "mousedown");
+    triggerMouseEvent(element[0], "mouseup");
+    triggerMouseEvent(element[0], "click");
+  };
+
+
+  /**
    * Отслеживание загрузки редактора
    *
    * @type {MutationObserver}
@@ -659,12 +685,13 @@
     init: {},
     notification: null,
     text: text,
-    creatElement: creatElement,
-    popupShow: popupShow,
     user: user,
     startStatus: startStatus,
     configGet: {},
-    config: {}
+    config: {},
+    creatElement: creatElement,
+    popupShow: popupShow,
+    triggerClick: triggerClick
   };
 
   window.needNotification = {
