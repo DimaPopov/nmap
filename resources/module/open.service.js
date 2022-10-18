@@ -8,7 +8,7 @@
   const popupShow = window.appChrome.popupShow;
   const services = {
     "pkk": {
-      "title": "ППК",
+      "title": "ПКК",
       "icon": '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 22"><path d="M0 14h6V8H0zM6 0C2.7 0 0 2.7 0 6h6V0zM0 22c3.3 0 6-2.7 6-6H0v6zM8 0c3.3 0 6 2.7 6 6H8V0zM8 14c3.3 0 6-2.7 6-6H8v6z" fill="#2671D5"></path></svg>',
       "url": 'https://pkk.rosreestr.ru/#/identify/[lon],[lat]/18/@470200'
     },
