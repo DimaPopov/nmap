@@ -162,8 +162,8 @@
           if (!menu[0]) return;
 
           let sourceUrl = window.location.href;
-          let lon = sourceUrl.match(/\d{1,3}\.\d*/g)[1];
-          let lat = sourceUrl.match(/\d{1,3}\.\d*/g)[0];
+          let lon = sourceUrl.match(/-?\d{1,3}\.\d*/g)[1];
+          let lat = sourceUrl.match(/-?\d{1,3}\.\d*/g)[0];
 
           const url = new URL(sourceUrl.replace("#!", ""));
           let z = url.searchParams.get('z');
