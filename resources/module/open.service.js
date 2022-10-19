@@ -12,6 +12,11 @@
       "icon": '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 22"><path d="M0 14h6V8H0zM6 0C2.7 0 0 2.7 0 6h6V0zM0 22c3.3 0 6-2.7 6-6H0v6zM8 0c3.3 0 6 2.7 6 6H8V0zM8 14c3.3 0 6-2.7 6-6H8v6z" fill="#2671D5"></path></svg>',
       "url": 'https://pkk.rosreestr.ru/#/identify/[lon],[lat]/18/@470200'
     },
+    "egrp": {
+      "title": "ЕГРП 365",
+      "icon": '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M 32,2 C 15.431,2 2,15.432 2,32 2,48.568 15.432,62 32,62 48.568,62 62,48.568 62,32 62,15.432 48.568,2 32,2 Z M 25.025,50 25.005,49.98 24.988,50 11,35.6 l 7.029,-7.164 6.977,7.184 21,-21.619 6.994,7.198 z" fill="#43a047"</svg>',
+      "url": 'https://egrp365.org/p_map/?x=[lon]&y=[lat]&zoom=[z]&layer=2'
+    },
     "2gis": {
       "title": "2ГИС",
       "icon": '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#299400" d="M16 28c6.6 0 12-5.376 12-12S22.6 4 16 4C9.376 4 4 9.376 4 16s5.376 12 12 12z"></path><path fill="#FFF" d="M16 8.08c4.003 0 6.72 3.048 6.72 6.336 0 1.32-.291 2.472-.97 3.912-3.979 0-4.707 2.616-4.877 4.368l-.12 1.464h-1.505l-.121-1.464c-.17-1.752-.898-4.368-4.877-4.368-.679-1.44-.97-2.592-.97-3.912 0-3.288 2.717-6.336 6.72-6.336z"></path></svg>',
@@ -45,6 +50,7 @@
     if (!result["nkSetting-openServices"]) {
       const DEFAULT_SETTING = {
         'pkk': false,
+        'egrp': false,
         '2gis': true,
         'google': true,
         'osm': false,
