@@ -11,6 +11,7 @@
     if (!result["nkSetting-openServices"]) {
       const DEFAULT_SETTING = {
         'pkk': false,
+        'egrp': false,
         '2gis': true,
         'google': true,
         'osm': false,
