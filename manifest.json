@@ -29,8 +29,6 @@
         "/resources/module/tiles.js",
         "/resources/module/favorite.objects.js",
         "/resources/module/open.service.js",
-        "/resources/module/object/vegetation.js",
-        "/resources/module/object/indoor.plan.js",
         "/resources/module/object/address.js"
       ]
     },
