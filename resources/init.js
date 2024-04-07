@@ -397,19 +397,32 @@
       const popup = $(".nk-portal-local .nk-popup");
       popup.find(".nk-popup__content").text(text);
 
-      const top = element[0].offsetHeight + element.offset().top + 5;
+      let top = element[0].offsetHeight + element.offset().top + 5;
       let left = window.innerWidth - (window.innerWidth - element.offset().left);
 
       const innerWidth = popup.width() + left;
+      const innerHeight = popup.height() + top;
 
       if (innerWidth >= window.innerWidth) {
-        popup.removeClass("nk-popup_direction_bottom-left");
+        popup.removeClass("nk-popup_direction_bottom-left nk-popup_direction_top-left nk-popup_direction_top-right");
         popup.addClass("nk-popup_direction_bottom-right");
 
         left = left - popup.width() + element.width();
       } else {
-        popup.removeClass("nk-popup_direction_bottom-right");
+        popup.removeClass("nk-popup_direction_bottom-right nk-popup_direction_top-right nk-popup_direction_top-left");
         popup.addClass("nk-popup_direction_bottom-left");
+      }
+
+      if (innerHeight >= window.innerHeight) {
+        top = top - popup.height() - element.height() - 10;
+
+        if (popup.hasClass("nk-popup_direction_bottom-right")) {
+          popup.removeClass("nk-popup_direction_bottom-right");
+          popup.addClass("nk-popup_direction_top-right");
+        }else {
+          popup.removeClass("nk-popup_direction_bottom-left");
+          popup.addClass("nk-popup_direction_top-left");
+        }
       }
 
       popup.css({"left": left + "px", "top": top + "px"});
@@ -556,27 +569,6 @@
           winodw.remove()
         }, 3000);
       });
-    }else {
-      /** Окно с информацией об просьбе заполнить опрос **/
-
-      chrome.storage.local.get(["chromeApp-close"], (result) => {
-        if (!result["chromeApp-close"]) {
-          $("body").append('<div class="nk-portal nk-window-end"><!----><div class="nk-modal nk-modal_theme_islands nk-modal_visible" role="dialog" aria-hidden="false" style="z-index: 10001;"><div class="nk-modal__table"><div class="nk-modal__cell"><div class="nk-modal__content" tabindex="-1" style="border: none;"><div class="nk-data-loss-confirmation-view__text nk-section nk-section_level_2" style="max-width: 650px;padding: 0;"><img src="https://user-images.githubusercontent.com/52531675/194917839-21c3fb28-f8ad-45d9-926d-d8917b482053.png" style="width: auto;height: 200px;left: 50%;transform: translateX(-50%);position: relative;"/><div style="cursor: default;padding: 12px 12px 0;max-width: 550px;margin: 0 auto;"><h1>Опрос об использовании расширения</h1><p>Спасибо, что Вы используете расширение «Дополнительные инструменты»! Пожалуйста, помогите ему стать ещё лучше, для этого пройдите опрос. Его заполнение займет у Вас примерно 5-10 минут.</p><p style="margin-top: 2em;padding-top: 2em;border-top: 1px solid var(--section--border-color);color: #b2b2b2;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" style="width: 40px; height: 40px; float: left; margin-left: -15px; margin-right: 20px;"><path fill="none" d="M0 0h26v26H0z"/><path fill="#b2b2b2" d="M22.7 11l-3.2 8.7c-.4 1-2.6 4.4-3.6 4-1.1-.4-.5-4.6-.2-5.4l3.2-8.7 3.8 1.4zM19.4 8.1l2.3-6.3c.4-1 1.6-1.8 2.7-1.4 1.1.4 1.5 2 1.2 2.8l-2.3 6.3-3.9-1.4z"/><path fill="none" stroke="#b2b2b2" stroke-width=".94" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M19.9 12.7l-4.2 11.5"/><path fill="none" stroke="#b2b2b2" stroke-width="1.881" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M20.2 1.8l-2.4 6.6"/><path fill="none" stroke="#b2b2b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M8.6 11.5c-.2-2.7-2.1-5-4.7-2.6C2.3 10.3 1.7 13 1.3 15c-.3 1.3-.6 4.3 1.1 4.9 1.9.7 3.4-1.9 5.2-1.8.2.8-.7 2.3-.2 3 .7 1.1 1.5-.5 2.4-.3.7.1.3.7.7.9.4.2 1 0 1.5.2.6.2.8.6 1.3 1"/></svg>В благодарность за использование «Дополнительных инструментов»,<br>Dmitry Popov</p></div></div><div class="nk-form-submit-view nk-form-submit-view_size_l" style="margin-top: 35px;"><button class="nk-button nk-button_theme_islands nk-button_size_l nk-close-window nk-button_hovered" type="button"><span class="nk-button__text">Закрыть</span></button><button class="nk-button nk-button_theme_islands nk-button_size_l nk-button_view_action nk-button_hovered nk-form-submit-view__submit nk-close-window" type="button"><a class="nk-button__text" style="text-decoration: none;color: inherit;" href="https://forms.gle/34wF2RwuPCCt2hNx7" target="_blank">Пройти опрос</a></button></div></div></div></div></div><!----><!----><!----></div>');
-
-          $(".nk-close-window").on("click", () => {
-            const winodw = $(".nk-window-end .nk-modal.nk-modal_theme_islands");
-            winodw.removeClass("nk-modal_visible");
-
-            chrome.storage.local.set({ "chromeApp-close": true });
-
-            setTimeout(() => {
-              winodw.remove()
-            }, 3000);
-          });
-        }
-      });
-
-      /** ----------------------------------------- **/
     }
   });
 
