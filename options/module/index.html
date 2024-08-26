@@ -57,6 +57,21 @@
     <div class="item-checkbox p">
       <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
         <span class="checkbox__box">
+          <input class="checkbox__control" type="checkbox" id="object_rd_jc">
+          <i class="checkbox__tick"></i>
+        </span>
+        <label class="checkbox__label" aria-hidden="true" id="lable-object_rd_jc" for="object_rd_jc">
+          <div class="safe-content">
+            <p class="title">Проверка пересечений дорог на конфликты</p>
+            <p class="description">Если в пересечении участков дорог сходится только 2 дороги, то будет выполенна проверка на идентичность атрибутов</p>
+          </div>
+        </label>
+      </span>
+    </div>
+    <!---->
+    <div class="item-checkbox p">
+      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+        <span class="checkbox__box">
           <input class="checkbox__control" type="checkbox" id="q-link">
           <i class="checkbox__tick"></i>
         </span>
@@ -131,34 +146,20 @@
       </span>
     </div>
     <!---->
-    <div class="item-checkbox p">
+    <div class="item-checkbox p" style="opacity: 0.5;pointer-events: none">
       <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
         <span class="checkbox__box">
-          <input class="checkbox__control" type="checkbox" id="object_vegetation">
+          <input class="checkbox__control" type="checkbox" id="fr_mos_ru" disabled>
           <i class="checkbox__tick"></i>
         </span>
-        <label class="checkbox__label" aria-hidden="true" id="lable-object_vegetation" for="object_vegetation">
+        <label class="checkbox__label" aria-hidden="true" id="lable-fr_mos_ru" for="fr_mos_ru">
           <div class="safe-content">
-            <p class="title">Детальность отрисовки парков и скверов</p>
-            <p class="description">Загружает информацию о детальности отрисовки парков и скверов</p>
+            <p class="title">Данные из Фонда реновации</p>
+            <p class="description">Эта настройка задается в подразделе «Фонд реновации — mos.ru» в левом меню</p>
           </div>
         </label>
       </span>
     </div>
-    <!---->
-    <div class="item-checkbox p">
-      <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
-        <span class="checkbox__box">
-          <input class="checkbox__control" type="checkbox" id="object_indoor_plan">
-          <i class="checkbox__tick"></i>
-        </span>
-        <label class="checkbox__label" aria-hidden="true" id="lable-object_indoor_plan" for="object_indoor_plan">
-          <div class="safe-content">
-            <p class="title">Публикация схемы помещения в Я.Картах</p>
-            <p class="description">Загружает информацию о том, публикуется ли схема помещений в Я.Картах</p>
-          </div>
-        </label>
-      </span>
     </div>
 
     <script src="/options/js/module.js"></script>

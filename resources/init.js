@@ -16,6 +16,8 @@
   let user = {};
   let update = {};
 
+  let initFrMosRu = false;
+
   let loadCount = 0;
 
   chrome.storage.local.get(["nkSetting"], (result) => setting = result.nkSetting);
@@ -290,60 +292,6 @@
         }
       }
     },
-    road: {
-      l135: {
-        title: "резкий поворот налево",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M5.111 7.233l-2.121 7.778 7.778-2.121-2.184-2.184 3.584-3.584c1.324-1.324 1.833-1.115 1.833.745v12.133h2v-12.133c0-3.644-2.665-4.741-5.247-2.159l-3.584 3.584-2.058-2.058z"/></svg>'
-      },
-      l180: {
-        title: "левый разворот",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M6 9h-3l4 7 4-7h-3v-1c0-1.654 1.345-3 3-3 1.654 0 3 1.345 3 3v12h2v-12c0-2.76-2.242-5-5-5-2.76 0-5 2.242-5 5v1z"/></svg>'
-      },
-      l45: {
-        title: "плавно налево",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M7.111 10.767l-2.121-7.778 7.778 2.121-2.184 2.184 3.414 3.414c.579.579 1.003 1.597 1.003 2.414v7.878h-2v-7.878c0-.285-.212-.795-.417-1l-3.414-3.414-2.058 2.058z"/></svg>'
-      },
-      l90: {
-        title: "налево",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M10 10h10v2h-10v3l-7-4 7-4z"/></svg>'
-      },
-      lr: {
-        title: "налево через разворот",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M11 6v-3l-7 4 7 4v-3h3.009c1.653 0 2.991 1.342 2.991 3 0 1.654-1.346 3-3.002 3h-3.992c-2.209 0-4.006 1.786-4.006 3.991v2.009h2v-2.009c0-1.097.899-1.991 2.006-1.991h3.992c2.761 0 5.002-2.242 5.002-5 0-2.762-2.232-5-4.991-5h-3.009z"/></svg>'
-      },
-      r135: {
-        title: "резко направо",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M16.889 7.234l2.121 7.778-7.778-2.121 2.184-2.184-3.584-3.584c-1.324-1.324-1.833-1.115-1.833.745v12.133h-2v-12.133c0-3.644 2.665-4.741 5.247-2.159l3.584 3.584 2.058-2.058z"/></svg>'
-      },
-      r180: {
-        title: "правый разворот",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M19 9l-4 7-4-7h3v-1c0-1.654-1.345-3-3-3-1.654 0-3 1.345-3 3v12h-2v-12c0-2.76 2.242-5 5-5 2.76 0 5 2.242 5 5v1h3z"/></svg>'
-      },
-      r45: {
-        title: "плавно направо",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M14.889 10.767l2.121-7.778-7.778 2.121 2.184 2.184-3.414 3.414c-.579.579-1.003 1.597-1.003 2.414v7.878h2v-7.878c0-.285.212-.795.417-1l3.414-3.414 2.058 2.058z"/></svg>'
-      },
-      r90: {
-        title: "направо",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M13 12h-10v-2h10v-3l7 4-7 4v-3z"/></svg>'
-      },
-      rl: {
-        title: "направо через разворот",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M11 6v-3l7 4-7 4v-3h-3.009c-1.653 0-2.991 1.342-2.991 3 0 1.654 1.346 3 3.002 3h3.992c2.209 0 4.006 1.786 4.006 3.991v2.009h-2v-2.009c0-1.097-.899-1.991-2.006-1.991h-3.992c-2.761 0-5.002-2.242-5.002-5 0-2.762 2.232-5 4.991-5h3.009z"/></svg>'
-      },
-      s: {
-        title: "прямо",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v10h-2v-10h-3l4-7 4 7z"/></svg>'
-      },
-      sl: {
-        title: "немного левее",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M13 9l-4-7-4 7h3v1.506c0 1.601 1.255 3.041 2.846 3.268l3.026.432c.608.087 1.129.684 1.129 1.294v3.5h2v-3.5c0-1.607-1.255-3.046-2.846-3.274l-3.026-.432c-.608-.087-1.129-.684-1.129-1.288v-1.506h3z"/></svg>'
-      },
-      sr: {
-        title: "немного правее",
-        icon: '<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path d="M9 9l4-7 4 7h-3v1.506c0 1.601-1.255 3.041-2.846 3.268l-3.026.432c-.608.087-1.129.684-1.129 1.294v3.5h-2v-3.5c0-1.607 1.255-3.046 2.846-3.274l3.026-.432c.608-.087 1.129-.684 1.129-1.288v-1.506h-3z"/></svg>'
-      }
-    }
   };
 
 
@@ -397,19 +345,32 @@
       const popup = $(".nk-portal-local .nk-popup");
       popup.find(".nk-popup__content").text(text);
 
-      const top = element[0].offsetHeight + element.offset().top + 5;
+      let top = element[0].offsetHeight + element.offset().top + 5;
       let left = window.innerWidth - (window.innerWidth - element.offset().left);
 
       const innerWidth = popup.width() + left;
+      const innerHeight = popup.height() + top;
 
       if (innerWidth >= window.innerWidth) {
-        popup.removeClass("nk-popup_direction_bottom-left");
+        popup.removeClass("nk-popup_direction_bottom-left nk-popup_direction_top-left nk-popup_direction_top-right");
         popup.addClass("nk-popup_direction_bottom-right");
 
         left = left - popup.width() + element.width();
       } else {
-        popup.removeClass("nk-popup_direction_bottom-right");
+        popup.removeClass("nk-popup_direction_bottom-right nk-popup_direction_top-right nk-popup_direction_top-left");
         popup.addClass("nk-popup_direction_bottom-left");
+      }
+
+      if (innerHeight >= window.innerHeight) {
+        top = top - popup.height() - element.height() - 10;
+
+        if (popup.hasClass("nk-popup_direction_bottom-right")) {
+          popup.removeClass("nk-popup_direction_bottom-right");
+          popup.addClass("nk-popup_direction_top-right");
+        }else {
+          popup.removeClass("nk-popup_direction_bottom-left");
+          popup.addClass("nk-popup_direction_top-left");
+        }
       }
 
       popup.css({"left": left + "px", "top": top + "px"});
@@ -527,17 +488,99 @@
       if (setting["favorite-objects"]) window.appChrome.init.favoriteObject();
       if (setting["open-service"]) window.appChrome.init.openService();
       if (setting["address"]) window.appChrome.init.address();
+
+      if (setting["fr_mos_ru"] && !initFrMosRu) {
+        initFrMosRu = true;
+
+        /* Получение данных из фонда реновации */
+        $.ajax({
+          type: "POST",
+          headers: {
+            'content-type': 'text/plain;charset=UTF-8',
+          },
+          url: setting["fr_mos_ru_api"],
+          data: JSON.stringify({ token: setting["fr_mos_ru_token"], login: window.appChrome.user.login }),
+          success: (response) => {
+            if (response?.objects?.items) {
+              const items = response.objects.items.map((item) => {
+                const itemNew = Object.assign(item);
+
+                itemNew.name_orign = item.name;
+                itemNew.name = item.name
+                  .replace(/ ?ул\. ?/gm, " улица ")
+                  .replace(/ ?пер\. ?/gm, " переулок ")
+                  .replace(/ ?ш\. ?/gm, " шоссе ")
+                  .replace(/ ?пл\. ?/gm, " площадь ")
+                  .replace(/ ?б-р ?/gm, " бульвар ")
+                  .replace(/ ?пр-кт ?/gm, " проспект ")
+                  .replace(/ ?пр-д ?/gm, " проезд ")
+                  .replace(/,? (д\.|дом) /gm, ", ")
+                  .replace(/,? (к\.|корп\.|корпус) /gm, "к")
+                  .replace(/,? (с\.|стр\.|строение) /gm, "c")
+                  .replace(/,? (влд\.|вл\.|з\/у) /gm, "вл")
+                  .replaceAll("улица вл", "улица, вл")
+                  .replaceAll("проспект вл", "проспект, вл")
+                  .replaceAll("проезд вл", "проезд, вл")
+                  .replaceAll("шоссе вл", "шоссе, вл")
+                  .replaceAll("бульвар вл", "бульвар, вл")
+                  .replaceAll(" ,", ",")
+                  .trim();
+
+                return itemNew;
+              });
+
+              const street = [];
+
+              items.forEach((item) => {
+                const streetItem = item.name.split(",")[0].toLowerCase();
+
+                if (!street[streetItem]) street[streetItem] = { items: [], address: [] };
+
+                street[streetItem].address.push(item.name);
+                street[streetItem].items.push(item);
+              });
+
+              const address = items.map((item) => item.name);
+
+              window.fr_mos_ru = {
+                items: items,
+                street: street,
+                address: address
+              };
+            }else {
+              if (window.appChrome.notification) {
+                window.appChrome.notification("error", "Не удалось получить информацию от Фонда реновации");
+              }else {
+                window.needNotification = {
+                  status: true,
+                  type: "error",
+                  text: "Не удалось получить информацию от Фонда реновации"
+                };
+              }
+            }
+          },
+          error: () => {
+            if (window.appChrome.notification) {
+              window.appChrome.notification("error", "Не удалось подключится к серверй данных от Фонда реновации");
+            }else {
+              window.needNotification = {
+                status: true,
+                type: "error",
+                text: "Не удалось подключится к серверй данных от Фонда реновации"
+              };
+            }
+          }
+        });
+      }
     }, 1);
 
     window.appChrome.init.eventObject(setting);
 
     setTimeout(() => {
       /* Показываем уведомление, если во время загрузки произошла ошибка, и модуль сообщил о ней */
-      chrome.storage.local.get(["nkApp_sendNotificationTile"], (result) => {
-        if (!result.nkApp_sendNotificationTile && window.needNotification.status) {
-          window.appChrome.notification(window.needNotification.type, window.needNotification.text);
-        }
-      });
+      if (window.needNotification.status) {
+        window.appChrome.notification(window.needNotification.type, window.needNotification.text);
+      }
     }, 1000);
 
     if (update.needUpdate) {
@@ -556,27 +599,6 @@
           winodw.remove()
         }, 3000);
       });
-    }else {
-      /** Окно с информацией об просьбе заполнить опрос **/
-
-      chrome.storage.local.get(["chromeApp-close"], (result) => {
-        if (!result["chromeApp-close"]) {
-          $("body").append('<div class="nk-portal nk-window-end"><!----><div class="nk-modal nk-modal_theme_islands nk-modal_visible" role="dialog" aria-hidden="false" style="z-index: 10001;"><div class="nk-modal__table"><div class="nk-modal__cell"><div class="nk-modal__content" tabindex="-1" style="border: none;"><div class="nk-data-loss-confirmation-view__text nk-section nk-section_level_2" style="max-width: 650px;padding: 0;"><img src="https://user-images.githubusercontent.com/52531675/194917839-21c3fb28-f8ad-45d9-926d-d8917b482053.png" style="width: auto;height: 200px;left: 50%;transform: translateX(-50%);position: relative;"/><div style="cursor: default;padding: 12px 12px 0;max-width: 550px;margin: 0 auto;"><h1>Опрос об использовании расширения</h1><p>Спасибо, что Вы используете расширение «Дополнительные инструменты»! Пожалуйста, помогите ему стать ещё лучше, для этого пройдите опрос. Его заполнение займет у Вас примерно 5-10 минут.</p><p style="margin-top: 2em;padding-top: 2em;border-top: 1px solid var(--section--border-color);color: #b2b2b2;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" style="width: 40px; height: 40px; float: left; margin-left: -15px; margin-right: 20px;"><path fill="none" d="M0 0h26v26H0z"/><path fill="#b2b2b2" d="M22.7 11l-3.2 8.7c-.4 1-2.6 4.4-3.6 4-1.1-.4-.5-4.6-.2-5.4l3.2-8.7 3.8 1.4zM19.4 8.1l2.3-6.3c.4-1 1.6-1.8 2.7-1.4 1.1.4 1.5 2 1.2 2.8l-2.3 6.3-3.9-1.4z"/><path fill="none" stroke="#b2b2b2" stroke-width=".94" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M19.9 12.7l-4.2 11.5"/><path fill="none" stroke="#b2b2b2" stroke-width="1.881" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M20.2 1.8l-2.4 6.6"/><path fill="none" stroke="#b2b2b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M8.6 11.5c-.2-2.7-2.1-5-4.7-2.6C2.3 10.3 1.7 13 1.3 15c-.3 1.3-.6 4.3 1.1 4.9 1.9.7 3.4-1.9 5.2-1.8.2.8-.7 2.3-.2 3 .7 1.1 1.5-.5 2.4-.3.7.1.3.7.7.9.4.2 1 0 1.5.2.6.2.8.6 1.3 1"/></svg>В благодарность за использование «Дополнительных инструментов»,<br>Dmitry Popov</p></div></div><div class="nk-form-submit-view nk-form-submit-view_size_l" style="margin-top: 35px;"><button class="nk-button nk-button_theme_islands nk-button_size_l nk-close-window nk-button_hovered" type="button"><span class="nk-button__text">Закрыть</span></button><button class="nk-button nk-button_theme_islands nk-button_size_l nk-button_view_action nk-button_hovered nk-form-submit-view__submit nk-close-window" type="button"><a class="nk-button__text" style="text-decoration: none;color: inherit;" href="https://forms.gle/34wF2RwuPCCt2hNx7" target="_blank">Пройти опрос</a></button></div></div></div></div></div><!----><!----><!----></div>');
-
-          $(".nk-close-window").on("click", () => {
-            const winodw = $(".nk-window-end .nk-modal.nk-modal_theme_islands");
-            winodw.removeClass("nk-modal_visible");
-
-            chrome.storage.local.set({ "chromeApp-close": true });
-
-            setTimeout(() => {
-              winodw.remove()
-            }, 3000);
-          });
-        }
-      });
-
-      /** ----------------------------------------- **/
     }
   });
 
@@ -679,6 +701,75 @@
     }
   });
 
+  const getStatusCategory = (data) => {
+    let cat_name = '&mdash;';
+
+    let status_code = data.status_code ? data.status_code.toLowerCase() : '';
+    let info_center = "";
+
+    let color = status_code == 'processing' ? 'orange' :
+      status_code == 'finished' ? 'green-light' :
+        status_code == 'old' ? 'green' :
+          status_code == 'confirmed' ? 'red' :
+            status_code == 'kvartal' ? 'kvartal' :
+              status_code == 'start' ? 'red' : '';
+
+    if (data.status_code === 'PROCESSING') {
+      cat_name = 'Новый дом';
+      data.status_text = 'Строится';
+    }
+    if (data.status_code === 'FINISHED') {
+      cat_name = 'Новый дом';
+      data.status_text = 'Введён в&nbsp;эксплуатацию';
+    }
+    if (data.status_code === 'START') {
+      cat_name = 'Новый дом';
+      data.status_text = 'Стартовая площадка';
+    }
+    if (data.status_code === 'KVARTAL') {
+      cat_name = 'Новый дом';
+      data.status_text = 'Объекты квартальной застройки';
+    }
+
+    if (data.status_code === 'OLD') {
+      cat_name = 'Дом, включённый в Программу реновации';
+
+      if (data.ext_status === 'settling') {
+        data.status_text = 'Идёт переселение';
+      } else if (data.ext_status === 'settled') {
+        data.status_text = 'Переселение дома завершено';
+      } else if (data.ext_status === 'destroyed') {
+        data.status_text = 'Переселение дома завершено.\n Дом снесён';
+      } else {
+        data.status_text = 'Переселение ещё не началось';
+      }
+
+      data.status = 'Введен в эксплуатацию';
+
+      if (data.ext_status == 'settling') {
+        if (data.infocenter) {
+          info_center = 'Переселение дома производится в&nbsp;Информационном центре по&nbsp;адресу: ' + data.infocenter.name + (data.infocenter2 ? '\n' + data.infocenter2.name : '');
+        }else {
+          info_center = 'Информационный центр по&nbsp;переселению дома закрыт. По&nbsp;вопросу завершения переселения Вы можете обратиться в&nbsp;префектуру административного округа.';
+        }
+      }else if (data.ext_status == 'settled') {
+        info_center = 'Переселение дома завершено.';
+      }else if (data.ext_status == 'destroyed') {
+        info_center = 'Переселение дома завершено. Дом снесён.';
+      }else {
+        info_center = 'Переселение дома ещё не&nbsp;началось. Адрес Информационного центра будет опубликован в&nbsp;день старта переселения.';
+      }
+    }
+
+    return {
+      color: color,
+      status: data.status,
+      status_text: data.status_text,
+      cat_name: cat_name,
+      info_center: info_center
+    };
+  };
+
   ////////////////////
 
   window.appChrome = {
@@ -691,7 +782,8 @@
     config: {},
     creatElement: creatElement,
     popupShow: popupShow,
-    triggerClick: triggerClick
+    triggerClick: triggerClick,
+    getStatusCategory: getStatusCategory
   };
 
   window.needNotification = {

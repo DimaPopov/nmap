@@ -66,6 +66,8 @@
       },
     ];
 
+    const sections = $(".nk-sidebar-view.nk-geoobject-viewer-view .nk-scrollable__content .nk-size-observer > div");
+
     $.ajax({
       type: "POST",
       headers: {
@@ -83,8 +85,6 @@
         const info = response.data[0].data.slaves;
         const warnings = info.filter(active_address => active_address.title === address.title && active_address.id != address.id);
 
-        const addressBlock = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-size-observer .nk-island:nth-child(1) .nk-scrollable__content > div");
-
         if (warnings.length > 0) {
           const count_dublicate = warnings.length % 2 === 0 ? warnings.length + " дубликата" : warnings.length + " дублкиат";
 
@@ -97,11 +97,14 @@
             });
           }
         }else {
-          addressBlock.prepend('<div class="nk-address-conflicts"></div>');
+          sections.prepend('<div class="nk-address-conflicts"></div>');
         }
       }
     });
 
+    if (window.appChrome.settingMaster["fr_mos_ru"]) {
+      window.fr_mos_ru_render(sections, address.title);
+    }
 
     /* Добавим кнопки для быстрого создания адреса */
     const parent = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-form.nk-section.nk-section_level_2 > .nk-form__group.nk-section.nk-section_level_2 > .nk-grid.nk-list-control.nk-form__control > .nk-grid__col.nk-grid__col_span_8 > .nk-name-row-layout:first-child");
@@ -185,7 +188,7 @@
     if (value == "defoult") lastAddress = 0;
     activeSetting = value;
   }
-  
+
 
   /**
    * Отслеживание открытие окна создания
@@ -302,12 +305,14 @@
    */
 
   window.appChrome.eventObect.append({
-    title: ['Адрес', 'Address'],
+    title: ['Адрес'],
     category: "addr",
     check: () => {
       const addressConflictsObject = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-address-conflicts");
+      const addrFrMosRu = $("#fr_mos_ru");
 
-      return addressConflictsObject[0];
+      if (!localStorage.getItem("nk-appChrome-start")) return;
+      return addressConflictsObject[0] || addrFrMosRu[0];
     },
     render: render
   });

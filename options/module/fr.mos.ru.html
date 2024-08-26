@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf8">
+        <link href="/options/style.css" rel="stylesheet"/>
+        <script src="/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <h1>Фонд реновации — mos.ru</h1>
+        <p class="p" style="margin-bottom: 20px;">Подгрузка данных <a href="https://fr.mos.ru/">программы реновации в Москве</a>. Модуль подключается по заявкам через <a id="fr_mos_ru_form" href="https://forms.yandex.ru/cloud/66c8888a068ff031ae021271/">специальную форму</a>.</p>
+        <!---->
+        <div class="item-checkbox p">
+          <span class="checkbox checkbox_theme_normal checkbox_size_m checkbox_view_classic checkbox_lines_multi i-bem checkbox_js_inited">
+            <span class="checkbox__box">
+              <input class="checkbox__control" type="checkbox" id="fr_mos_ru">
+              <i class="checkbox__tick"></i>
+            </span>
+            <label class="checkbox__label" aria-hidden="true" id="lable-fr_mos_ru" for="fr_mos_ru">
+              <div class="safe-content">
+                <p class="title">Включить модуль</p>
+                <p class="description">Не включайте модуль, если Ваша заявка ещё не одобрена — Вы будете получать уведомление<br/>об ошибке при работе с Народной картой</p>
+              </div>
+            </label>
+          </span>
+        </div>
+        <!---->
+        <h2>Параметры подключения</h2>
+        <p class="p" style="margin-bottom: 20px;">Укажите информацию, полученную в письме с информацией об одобрении заявки</p>
+        <!---->
+        <div class="item-input p">
+          <span class="input">
+            <label class="checkbox__label" aria-hidden="true" id="lable-fr_mos_ru_api" for="fr_mos_ru_api">
+              <p class="title">Адрес API</p>
+              <input class="input__text" type="text" id="fr_mos_ru_api">
+            </label>
+          </span>
+        </div>
+        <!---->
+        <div class="item-input p">
+          <span class="input">
+            <label class="checkbox__label" aria-hidden="true" id="lable-fr_mos_ru_token" for="fr_mos_ru_token">
+              <p class="title">Ключ доступа</p>
+              <input class="input__text" type="text" id="fr_mos_ru_token">
+            </label>
+          </span>
+        </div>
+
+        <button id="save-button" class="doc-button doc-button_theme_islands doc-button_size_l doc-button_view_action doc-button_hovered doc-form-submit-view__submit" type="button"><span class="doc-button__text">Сохранить параметры</span><!----></button>
+        <span id="info" style="position: absolute;line-height: 31px" data-info=""></span>
+
+        <script src="/options/js/module.js"></script>
+        <script src="/options/js/module.fr.mos.ru.js"></script>
+        <script src="/options/render.doc.js"></script>
+    </body>
+</html>

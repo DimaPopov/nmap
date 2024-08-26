@@ -146,10 +146,11 @@
   });
 
   const restartSetting = () => {
-    chrome.storage.local.clear("nkSetting");
-    chrome.storage.local.clear("nkSetting-getUser");
-    chrome.storage.local.clear("nkSetting-checkAddress");
-    chrome.storage.local.clear("nkSetting-favoriteObjects");
+    chrome.storage.local.get("nkSetting", () => chrome.storage.local.remove("nkSetting"));
+    chrome.storage.local.get("nkSetting-getUser", () => chrome.storage.local.remove("nkSetting-getUser"));
+    chrome.storage.local.get("nkSetting-checkAddress", () => chrome.storage.local.remove("nkSetting-checkAddress"));
+    chrome.storage.local.get("nkSetting-favoriteObjects", () => chrome.storage.local.remove("nkSetting-favoriteObjects"));
+    chrome.storage.local.get("nkSetting-openServices", () => chrome.storage.local.remove("nkSetting-openServices"));
 
     chrome.runtime.sendMessage({method: "setSetting"}, () => {});
 

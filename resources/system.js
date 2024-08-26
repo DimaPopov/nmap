@@ -11,13 +11,16 @@
     'check-address': false,
     'q-link': false,
     'lock-pattern': true,
-    'tiles': true,
+    'tiles': false,
     'favorite-objects': false,
     'address': true,
+    'fr_mos_ru': false,
+    'fr_mos_ru_api': "",
+    'fr_mos_ru_token': "",
     'open-service': false,
-    'object:vegetation': true,
-    'object:indoor_plan': true,
-    'object:addr': true
+    'object:addr': true,
+    'object:bld': true,
+    'object:rd_jc': true
   };
 
   /* Служебный запрос к серверу для сбора статистики */

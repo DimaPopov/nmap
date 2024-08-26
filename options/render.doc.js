@@ -37,6 +37,12 @@
             link: "/options/module/open-services.html",
             module: true,
             setting_name: "open-services"
+          },
+          {
+            label: "Фонд реновации — mos.ru",
+            link: "/options/module/fr.mos.ru.html",
+            module: true,
+            setting_name: "open-services"
           }
         ]
       },
