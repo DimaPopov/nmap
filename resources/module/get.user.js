@@ -624,7 +624,7 @@
     
     
     /* Скроем активные окна */    
-    while ($(".nk-sidebar-view:not(.nk-get-user-view):not([style*='visibility: hidden;'])")[0]) {
+    while ($(".nk-sidebar-view:not(.nk-get-user-view):not([hidden])")[0]) {
       $(".nk-sidebar-view .nk-icon_id_close").click();
     }
     
@@ -640,6 +640,7 @@
     }
     
     $(".nk-app-view").append("<aside class='nk-sidebar-view nk-get-user-view nk-island'></aside>");
+	console.log(123);
     
     viewElements.parent = $(".nk-get-user-view");
     viewElements.parent = creatElement(viewElements.parent, ["nk-size-observer"], ".nk-size-observer");
@@ -657,7 +658,10 @@
 
     let popup = $(".nk-portal-local .nk-popup");
 
-    viewElements.header.viewClose.on('click', hideView);
+    viewElements.header.viewClose.on('click', () => {
+		hideView();
+		popup.removeClass("nk-popup_visible");
+	});
     viewElements.header.viewClose.hover(() => {
       popup.css({ "left": window.innerWidth - MAGIC_LEFT_CLOSE + "px", "top": "105px" });
       popup.find(".nk-popup__content").text("Закрыть (Esc)");
@@ -734,7 +738,7 @@
   */
   
   const editAppView = new MutationObserver(() => {
-    const objectViewElement =  $(".nk-sidebar-view:not(.nk-get-user-view):not([style*='visibility: hidden;'])");
+    const objectViewElement =  $(".nk-sidebar-view:not(.nk-get-user-view):not([hidden])");
 
     /* Проверка на наличие другого окна или активной загрузки */
     if (!objectViewElement[0] || !$(".nk-get-user-view")[0]) return;
