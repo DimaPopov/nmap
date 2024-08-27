@@ -640,7 +640,6 @@
     }
     
     $(".nk-app-view").append("<aside class='nk-sidebar-view nk-get-user-view nk-island'></aside>");
-	console.log(123);
     
     viewElements.parent = $(".nk-get-user-view");
     viewElements.parent = creatElement(viewElements.parent, ["nk-size-observer"], ".nk-size-observer");
