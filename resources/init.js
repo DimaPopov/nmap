@@ -561,12 +561,12 @@
           },
           error: () => {
             if (window.appChrome.notification) {
-              window.appChrome.notification("error", "Не удалось подключится к серверй данных от Фонда реновации");
+              window.appChrome.notification("error", "Не удалось подключится к серверу данных от Фонда реновации");
             }else {
               window.needNotification = {
                 status: true,
                 type: "error",
-                text: "Не удалось подключится к серверй данных от Фонда реновации"
+                text: "Не удалось подключится к серверу данных от Фонда реновации"
               };
             }
           }
