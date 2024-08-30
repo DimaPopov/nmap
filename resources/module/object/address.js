@@ -21,7 +21,7 @@
     const bottonMeny = $(".nk-sidebar-view.nk-geoobject-viewer-view:not([style]) .nk-sidebar-header-view.nk-grid.nk-section.nk-section_level_1 > .nk-grid__col:nth-child(2) > span");
     window.appChrome.triggerClick(bottonMeny);
 
-    // Скроем подпсказку
+    // Скроем подсказку
     const popup = $(".nk-portal-local .nk-popup");
     popup.removeClass("nk-popup_visible");
 
@@ -31,7 +31,7 @@
       window.appChrome.triggerClick(copyButton);
 
       setTimeout(() => {
-        //Заполним поле адреса
+        // Заполним поле адреса
         const input = $('.nk-sidebar-view.nk-geoobject-editor-view:not([style]) .nk-text-input__control[name="addr_nm:name"]');
         input.val(number);
 
@@ -86,7 +86,7 @@
         const warnings = info.filter(active_address => active_address.title === address.title && active_address.id != address.id);
 
         if (warnings.length > 0) {
-          const count_dublicate = warnings.length % 2 === 0 ? warnings.length + " дубликата" : warnings.length + " дублкиат";
+          const count_dublicate = warnings.length % 2 === 0 ? warnings.length + " дубликата" : warnings.length + " дубликат";
 
           if (!addressBlock.find(".nk-poi-conflicts-viewer-view")[0]) {
             addressBlock.prepend('<div class="nk-poi-conflicts-viewer-view nk-address-conflicts nk-section nk-section_level_2"><div class="nk-poi-conflicts-viewer-view__header">' + count_dublicate + ' адреса</div><div class="nk-poi-conflicts-viewer-view__zoom-level"><div><div class="nk-poi-conflicts-viewer-view__geoobject"></div></div></div></div>');
@@ -117,7 +117,7 @@
       const button_m2 = $("#nk-address-button_n2");
       const button_m1 = $("#nk-address-button_n1");
 
-      // Проверим, чтобы при умньшении адрес не стал 0 или меньше
+      // Проверим, чтобы при уменьшении адрес не стал 0 или меньше
       if (numberAddres - 2 > 0) {
         popupShow(button_m2, "Создать адрес с номером " + (numberAddres - 2));
 
@@ -132,7 +132,7 @@
         button_m2.addClass('nk-button_disabled');
       }
 
-      // Проверим, чтобы при умньшении адрес не стал 0 или меньше
+      // Проверим, чтобы при уменьшении адрес не стал 0 или меньше
       if (numberAddres - 1 > 0) {
         popupShow(button_m1, "Создать адрес с номером " + (numberAddres - 1));
 
@@ -191,7 +191,7 @@
 
 
   /**
-   * Отслеживание открытие окна создания
+   * Отслеживание открытия окна создания
    */
 
   const editAppView = new MutationObserver(() => {
@@ -301,7 +301,7 @@
 
 
   /**
-   * Подписываемся на получение уведомления об открытии схемы помещения
+   * Подписываемся на получение уведомления об открытии адреса
    */
 
   window.appChrome.eventObect.append({

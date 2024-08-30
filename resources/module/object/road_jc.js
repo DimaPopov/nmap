@@ -49,13 +49,13 @@
 
     if (hasDiff && !$("#note_rd_jc")[0]) {
       const sections = $(".nk-sidebar-view.nk-geoobject-viewer-view .nk-scrollable__content .nk-size-observer > div");
-      sections.prepend('<div id="note_rd_jc" class="nk-poi-conflicts-viewer-view nk-rd_jc-conflicts nk-section nk-section_level_2"><div class="nk-poi-conflicts-viewer-view__header">Конфликт атрибутов</div><div class="nk-rd_jc_confilcts_list">У участок дорог есть различия в атрибутах, поэтому эту точку пересечения нельзя удалить. Если видимых отличий между атрибутами нет и точка пересечения лишняя — оставьте сообщение об ошибке</div></div>');
+      sections.prepend('<div id="note_rd_jc" class="nk-poi-conflicts-viewer-view nk-rd_jc-conflicts nk-section nk-section_level_2"><div class="nk-poi-conflicts-viewer-view__header">Конфликт атрибутов</div><div class="nk-rd_jc_confilcts_list">У участков дорог есть различия в атрибутах, поэтому эту точку пересечения нельзя удалить. Если видимых отличий между атрибутами нет и точка пересечения лишняя — оставьте сообщение об ошибке</div></div>');
     }
   };
 
 
   /**
-   * Подписываемся на получение уведомления об открытии объекта растительности
+   * Подписываемся на получение уведомления об открытии пересечения дорог
    */
 
   window.appChrome.eventObect.append({

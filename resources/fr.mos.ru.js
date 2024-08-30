@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Ищет дубликаты адресов
+ * Ищет дома, участвующие в программе реновации
  */
 
 (function () {
@@ -52,7 +52,7 @@
 
         parent.prepend(`<div id="fr_mos_ru" class="nk-section nk-section_level_2"><div class="fr_mos_ru-logo"></div><div class="fr-mos-ru-box fr-mos-ru-box-${info.color}">${info.cat_name}</div><div class="fr_mos_ru-status_text">${info.status_text}</div><div class="fr_mos_ru-center">${info.info_center}</div>${infoFrMosRu?.code ? `<a role="link" class="fr_mos_ru-name_orign" href="https://fr.mos.ru/uchastnikam-programmy/karta-renovatsii/${infoFrMosRu.code}/" target="_blank" rel="noopener noreferrer">${infoFrMosRu.name_orign}</a>` : `<div class="fr_mos_ru-name_orign">${infoFrMosRu.name_orign}</div>`}</div>`);
       }else if (frMosRuStreet) {
-        parent.prepend(`<div id="fr_mos_ru" class="nk-section nk-section_level_2"><div class="fr_mos_ru-logo"></div><div class="fr_mos_ru-status_text">Не участвует в программе реновации</div><div class="fr_mos_ru-center">Этот дом не участвует в программе реновации.</div><div class="fr_mos_ru-name_orign-list fr_mos_ru-name_orign-popout"><span>Дома с этой улицы участвующие в программе</span></div></div>`);
+        parent.prepend(`<div id="fr_mos_ru" class="nk-section nk-section_level_2"><div class="fr_mos_ru-logo"></div><div class="fr_mos_ru-status_text">Не участвует в программе реновации</div><div class="fr_mos_ru-center">Этот дом не участвует в программе реновации.</div><div class="fr_mos_ru-name_orign-list fr_mos_ru-name_orign-popout"><span>Дома с этой улицы, участвующие в программе</span></div></div>`);
 
         const text = $("#fr_mos_ru .fr_mos_ru-name_orign-list");
         const textPopout = $("#fr_mos_ru .fr_mos_ru-name_orign-popout");

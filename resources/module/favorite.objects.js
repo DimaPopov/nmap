@@ -115,7 +115,7 @@
           const select = $(".nk-popup.nk-popup_visible .nk-menu-item .nk-primary-type-edit-control__option:contains(\"" + (info.object[0].toLowerCase() + info.object.slice(1)) + "\")");
           window.appChrome.triggerClick(select);
 
-          // Выберим рубрику
+          // Выберем рубрику
           window.appChrome.triggerClick($(".nk-sidebar-view:not([style]) .nk-business-main-rubric-editor-view__suggest .nk-text-input__clear"));
 
           setTimeout(() => {
@@ -243,7 +243,7 @@
       }
     }
 
-    /* Добавим объекты выбранные через редактор */
+    /* Добавим объекты, выбранные через редактор */
     parent.append('<div class="nk-favorite-objects_user-list"></div>');
     parent = parent.find(".nk-favorite-objects_user-list");
 

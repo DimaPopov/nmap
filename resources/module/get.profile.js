@@ -74,7 +74,7 @@
       profileHeader.find(".nk-user-profile-view__name").after('<div class="nk-user-profile-view__status">Робот</div>'); 
     }
 
-    /* Добавление информации о должности и/или специальных прав */
+    /* Добавление информации о должности и/или специальных правах */
     if (user.publicId && user.status !== "deleted" && !user.outsourcer && !user.yandex) {
       const data = [
         {
@@ -279,7 +279,7 @@
 
 
   /**
-   * Инициализация подгрудки дополнительной информации в профиль
+   * Инициализация подгрузки дополнительной информации в профиль
    */
 
   const creatGetProfile = () => {

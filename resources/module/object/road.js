@@ -44,7 +44,7 @@
     const laneView = element.find("div:last-child .nk-grid__col_span_8 .nk-lanes-view");
     const numberLanes = laneView.find(".nk-lanes-view__lanes-numbers");
 
-    /* Определим максимальное число манёвров и колличество полос */
+    /* Определим максимальное число манёвров и количество полос */
     const sortLanes = (lane_1, lane_2) => {
       return (lane_1.length > lane_2.length) ? lane_1 : lane_2;
     }
@@ -65,7 +65,7 @@
       const kinds = lane.split(":")[1];
       if (kinds !== kindsValue[0]) kindsLane[id] = kinds;
 
-      /* Добавим информацию о доступных манёврых */
+      /* Добавим информацию о доступных манёврах */
       const maneuvers = lane.split(":")[0].split(",");
       maneuvers.forEach((maneuver, lane_ID) => {
         let activeDirections = laneView.find(".nk-lanes-view__lanes-directions:nth-child(" + (lane_ID + 2) + ")");
@@ -95,7 +95,7 @@
       });
 
 
-      /* Если манёвров не максимальное колличество, то добавим пустые ячейки */
+      /* Если манёвров не максимальное количество, то добавим пустые ячейки */
       for (let i = maneuvers.length; i < maxCountManeuvers; i++) {
         let activeDirections = laneView.find(".nk-lanes-view__lanes-directions:nth-child(" + (i + 2) + ")");
 
@@ -123,7 +123,7 @@
           continue;
         }
 
-        /* Добавим информацию о виде траспнорта */
+        /* Добавим информацию о виде транспорта */
         const kinds = kindsInfo[nameKinds];
         parent.append('<td class="nk-lanes-view__cell nk-last-append-chrome"><span class="nk-icon">' + kinds.icon + '</span></td>');
 
@@ -193,7 +193,7 @@
       sectionElement.before('<div class="nk-section nk-section_level_2 nk-lanes-section"></div>');
       const element = sectionElement.parent().find(".nk-lanes-section");
 
-      /* Добавим блок для информаций о движении по полосам */
+      /* Добавим блок для информации о движении по полосам */
       if (f_lane) renderLane(element, "rd_el:f_lane", f_lane.split(";"));
       if (t_lane) renderLane(element, "rd_el:t_lane", t_lane.split(";"));
     }
@@ -213,7 +213,7 @@
 
 
   /**
-   * Подписываемся на получение уведомления об открытии объекта растительности
+   * Подписываемся на получение уведомления об открытии участка дороги
    */
 
   window.appChrome.eventObect.append({

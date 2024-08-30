@@ -238,7 +238,7 @@
         viewElements.parent = creatElement(viewElements.parentDetals, ["nk-list-item-info-user_details-block", "nk-section", "nk-section_level_2"], ".nk-list-item-info-user_details-block:last-child");
       }
       
-      /* Добавление информации о должности и/или специальных прав */
+      /* Добавление информации о должности и/или специальных правах */
       if (user.publicId && user.status !== "deleted" && !user.outsourcer && !user.yandex) {
         const data = [
           {
@@ -430,7 +430,7 @@
                 creatElement(localParent, ["nk-info-user__info--text"], ".nk-info-user__info--text", new Intl.NumberFormat('ru-RU').format(stats.totalEdits));
               }
 
-              /* Разобрано неточности */
+              /* Разобрано неточностей */
               if (settingUser.view["feedback-count"]) {
                 localParent = creatElement(parent, ["nk-info-user__info"], ".nk-info-user__info:last-child");
 
@@ -798,7 +798,7 @@
       const appViewElement = document.querySelector(".nk-app-view");
       editAppView.observe(appViewElement, {childList: true});
     }catch {
-      window.appChrome.notification("error", "Модуль поиска пользоватлей не запущен");
+      window.appChrome.notification("error", "Модуль поиска пользователей не запущен");
     }
   };
   
