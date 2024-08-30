@@ -31,7 +31,7 @@
   };
 
   /**
-   * Применяет резалюцию к загруженным задачам модерации
+   * Применяет резолюцию к загруженным задачам модерации
    * @param action
    */
 
@@ -73,7 +73,7 @@
           tasks.push(task.id + "");
         });
 
-        /* Применим резалюцию к задачам модерации */
+        /* Применим резолюцию к задачам модерации */
         let dataModerationTasks = [];
 
         switch (action) {
@@ -148,7 +148,7 @@
    */
 
   const editAppView = new MutationObserver(() => {
-    /* Проверка наличие окна */
+    /* Проверка наличия окна */
     const objectViewElement = $(".nk-sidebar-view.nk-island:not([style])");
     if (!objectViewElement[0]) {
       $(".nk-action-section-moderation").remove();
@@ -162,7 +162,7 @@
       return;
     }
 
-    /* Проверка открытия панели разобра задач модерации */
+    /* Проверка открытия панели разбора задач модерации */
     const hesh_url = window.location.href.replace(window.location.origin + "/#!/", "");
     const zone = Number(hesh_url.replace("moderation/regions/", "").split("/")[0]);
     if (!zone) {
