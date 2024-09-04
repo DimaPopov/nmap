@@ -88,8 +88,8 @@
         if (warnings.length > 0) {
           const count_dublicate = warnings.length % 2 === 0 ? warnings.length + " дубликата" : warnings.length + " дубликат";
 
-          if (!addressBlock.find(".nk-poi-conflicts-viewer-view")[0]) {
-            addressBlock.prepend('<div class="nk-poi-conflicts-viewer-view nk-address-conflicts nk-section nk-section_level_2"><div class="nk-poi-conflicts-viewer-view__header">' + count_dublicate + ' адреса</div><div class="nk-poi-conflicts-viewer-view__zoom-level"><div><div class="nk-poi-conflicts-viewer-view__geoobject"></div></div></div></div>');
+          if (!sections.find(".nk-poi-conflicts-viewer-view")[0]) {
+            sections.prepend('<div class="nk-poi-conflicts-viewer-view nk-address-conflicts nk-section nk-section_level_2"><div class="nk-poi-conflicts-viewer-view__header">' + count_dublicate + ' адреса</div><div class="nk-poi-conflicts-viewer-view__zoom-level"><div><div class="nk-poi-conflicts-viewer-view__geoobject"></div></div></div></div>');
             const parrent = $(".nk-poi-conflicts-viewer-view .nk-poi-conflicts-viewer-view__geoobject");
 
             warnings.forEach((warning) => {
