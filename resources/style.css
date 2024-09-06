@@ -932,8 +932,18 @@
   white-space: pre-wrap;
 }
 
+.fr_mos_ru-name_orign-list-show a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .fr_mos_ru-name_orign-list-show span {
   color: var(--fr_mos_ru-legend-green);
+}
+
+.nk-notification-view_type_fr_mos_ru {
+  background-color: rgba(0, 178, 169, 0.9) !important;
+  color: #fff !important;
 }
 
 .nk-rd_jc_confilcts_list {
