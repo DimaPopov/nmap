@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Дополнительные инструменты",
   "description": "Расширение добавляет новые специальные возможности в Народную карту",
-  "version": "5.1.1",
-  "version_name": "5.1.1",
+  "version": "5.1.3",
+  "version_name": "5.1.3",
   "icons": {
     "128": "icon.png"
   },
