@@ -21,6 +21,18 @@
 
     $("body").append('<div class="nk-portal nk-portal_edit-tile"><!----><div class="nk-popup nk-popup_direction_right-bottom nk-popup_visible nk-popup_theme_islands nk-popup_restrict-height" style="left: 59px; bottom: 159px; z-index: 1001;"><div class="nk-size-observer"><div class="nk-popup__content"><div class="nk-size-observer"><div class="nk-scrollable nk-scrollable_with-thumb"><div class="nk-scrollable__container" style="max-height: 817px;"><div class="nk-scrollable__content"><div class="nk-size-observer"><div class="nk-map-layers-control-view__layers"><div class="nk-map-layers-control-view__actions"></div></div></div></div></div><!----><!----></div>');
     const listBlock = $("body .nk-portal_edit-tile .nk-map-layers-control-view__layers .nk-map-layers-control-view__actions");
+    let is_indoor = mapElement ? mapElement[0].style.zIndex == "195" : false;
+    if($(".ymaps-2-1-79-ground-pane ymaps[style*='z-index: 195']").length){
+      if(is_indoor) mapElement = $(".ymaps-2-1-79-ground-pane ymaps[style*='z-index: 195']");
+      listBlock.append(`<div class="nk-filter-continer"><p class="nk-filter-title">${text.indoor} <input type="checkbox" id="indoor-checkbox" ${is_indoor ? "checked" : null} /></p></div>`);
+      
+      const checkbox = listBlock.find("#indoor-checkbox");
+      checkbox.on("input", (e) => {
+        mapElement = e.target.checked ? $(".ymaps-2-1-79-ground-pane ymaps[style*='z-index: 195']") : $(".ymaps-2-1-79-ground-pane ymaps[style*='z-index: 150']");
+      });
+    } else if(is_indoor){
+      mapElement = $(".ymaps-2-1-79-ground-pane ymaps[style*='z-index: 150']");
+    }
     let filterList = [];
 
     for (const nameFilter in text.fulter) {
