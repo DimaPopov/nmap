@@ -61,7 +61,7 @@
         title: "Проверка адресов",
         label: {
           street: "Дорога",
-          listAddress: "Номера домов"
+          listAddress: "Список адресов"
         },
         button: {
           cancellation: "Отмена",
@@ -70,7 +70,7 @@
         load: "Идёт проверка",
         row: {
           error: "Недобавленные адреса",
-          not_found: "Несуществующие адреса",
+          not_found: "Адресов нет в списке",
           warning: "Адреса с ошибкой"
         },
         default: {
@@ -87,7 +87,7 @@
           default: defaultError,
           valid: {
             count: "Номера домов должны быть разделены запятыми",
-            road: "Номера домов не должны содержать название дороги"
+            road: "Номера домов в списке не должны содержать название дороги"
           }
         }
       }
@@ -177,7 +177,6 @@
           height: 192,
           term: "Выберите любой срок блокировки, но не более 3 дней"
         },
-
 
         // Систематические нарушения правил
         {
@@ -290,7 +289,7 @@
 
 
   /**
-   * Событие клика на кнопку полезных ссылок
+   * Событие клика на кнопку дополнительных инструментов
    */
 
   const clickToolsButton = () => {
@@ -434,17 +433,19 @@
         if(!parent.find('div[data-link="chrome-extension://' + id + '/index.html"]').length){
           parent.append('<div class="nk-menu-item nk-menu-item_theme_islands nk-menu-item_size_l" data-link="chrome-extension://' + id + '/index.html" tabindex="-1">Настройки</div>');
           const button = parent.find('div[data-link="chrome-extension://' + id + '/index.html"]');
-
+  
           button.hover(() => {
             button.addClass("nk-menu-item_hovered");
           }, () => {
             button.removeClass("nk-menu-item_hovered");
           });
-
+  
           button.on("click", () => {
             chrome.runtime.sendMessage({method: "openSetting"});
           });
         }
+      }, 10);
+    });
 
 
     /* Редактор загрузился, теперь ожидаем загрузки дополнительных инструментов для добавления меню */
