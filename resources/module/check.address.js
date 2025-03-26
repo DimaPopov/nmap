@@ -35,7 +35,8 @@
   /**
    * Скрытие окна проверки адресов
    */
-    
+
+  /* Удалим окно поиска */
   const hideView = () => {    
     $(".nk-portal-local").remove();
     activeObject = false;
@@ -45,6 +46,10 @@
     
     objectID = 0;
     activeObject = false;
+
+    /* Покажем окно дороги */
+    const objectViewElement = $(".nk-geoobject-viewer-view");
+    objectViewElement.css("display", "unset");
   };
 
 
@@ -418,6 +423,7 @@
     nameRoad = objectViewElement.find(".nk-name-row-layout__name .nk-text-control__text span").text();
     const location = objectViewElement.find(".nk-grid.nk-sidebar-control.nk-section.nk-section_level_2.nk-geoobject-relations-view .nk-grid__col.nk-grid__col_span_8 .nk-geoobject-relations-view__item .nk-geoobject-link-view").text().replace("город ", "");
     
+    /* Скроем окно дороги */
     objectViewElement.css("display", "none");
 
     /* Создание нового окна */
@@ -466,8 +472,7 @@
     elementsView.form.home = creatElement(elementsView.nkIsland, ["nk-section", "nk-section_level_1"], ".nk-section:last-child");
     elementsView.form.home.append("<form class='nk-form nk-section nk-section_level_1'></form>");
     
-    elementsView.form.parent = elementsView.form.home.find(".nk-form");
-    
+    elementsView.form.parent = elementsView.form.home.find(".nk-form");    
     
     /* Идентификатор и название объекта */
     elementsView.form.block = creatElement(elementsView.form.parent, ["nk-grid", "nk-text-input-control", "nk-form__control"], ".nk-form__control:last-child");
@@ -503,7 +508,6 @@
     elementsView.form.block_text.html('<span class="nk-text-area nk-text-area_theme_islands nk-text-area_size_m nk-text-area_invalid nk-text-area_width_available"><textarea class="nk-text-area__control" id="list_afress"></textarea></span>');
     
     /* Кнопки проверить и отменить */
-        
     elementsView.form.parent = creatElement(elementsView.form.home, ["nk-form-submit-view", "nk-form-submit-view_size_l", "nk-section", "nk-section_level_1"], ".nk-form-submit-view");
     elementsView.form.parent.html('<button aria-disabled="false" class="nk-button nk-button_theme_islands nk-button_size_l nk-cancellation" type="button"><span class="nk-button__text">' + text.view.button.cancellation + '</span></button><button aria-disabled="true" class="nk-button nk-button_theme_islands nk-button_size_l nk-button_view_action nk-button_disabled nk-form-submit-view__submit" type="button" disabled="true"><span class="nk-button__text">' + text.view.button.check + '</span></button>');
     
