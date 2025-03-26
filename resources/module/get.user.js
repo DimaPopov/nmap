@@ -73,10 +73,14 @@
 
   const hideView = () => {
     const viewElement = $(".nk-get-user-view");
+    const objectViewElement = $(".nk-geoobject-viewer-view");
+
     window.location.hash = "?" + window.location.hash.split("?")[1].split("%23sat")[0] + "%23sat";
     
     document.removeEventListener("keyup", hideViewKeyup);
     viewElement.remove();
+
+    objectViewElement.css("display", "unset");
   };
     
   const hideViewKeyup = (e) => {
@@ -625,7 +629,7 @@
     
     /* Скроем активные окна */    
     while ($(".nk-sidebar-view:not(.nk-get-user-view):not([hidden])")[0]) {
-      $(".nk-sidebar-view .nk-icon_id_close").click();
+      document.querySelector('.nk-get-user-view').style.display = 'none';
     }
     
     
