@@ -427,7 +427,7 @@
     /* Ждем клика по аватарке */
     $(".nk-user-bar-view__user-icon").on('click', () => {
       setTimeout(() => {
-        const parent = $("body > .nk-portal > .nk-popup > .nk-size-observer > .nk-popup__content > .nk-menu > .nk-menu__group:first-of-type");
+        const parent = $(".nk-user-bar-view__name + .nk-menu .nk-menu__group:first-of-type");
         const id = chrome.runtime.id;
 
         if(!parent.find('div[data-link="chrome-extension://' + id + '/index.html"]').length){
