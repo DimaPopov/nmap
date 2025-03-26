@@ -8,7 +8,7 @@
   const DEFAULT_SETTING = {
     'get-user': true,
     'get-profile': true,
-    'check-address': true,
+    'check-address': false,
     'q-link': false,
     'lock-pattern': true,
     'tiles': true,
