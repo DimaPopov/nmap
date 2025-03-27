@@ -22,14 +22,10 @@
 
     $("body").append('<div class="nk-portal nk-portal_edit-tile"><!----><div class="nk-popup nk-popup_direction_right-bottom nk-popup_visible nk-popup_theme_islands nk-popup_restrict-height" style="left: 59px; bottom: 159px; z-index: 1001;"><div class="nk-size-observer"><div class="nk-popup__content"><div class="nk-size-observer"><div class="nk-scrollable nk-scrollable_with-thumb"><div class="nk-scrollable__container" style="max-height: 817px;"><div class="nk-scrollable__content"><div class="nk-size-observer"><div class="nk-map-layers-control-view__layers"><div class="nk-map-layers-control-view__actions"></div></div></div></div></div><!----><!----></div>');
     const listBlock = $("body .nk-portal_edit-tile .nk-map-layers-control-view__layers .nk-map-layers-control-view__actions");
-
     let filterList = [];
-
     for (const nameFilter in text.fulter) {
-      
       const infoFilter = text.fulter[nameFilter];
       filterList.push(nameFilter + "(" + (infoFilter.default / infoFilter.meaning) + infoFilter.unit + ")");
-
       listBlock.append('<div class="nk-filter-continer"><p class="nk-filter-title">' + infoFilter['title'] + '</p><div class="nk-filter-block"><input type="range" min="' + infoFilter.min + '" max="' + infoFilter.max + '" value="' + infoFilter.default + '"/></div></div>');
       const input = listBlock.find(".nk-filter-continer:last-child input");
 
